@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/page_home"
+        android:enabled="true"
+        android:icon="@drawable/baseline_location_on_24"
+        android:title="@string/tv_menu_map"/>
+
+    <item
+        android:id="@+id/page_attendance"
+        android:enabled="true"
+        android:icon="@drawable/baseline_attendance_24"
+        android:title="@string/tv_menu_attendance"/>
+
+
+    <item
+        android:id="@+id/page_notification"
+        android:enabled="true"
+        android:icon="@drawable/baseline_notifications_24"
+        android:title="@string/tv_menu_notification"/>
+
+    <item
+        android:id="@+id/page_profile"
+        android:enabled="true"
+        android:icon="@drawable/baseline_person_24"
+        android:title="@string/tv_menu_profile"/>
+
+
+
+</menu>

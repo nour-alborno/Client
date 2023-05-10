@@ -7,4 +7,24 @@
     <color name="teal_700">#FF018786</color>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
+    <color name="sea_green">#417F7A</color>
+    <color name="gray_background">#F5F5F5</color>
+    <color name="gray">#E8E8E8</color>
+    <color name="red">#F8300A</color>
+    <color name="green">#00AD67</color>
+    <color name="orange">#F9B119</color>
+    <color name="black_text">#2E2E2E</color>
+
+    <color name="colorPrimary">@color/sea_green</color>  <!--لون التول بار أو الآكشن بار  -->
+    <color name="colorPrimaryVariant">@color/sea_green</color>  <!--لون شريط حالة الإشعارات -->
+    <color name="black_t_sch">#FF202020</color>
+
+    <color name="black_description_notification">#3C3C3C</color>
+
+    <color name="gray2">#8B8B8B</color>
+    <color name="gray_bac_circle">#D9D9D9</color>
+    <color name="black_light">#5D6162</color>
+    <color name="light_gray">#EDEDED</color>
+    <color name="dark_gray">#6A6A6A</color>
+
 </resources>
