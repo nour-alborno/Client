@@ -5,6 +5,7 @@ import android.view.MenuItem;
 import androidx.fragment.app.Fragment;
 
 import com.example.client.R;
+import com.example.client.Ui.Fragments.Attendance.AttendanceFragment;
 import com.example.client.Ui.Fragments.Profile.ProfileFragment;
 
 public class MainPresenter {
@@ -32,7 +33,7 @@ public class MainPresenter {
                 break;
 
             case R.id.page_attendance:
-              //  fragment = new ScheduleFragment(); // ندى
+                fragment = new AttendanceFragment(); // ندى
                 break;
 
             case R.id.page_notification:

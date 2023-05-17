@@ -8,6 +8,7 @@
 
     <string name="appBar_title_profile">Profile</string>
     <string name="appBar_title_suggestions">Suggestions</string>
+    <string name="appBar_title_attendance">Attendance</string>
 
     <string name="profile_archive">History</string>
     <string name="profile_contact">Contact us</string>
@@ -30,4 +31,7 @@
     <string name="edit_profile_age">Age</string>
     <string name="edit_profile_city">City</string>
     <string name="edit_profile_Beneficiary">Organization</string>
+
+    <string name="title_attendance">Confirm your attendance</string>
+
 </resources>

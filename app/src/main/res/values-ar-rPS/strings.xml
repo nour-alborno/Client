@@ -10,6 +10,7 @@
 
     <string name="appBar_title_profile">الصفحة الشخصية</string>
     <string name="appBar_title_suggestions">الإقتراحات</string>
+    <string name="appBar_title_attendance">الحضور</string>
 
     <string name="profile_archive">الأرشيف</string>
     <string name="profile_contact">تواصل معنا</string>
@@ -31,5 +32,7 @@
     <string name="edit_profile_age">العمر</string>
     <string name="edit_profile_city">المدينة</string>
     <string name="edit_profile_Beneficiary">المؤسسة</string>
+
+    <string name="title_attendance">أكد حضورك</string>
 
 </resources>
