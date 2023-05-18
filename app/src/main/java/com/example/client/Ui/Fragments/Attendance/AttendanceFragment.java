@@ -11,6 +11,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
+import com.example.client.Model.AttendanceConfirmation;
 import com.example.client.Model.Benefeciares;
 import com.example.client.Model.Benf_Schedule;
 import com.example.client.Model.DriverProfile;
@@ -20,6 +21,8 @@ import com.example.client.databinding.FragmentAttendanceBinding;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
@@ -41,8 +44,11 @@ import java.util.Date;
  */
 public class AttendanceFragment extends Fragment {
 
+    DatabaseReference reference;
 
-
+    String  driverId;
+    String journeyIdGoing;
+    String journeyIdReturn;
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -96,6 +102,7 @@ public class AttendanceFragment extends Fragment {
         String day = f.format(new Date());
 
         FirebaseFirestore firestore = FirebaseFirestore.getInstance();
+        FirebaseDatabase db =FirebaseDatabase.getInstance();
 
 
 
@@ -119,12 +126,18 @@ public class AttendanceFragment extends Fragment {
                                 Log.d("Benf_schedule", benf_schedule.getJourneyIdGoing());
 
 
+
+
                                 //fetching going journey data
                                 firestore.collection("Journey").document(benf_schedule.getJourneyIdGoing()).get()
                                                 .addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
                                                     @Override
                                                     public void onComplete(@NonNull Task<DocumentSnapshot> task) {
                                                          if (task.isSuccessful()){
+
+                                                             journeyIdGoing = benf_schedule.getJourneyIdGoing();
+
+
                                                       JourneyModel journeyModel = task.getResult().toObject(JourneyModel.class);
                                                       binding.tvStartTimeItemSchedule.setText(journeyModel.getStart());
                                                       binding.tvArrivalsTimeItemSchedule.setText(journeyModel.getEnd());
@@ -174,6 +187,11 @@ public class AttendanceFragment extends Fragment {
                                             @Override
                                             public void onComplete(@NonNull Task<DocumentSnapshot> task) {
                                                 if (task.isSuccessful()){
+
+
+                                                    journeyIdReturn = benf_schedule.getJourneyIdReturn();
+
+
                                                     JourneyModel journeyModel = task.getResult().toObject(JourneyModel.class);
                                                     binding.tvStartTimeItemSchedule2.setText(journeyModel.getStart());
                                                     binding.tvArrivalsTimeItemSchedule2.setText(journeyModel.getEnd());
@@ -186,6 +204,7 @@ public class AttendanceFragment extends Fragment {
 
                                                     binding.tvDate2.setText(simpleformat.format(Calendar.getInstance().getTime()));
 
+                                                    driverId = journeyModel.getDriver();
                                                     Toast.makeText(getActivity(), journeyModel.getDriver(), Toast.LENGTH_LONG).show();
                                                     //Fetching DriverName
 
@@ -228,6 +247,23 @@ public class AttendanceFragment extends Fragment {
         binding.btnAccept.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                ArrayList<String> attend = new ArrayList<>();
+                attend.add("1");
+
+                SimpleDateFormat simpleformat = new SimpleDateFormat("dd-MMMM-yyyy ");
+                reference = db.getReference("AttendanceConfirmation");
+                reference.child(simpleformat.format(Calendar.getInstance().getTime())).child(driverId)
+                        .child(journeyIdGoing).setValue(new AttendanceConfirmation(attend))
+                        .addOnCompleteListener(new OnCompleteListener<Void>() {
+                            @Override
+                            public void onComplete(@NonNull Task<Void> task) {
+                                if (task.isSuccessful()){
+                                    Log.d("test","succesfull");
+                                } else {
+                                    Log.d("test",task.getException().getMessage());
+                                }
+                            }
+                        });
 
             }
         });
@@ -236,6 +272,24 @@ public class AttendanceFragment extends Fragment {
             @Override
             public void onClick(View view) {
 
+                ArrayList<String> attend = new ArrayList<>();
+                attend.add("1");
+
+                SimpleDateFormat simpleformat = new SimpleDateFormat("dd-MMMM-yyyy ");
+
+            reference = db.getReference("AttendanceConfirmation");
+            reference.child(simpleformat.format(Calendar.getInstance().getTime())).child(driverId)
+                    .child(journeyIdReturn).setValue(new AttendanceConfirmation(attend))
+                    .addOnCompleteListener(new OnCompleteListener<Void>() {
+                        @Override
+                        public void onComplete(@NonNull Task<Void> task) {
+                            if (task.isSuccessful()){
+                                Log.d("test2","succesfull");
+                            } else {
+                                Log.d("test2",task.getException().getMessage());
+                            }
+                        }
+                    });
             }
         });
 
