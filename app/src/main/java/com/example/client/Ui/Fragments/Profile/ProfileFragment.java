@@ -1,15 +1,27 @@
 
 package com.example.client.Ui.Fragments.Profile;
 
+import android.content.Intent;
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.example.client.Model.Benefeciares;
 import com.example.client.R;
+import com.example.client.Ui.Activities.ContactUs.ContactUsActivity;
+import com.example.client.Ui.Activities.EditProfile.EditProfileActivity;
+import com.example.client.Ui.Activities.History.HistoryActivity;
+import com.example.client.databinding.FragmentProfileBinding;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.FirebaseFirestore;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -18,6 +30,7 @@ import com.example.client.R;
  */
 public class ProfileFragment extends Fragment {
 
+    Benefeciares benefeciares;
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
@@ -61,7 +74,56 @@ public class ProfileFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_profile, container, false);
+        FragmentProfileBinding binding = FragmentProfileBinding.inflate(inflater,container,false);
+
+        FirebaseFirestore firestore = FirebaseFirestore.getInstance();
+
+        firestore.collection("Beneficiaries").document("1").get()
+                .addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                        Log.d("Beneficiaries",task.getResult().toString());
+                        if (task.isSuccessful()){
+
+
+                            benefeciares = task.getResult().toObject(Benefeciares.class);
+                            Log.d("Beneficiaries",task.getResult().toString());
+                            binding.tvName.setText(benefeciares.getName());
+                            binding.tvNumber.setText("+972".concat(String.valueOf(benefeciares.getMobile())));
+
+                        } else {
+
+                            Log.d("Beneficiaries", task.getException().getMessage());
+
+                        }
+
+                    }
+                });
+
+
+
+        binding.imgEdit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(getActivity(), EditProfileActivity.class));
+            }
+        });
+         binding.linLayoutHistory.setOnClickListener(new View.OnClickListener() {
+             @Override
+             public void onClick(View view) {
+                 startActivity(new Intent(getActivity(), HistoryActivity.class));
+             }
+         });
+
+
+         binding.tvContactus.setOnClickListener(new View.OnClickListener() {
+             @Override
+             public void onClick(View view) {
+                 startActivity(new Intent(getActivity(), ContactUsActivity.class));
+             }
+         });
+
+
+        return binding.getRoot();
     }
 }

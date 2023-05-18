@@ -1,9 +1,14 @@
 
 package com.example.client.Model;
 
-public class Benefeciares {
+import android.os.Parcel;
+import android.os.Parcelable;
+
+import androidx.annotation.NonNull;
+
+public class Benefeciares implements Parcelable {
     String name;
-    String mobile;
+    int mobile;
     String region;
     String address;
     String age;
@@ -16,7 +21,7 @@ public class Benefeciares {
     public Benefeciares() {
     }
 
-    public Benefeciares(String name, String mobile, String region, String address, String age, String disabilityType, String organization, String gender, String documentId) {
+    public Benefeciares(String name, int mobile, String region, String address, String age, String disabilityType, String organization, String gender, String documentId) {
         this.name = name;
         this.mobile = mobile;
         this.region = region;
@@ -28,16 +33,29 @@ public class Benefeciares {
         this.documentId = documentId;
     }
 
-    public Benefeciares(String name, String mobile, String region, String address, String age, String disabilityType, String organization, String gender) {
-        this.name = name;
-        this.mobile = mobile;
-        this.region = region;
-        this.address = address;
-        this.age = age;
-        this.disabilityType = disabilityType;
-        this.organization = organization;
-        this.gender = gender;
+    protected Benefeciares(Parcel in) {
+        name = in.readString();
+        mobile = in.readInt();
+        region = in.readString();
+        address = in.readString();
+        age = in.readString();
+        disabilityType = in.readString();
+        organization = in.readString();
+        gender = in.readString();
+        documentId = in.readString();
     }
+
+    public static final Creator<Benefeciares> CREATOR = new Creator<Benefeciares>() {
+        @Override
+        public Benefeciares createFromParcel(Parcel in) {
+            return new Benefeciares(in);
+        }
+
+        @Override
+        public Benefeciares[] newArray(int size) {
+            return new Benefeciares[size];
+        }
+    };
 
     public String getName() {
         return name;
@@ -47,11 +65,11 @@ public class Benefeciares {
         this.name = name;
     }
 
-    public String getMobile() {
+    public int getMobile() {
         return mobile;
     }
 
-    public void setMobile(String mobile) {
+    public void setMobile(int mobile) {
         this.mobile = mobile;
     }
 
@@ -109,5 +127,23 @@ public class Benefeciares {
 
     public void setDocumentId(String documentId) {
         this.documentId = documentId;
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(@NonNull Parcel parcel, int i) {
+        parcel.writeString(name);
+        parcel.writeInt(mobile);
+        parcel.writeString(region);
+        parcel.writeString(address);
+        parcel.writeString(age);
+        parcel.writeString(disabilityType);
+        parcel.writeString(organization);
+        parcel.writeString(gender);
+        parcel.writeString(documentId);
     }
 }
