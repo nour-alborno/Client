@@ -70,6 +70,7 @@ public class HomeFragment extends Fragment implements OnMapReadyCallback {
 
 
 
+//        //change map type
 //        SupportMapFragment mapFragmen = SupportMapFragment.newInstance();
 //        FragmentManager fragmentManager = getChildFragmentManager();
 //        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
