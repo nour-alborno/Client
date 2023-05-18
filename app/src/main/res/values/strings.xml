@@ -1,3 +1,37 @@
 <resources>
     <string name="app_name">Client</string>
+
+    <string name="tv_menu_profile">Profile</string>
+    <string name="tv_menu_attendance">Attendance</string>
+    <string name="tv_menu_notification">Notification</string>
+    <string name="tv_menu_map">Map</string>
+
+    <string name="appBar_title_profile">Profile</string>
+    <string name="appBar_title_suggestions">Suggestions</string>
+    <string name="appBar_title_attendance">Attendance</string>
+
+    <string name="profile_archive">History</string>
+    <string name="profile_contact">Contact us</string>
+    <string name="profile_aboutus">About us</string>
+    <string name="profile_settings">Settings</string>
+    <string name="profile_logout">Logout</string>
+
+    <string name="tv_title_contact_us">Contact us</string>
+    <string name="et_hint_subject">Subject</string>
+
+    <string name="tv_beneficiaries">Beneficiaries</string>
+
+    <string name="appbar_title_edit_profile">Edit Profile</string>
+    <string name="edit_photo">Edit Photo</string>
+
+    <string name="edit_profile_name">Name</string>
+    <string name="edit_profile_gender">Gender</string>
+    <string name="edit_profile_address">Address</string>
+    <string name="edit_profile_disability">Disability Type</string>
+    <string name="edit_profile_age">Age</string>
+    <string name="edit_profile_city">City</string>
+    <string name="edit_profile_Beneficiary">Organization</string>
+
+    <string name="title_attendance">Confirm your attendance</string>
+
 </resources>

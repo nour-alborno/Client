@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Client</string>
+
+    <string name="tv_menu_profile">الصفحة الشخصية</string>
+    <string name="tv_menu_attendance">صفحة تأكيد الحضور</string>
+    <string name="tv_menu_notification">صفحة الإشعارات</string>
+    <string name="tv_menu_map">الخريطة</string>
+
+
+    <string name="appBar_title_profile">الصفحة الشخصية</string>
+    <string name="appBar_title_suggestions">الإقتراحات</string>
+    <string name="appBar_title_attendance">الحضور</string>
+
+    <string name="profile_archive">الأرشيف</string>
+    <string name="profile_contact">تواصل معنا</string>
+    <string name="profile_aboutus">من نحن؟</string>
+    <string name="profile_settings">الإعدادات</string>
+    <string name="profile_logout">تسجيل الخروج</string>
+
+    <string name="tv_title_contact_us">تواصل معنا</string>
+    <string name="et_hint_subject">الموضوع</string>
+    <string name="tv_beneficiaries">المستفيدين</string>
+
+    <string name="appbar_title_edit_profile"> تعديل الملف الشخصي</string>
+    <string name="edit_photo">تعديل الصورة</string>
+
+    <string name="edit_profile_name">الإسم</string>
+    <string name="edit_profile_gender">الجنس</string>
+    <string name="edit_profile_address">العنوان</string>
+    <string name="edit_profile_disability">الإعاقة</string>
+    <string name="edit_profile_age">العمر</string>
+    <string name="edit_profile_city">المدينة</string>
+    <string name="edit_profile_Beneficiary">المؤسسة</string>
+
+    <string name="title_attendance">أكد حضورك</string>
+
+</resources>
