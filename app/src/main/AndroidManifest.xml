@@ -1,7 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    package="com.example.client">
+    package="com.example.client" >
+
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
 
     <application
         android:allowBackup="true"
@@ -12,22 +16,30 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.Client"
-        tools:targetApi="31">
-
-        <!--        add API Key (Map) - nada  -->
-        <meta-data
-            android:name="com.google.android.geo.API_KEY"
-            android:value="AIzaSyBykl7wCfkooacvZ_Z1CH4g9nl4NVBa6wY" />
-
+        tools:targetApi="31" >
         <activity
-            android:name=".MainActivity"
-            android:exported="true">
+            android:name=".Ui.Activities.EditProfile.EditProfileActivity"
+            android:exported="false" />
+        <activity
+            android:name=".Ui.Activities.ContactUs.ContactUsActivity"
+            android:exported="false" />
+        <activity
+            android:name=".Ui.Activities.Main.MainActivity"
+            android:exported="true" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
+        <meta-data
+            android:name="com.google.android.geo.API_KEY"
+            android:value="AIzaSyC5Zj3Id3i6fzJYpYbLPEfd0LjkboWzX-M" />
+
+        <uses-library
+            android:name="com.google.android.maps"
+            android:required="true" />
     </application>
 
 </manifest>
