@@ -37,7 +37,7 @@ public class MainPresenter {
                 break;
 
             case R.id.page_notification:
-             //   fragment = new ArchiveFragment();
+              //  fragment = new NotificationFragment();
                 break;
 
             case R.id.page_profile:
