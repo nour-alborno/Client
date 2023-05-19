@@ -6,6 +6,7 @@ import androidx.fragment.app.Fragment;
 
 import com.example.client.R;
 import com.example.client.Ui.Fragments.Attendance.AttendanceFragment;
+import com.example.client.Ui.Fragments.Home.HomeFragment;
 import com.example.client.Ui.Fragments.Profile.ProfileFragment;
 
 public class MainPresenter {
@@ -29,8 +30,9 @@ public class MainPresenter {
         switch (item.getItemId()){
 
             case R.id.page_home:
-                //fragment = new HomeFragment();
+               fragment = new HomeFragment();
                 break;
+
 
             case R.id.page_attendance:
                 fragment = new AttendanceFragment(); // ندى

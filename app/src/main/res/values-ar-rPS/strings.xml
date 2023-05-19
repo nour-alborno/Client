@@ -35,5 +35,7 @@
     <string name="edit_profile_Beneficiary">المؤسسة</string>
 
     <string name="title_attendance">أكد حضورك</string>
+    <string name="ok">Ok</string>
+    <string name="determine_the_accuracy_of_your_location">Determine the accuracy of your location</string>
 
 </resources>
