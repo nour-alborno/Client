@@ -68,23 +68,51 @@ public class HomeFragment extends Fragment implements OnMapReadyCallback {
         sp = requireContext().getSharedPreferences("spLocation", MODE_PRIVATE);
         edit = sp.edit();
 
+        String latitude_sp = sp.getString(LATITUDE_KEY, "null");
+        String longitude_sp = sp.getString(LONGITUDE_KEY, "null");
+        Log.d("TAGMainnn", "onCreate: " +"latitude : " + latitude_sp + "  longitude : " + longitude_sp);
+
+        double latitude_sp_double = Double.parseDouble(latitude_sp);
+        double longitude_sp_double = Double.parseDouble(longitude_sp);
 
 
-//        //change map type
-//        SupportMapFragment mapFragmen = SupportMapFragment.newInstance();
+//        SupportMapFragment mapFrag = SupportMapFragment.newInstance();
 //        FragmentManager fragmentManager = getChildFragmentManager();
 //        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-//        fragmentTransaction.add(R.id.map, mapFragmen);
+//        fragmentTransaction.add(R.id.map, mapFrag);
 //        fragmentTransaction.commit();
 //
-//        mapFragmen.getMapAsync(new OnMapReadyCallback() {
+//        mapFrag.getMapAsync(new OnMapReadyCallback() {
 //            @Override
 //            public void onMapReady(GoogleMap map) {
 //                googleMap = map;
-//                // Change map type here
+//
+//                // Set initial camera position
+//                LatLng initialPosition = new LatLng(latitude_sp_double, longitude_sp_double);
+//                float zoomLevel = 12.0f;
+//                CameraUpdate cameraUpdate = CameraUpdateFactory.newLatLngZoom(initialPosition, zoomLevel);
+//                googleMap.moveCamera(cameraUpdate);
+//
+//                // Enable zoom controls
+//                googleMap.getUiSettings().setZoomControlsEnabled(true);
+//
+//                // Add a marker
+//                LatLng markerPosition = new LatLng(latitude_sp_double, longitude_sp_double);
+//                MarkerOptions markerOptions = new MarkerOptions()
+//                        .position(markerPosition)
+//                        .title("Marker Title")
+//                        .icon(BitmapDescriptorFactory.fromResource(R.drawable.img_bus))
+//                        .snippet("Marker Snippet");
+//                googleMap.addMarker(markerOptions);
+//
+//                // Change map type
 //                googleMap.setMapType(GoogleMap.MAP_TYPE_NORMAL);
+//
+//                polylinePoints.add(initialPosition);
+//                drawFinalPolyline();
 //            }
 //        });
+
 
 
 
