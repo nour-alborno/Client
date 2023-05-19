@@ -47,20 +47,16 @@
             app:layout_constraintTop_toBottomOf="@+id/top_appbar" />
 
 
-        <com.google.android.material.floatingactionbutton.FloatingActionButton
-            android:id="@+id/fab"
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/btn_call"
             android:layout_width="@dimen/_50sdp"
             android:layout_height="@dimen/_50sdp"
-            app:fabCustomSize="@dimen/_50sdp"
-            app:backgroundTint="@color/green"
-            app:tint="@color/white"
-            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_marginEnd="32dp"
+            android:layout_marginBottom="32dp"
+            android:src="@drawable/img_call"
+            app:civ_border_color="@color/green"
             app:layout_constraintBottom_toBottomOf="parent"
-            android:layout_marginEnd="@dimen/_21sdp"
-            android:layout_marginBottom="@dimen/_27sdp"
-            android:src="@drawable/baseline_call_24"
-            app:layout_behavior="com.google.android.material.behavior.SwipeDismissBehavior" />
-
+            app:layout_constraintEnd_toEndOf="parent" />
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>
