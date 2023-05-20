@@ -24,10 +24,19 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.fragment.app.Fragment;
 
+import com.example.client.Model.Benefeciares;
 import com.example.client.R;
 import com.example.client.Ui.Fragments.Profile.ProfileFragment;
 import com.example.client.databinding.ActivityMainBinding;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.android.material.navigation.NavigationBarView;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.GeoPoint;
+import com.google.type.LatLng;
+
+import java.util.HashMap;
+import java.util.Map;
 
 public class MainActivity extends AppCompatActivity implements MainView {
 
@@ -43,12 +52,17 @@ public class MainActivity extends AppCompatActivity implements MainView {
 
     SharedPreferences sp;
     SharedPreferences.Editor edit;
+
+    FirebaseFirestore firestore;
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         binding=ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
+        firestore=FirebaseFirestore.getInstance();
 
         sp = getSharedPreferences("spLocation", MODE_PRIVATE);
         edit = sp.edit();
@@ -131,73 +145,83 @@ public class MainActivity extends AppCompatActivity implements MainView {
     private void getLocation() {
 
         //Check Permissions again
+        Log.d("geoLocation", "getLocation");
 
         if (ActivityCompat.checkSelfPermission(MainActivity.this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(MainActivity.this,
 
                 Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
             ActivityCompat.requestPermissions(this, new String[]
                     {Manifest.permission.ACCESS_FINE_LOCATION}, REQUEST_LOCATION);
+
+            Log.d("geoLocation", "getLocation");
+
         } else {
             Location LocationGps = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
             Location LocationNetwork = locationManager.getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
             Location LocationPassive = locationManager.getLastKnownLocation(LocationManager.PASSIVE_PROVIDER);
 
-            Intent intent = new Intent();
+            Log.d("geoLocation", "getLocation");
+         //   Intent intent = new Intent();
 
             if (LocationGps != null) {
-                double lat = LocationNetwork.getLatitude();
-                double longi = LocationNetwork.getLongitude();
+               double  lat = LocationGps.getLatitude();
+               double  longi = LocationGps.getLongitude();
 
-                latitude = String.valueOf(lat);
-                longitude = String.valueOf(longi);
+                    saveLocation(lat,longi);
 
-                edit.putString(LATITUDE_KEY, latitude);
-                edit.putString(LONGITUDE_KEY, longitude);
-                edit.apply();
-
-                intent.putExtra(LATITUDE_KEY, latitude);
-                intent.putExtra(LONGITUDE_KEY, longitude);
+//                intent.putExtra(LATITUDE_KEY, latitude);
+//                intent.putExtra(LONGITUDE_KEY, longitude);
 
                 Toast.makeText(MainActivity.this, "Your Location:" + "\n" + "Latitude= " + latitude + "\n" + "Longitude= " + longitude, Toast.LENGTH_SHORT).show();
-
+                   Log.d("GEO", "one "+ lat + " " + longi);
             } else if (LocationNetwork != null) {
                 double lat = LocationNetwork.getLatitude();
                 double longi = LocationNetwork.getLongitude();
 
+                Log.d("GEO", "two "+ lat + " " + longi);
 
-                latitude = String.valueOf(lat);
-                longitude = String.valueOf(longi);
+                saveLocation(lat,longi);
+//                latitude = String.valueOf(lat);
+//                longitude = String.valueOf(longi);
+//
+//                edit.putString(LATITUDE_KEY, latitude);
+//                edit.putString(LONGITUDE_KEY, longitude);
+//                edit.apply();
 
-                edit.putString(LATITUDE_KEY, latitude);
-                edit.putString(LONGITUDE_KEY, longitude);
-                edit.apply();
-
-                intent.putExtra(LATITUDE_KEY, latitude);
-                intent.putExtra(LONGITUDE_KEY, longitude);
+//                intent.putExtra(LATITUDE_KEY, latitude);
+//                intent.putExtra(LONGITUDE_KEY, longitude);
 
                 Toast.makeText(MainActivity.this, "Your Location:" + "\n" + "Latitude= " + latitude + "\n" + "Longitude= " + longitude, Toast.LENGTH_SHORT).show();
 
             } else if (LocationPassive != null) {
-                double lat = LocationPassive.getLatitude();
-                double longi = LocationPassive.getLongitude();
+              double lat = LocationPassive.getLatitude();
+               double longi = LocationPassive.getLongitude();
 
-                latitude = String.valueOf(lat);
-                longitude = String.valueOf(longi);
+                Log.d("GEO", "three "+ lat + " " + longi);
+                saveLocation(lat,longi);
+//                latitude = String.valueOf(lat);
+//                longitude = String.valueOf(longi);
+//
+//                edit.putString(LATITUDE_KEY, latitude);
+//                edit.putString(LONGITUDE_KEY, longitude);
+//                edit.apply();
 
-                edit.putString(LATITUDE_KEY, latitude);
-                edit.putString(LONGITUDE_KEY, longitude);
-                edit.apply();
-
-                intent.putExtra(LATITUDE_KEY, latitude);
-                intent.putExtra(LONGITUDE_KEY, longitude);
+//                intent.putExtra(LATITUDE_KEY, latitude);
+//                intent.putExtra(LONGITUDE_KEY, longitude);
 
                 Toast.makeText(MainActivity.this, "Your Location:" + "\n" + "Latitude= " + latitude + "\n" + "Longitude= " + longitude, Toast.LENGTH_SHORT).show();
+
+
+
             } else {
                 Toast.makeText(this, "Can't Get Your Location", Toast.LENGTH_SHORT).show();
             }
 
-            setResult(RESULT_OK, intent);
+       //     setResult(RESULT_OK, intent);
             dialog.dismiss();
+
+
+
         }
 
 
@@ -222,6 +246,38 @@ public class MainActivity extends AppCompatActivity implements MainView {
         });
         final AlertDialog alertDialog = builder.create();
         alertDialog.show();
+    }
+
+
+    void saveLocation(double lat , double longi){
+        Log.d("geoLocation", "SaveLocationMethod");
+        if (lat != 0 && longi != 0) {
+
+            Log.d("geoLocation", "SaveLocationMethodInside");
+            latitude = String.valueOf(lat);
+            longitude = String.valueOf(longi);
+
+            edit.putString(LATITUDE_KEY, latitude);
+            edit.putString(LONGITUDE_KEY, longitude);
+            edit.apply();
+
+            //Storing location in benf firestore
+            GeoPoint geoPoint = new GeoPoint(lat,longi);
+            Map<String, Object> updates = new HashMap<>();
+            updates.put("location", geoPoint);
+
+            firestore.collection("Beneficiaries").document("1").update(updates)
+                    .addOnCompleteListener(new OnCompleteListener<Void>() {
+                        @Override
+                        public void onComplete(@NonNull Task<Void> task) {
+
+                            if (task.isSuccessful()) {
+                                Log.d("geoLocation", "Successful");
+                            } else {
+                                Log.d("geoLocation", task.getException().getMessage());         }
+                        }
+                   });
+        }
     }
 
 }

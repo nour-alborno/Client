@@ -250,7 +250,7 @@ public class AttendanceFragment extends Fragment {
                 ArrayList<String> attend = new ArrayList<>();
                 attend.add("1");
 
-                SimpleDateFormat simpleformat = new SimpleDateFormat("dd-MMMM-yyyy ");
+                SimpleDateFormat simpleformat = new SimpleDateFormat("dd-MMMM-yyyy");
                 reference = db.getReference("AttendanceConfirmation");
                 reference.child(simpleformat.format(Calendar.getInstance().getTime())).child(driverId)
                         .child(journeyIdGoing).setValue(new AttendanceConfirmation(attend))
@@ -275,7 +275,7 @@ public class AttendanceFragment extends Fragment {
                 ArrayList<String> attend = new ArrayList<>();
                 attend.add("1");
 
-                SimpleDateFormat simpleformat = new SimpleDateFormat("dd-MMMM-yyyy ");
+                SimpleDateFormat simpleformat = new SimpleDateFormat("dd-MMMM-yyyy");
 
             reference = db.getReference("AttendanceConfirmation");
             reference.child(simpleformat.format(Calendar.getInstance().getTime())).child(driverId)

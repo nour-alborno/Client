@@ -6,6 +6,8 @@ import android.os.Parcelable;
 
 import androidx.annotation.NonNull;
 
+import com.google.firebase.firestore.GeoPoint;
+
 public class Benefeciares implements Parcelable {
     String name;
     int mobile;
@@ -16,7 +18,13 @@ public class Benefeciares implements Parcelable {
     String organization;
     String gender;
 
+    GeoPoint location;
     String documentId;
+
+
+    public Benefeciares(GeoPoint location) {
+        this.location = location;
+    }
 
     public Benefeciares() {
     }

@@ -22,12 +22,10 @@ public class AttendanceConfirmation {
     public AttendanceConfirmation() {
     }
 
-    public AttendanceConfirmation(String driverId, String date, String journeyId, ArrayList<String> benf) {
-        this.driverId = driverId;
-        this.date = date;
-        this.journeyId = journeyId;
-        this.benf = benf;
-    }
+
+
+
+
 
     public String getDriverId() {
         return driverId;
