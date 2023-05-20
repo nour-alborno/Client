@@ -3,7 +3,6 @@ package com.example.client.Ui.Fragments.Home;
 import static android.content.Context.MODE_PRIVATE;
 
 import android.Manifest;
-import android.app.Dialog;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.graphics.Color;
@@ -13,7 +12,6 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -52,6 +50,7 @@ public class HomeFragment extends Fragment implements OnMapReadyCallback {
     private Marker currentLocationMarker;
     private Polyline currentPolyline;
     private List<LatLng> polylinePoints;
+
     public final String LATITUDE_KEY = "latitude";
     public final String LONGITUDE_KEY = "longitude";
 
@@ -59,26 +58,11 @@ public class HomeFragment extends Fragment implements OnMapReadyCallback {
     SharedPreferences.Editor edit;
     private GoogleMap googleMap;
 
-    Dialog dialog;
-    Button btn_calling;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         FragmentHomeBinding binding = FragmentHomeBinding.inflate(inflater, container, false);
-
-
-        binding.btnCall.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-
-
-
-
-
-
-            }
-        });
 
 
         sp = requireContext().getSharedPreferences("spLocation", MODE_PRIVATE);
@@ -255,6 +239,7 @@ public class HomeFragment extends Fragment implements OnMapReadyCallback {
     }
 
 
+
     private void updateCurrentLocationMarker(LatLng latLng) {
         if (currentLocationMarker != null) {
             currentLocationMarker.setPosition(latLng);
@@ -269,6 +254,8 @@ public class HomeFragment extends Fragment implements OnMapReadyCallback {
         polylinePoints.add(latLng);
         drawFinalPolyline();
     }
+
+
 
 
     private void drawFinalPolyline() {
