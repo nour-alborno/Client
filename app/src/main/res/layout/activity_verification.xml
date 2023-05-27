@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="@dimen/_13sdp"
+    android:gravity="center"
+    android:background="@color/white"
+    tools:context=".Ui.Activities.Verification.VerificationActivity">
+
+    <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/tv_resend"
+        android:layout_width="@dimen/_200sdp"
+        android:layout_height="@dimen/_30sdp"
+        android:fontFamily="@font/roboto_regular"
+        android:clickable="true"
+        android:gravity="center"
+        android:text="@string/didn_t_get_otp_resend"
+        android:textColor="#88B3AF"
+        android:textSize="@dimen/_10ssp"
+        app:layout_constraintEnd_toEndOf="@+id/btn_login"
+        app:layout_constraintStart_toStartOf="@+id/btn_login"
+        app:layout_constraintTop_toBottomOf="@+id/btn_login" />
+
+    <com.google.android.material.imageview.ShapeableImageView
+        android:id="@+id/img_logo"
+        android:layout_width="@dimen/_71sdp"
+        android:layout_height="@dimen/_75sdp"
+        android:layout_marginTop="@dimen/_37sdp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/img_logo" />
+
+    <com.google.android.material.imageview.ShapeableImageView
+        android:id="@+id/img_outreach"
+        android:layout_width="@dimen/_100sdp"
+        android:layout_height="@dimen/_37sdp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/img_logo"
+        app:srcCompat="@drawable/img_outreach" />
+
+    <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/tv_enterCode"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/roboto_regular"
+        android:text="@string/enter_the_code"
+        android:textAlignment="center"
+        android:textColor="@color/sea_green"
+        android:textSize="@dimen/_20ssp"
+        android:layout_marginTop="@dimen/_30sdp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/img_outreach" />
+
+    <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/tv_hintCode"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/roboto_regular"
+        android:text="@string/secret_code"
+        android:textAlignment="center"
+        android:textColor="@color/dark_gray"
+        android:textSize="@dimen/_12ssp"
+        android:layout_marginTop="@dimen/_20sdp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tv_enterCode" />
+
+
+    <com.chaos.view.PinView
+        android:id="@+id/pin_view"
+        style="@style/PinWidget.PinView"
+        android:layout_width="@dimen/_205sdp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:cursorVisible="true"
+        android:gravity="center"
+        android:inputType="number"
+        android:layout_marginTop="@dimen/_10sdp"
+        android:itemBackground="@color/white"
+        android:textColor="@color/dark_gray"
+        app:cursorColor="@color/sea_green"
+        app:hideLineWhenFilled="false"
+        app:itemCount="6"
+        app:itemHeight="@dimen/_40sdp"
+        app:itemRadius="@dimen/_6sdp"
+        app:itemWidth="@dimen/_30sdp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tv_hintCode"
+        app:lineColor="@color/gray" />
+
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/btn_login"
+        android:layout_width="@dimen/_267sdp"
+        android:layout_height="@dimen/_40sdp"
+        android:layout_marginTop="@dimen/_13sdp"
+        android:fontFamily="@font/roboto_regular"
+        android:text="@string/verify"
+        android:textAllCaps="false"
+        android:textSize="@dimen/_14ssp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/pin_view" />
+
+    <ProgressBar
+        android:id="@+id/progress_bar"
+        android:layout_width="@dimen/_20sdp"
+        android:layout_height="@dimen/_20sdp"
+        android:layout_centerHorizontal="true"
+        android:visibility="invisible"
+        app:layout_constraintBottom_toBottomOf="@+id/btn_login"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.305"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/btn_login"
+        app:layout_constraintVertical_bias="0.538" />
+
+
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

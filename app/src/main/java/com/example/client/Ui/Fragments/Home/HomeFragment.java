@@ -4,8 +4,6 @@ import static android.content.Context.MODE_PRIVATE;
 
 import android.Manifest;
 import android.content.SharedPreferences;
-import android.content.pm.PackageManager;
-import android.graphics.Color;
 import android.location.Location;
 import android.os.Bundle;
 import android.util.Log;
@@ -14,50 +12,74 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
+import androidx.activity.result.ActivityResultCallback;
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
-import androidx.core.app.ActivityCompat;
-import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 
-import com.example.client.R;
+import com.example.client.Model.DriversNumbers;
 import com.example.client.databinding.FragmentHomeBinding;
+import com.firebase.geofire.GeoFire;
+import com.firebase.geofire.GeoLocation;
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationCallback;
-import com.google.android.gms.location.LocationRequest;
-import com.google.android.gms.location.LocationResult;
-import com.google.android.gms.location.LocationServices;
-import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
-import com.google.android.gms.maps.SupportMapFragment;
-import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
-import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.maps.model.Polyline;
-import com.google.android.gms.maps.model.PolylineOptions;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class HomeFragment extends Fragment implements OnMapReadyCallback {
 
+    private GoogleMap mMap;
+    private LatLng origin;
+    private LatLng destination;
+
+    //current and destination location objects
+    Location myLocation = null;
+    Location destinationLocation = null;
+    protected LatLng start = null;
+    protected LatLng end = null;
+
+    //to get location permissions.
+    private final static int LOCATION_REQUEST_CODE = 23;
+    boolean locationPermission = false;
+
+    //polyline object
+    private List<Polyline> polylines = null;
+
 
     public static final int LOCATION_PERMISSION_REQUEST_CODE = 1;
-    private GoogleMap mMap;
+    //private GoogleMap mMap;
     private FusedLocationProviderClient fusedLocationClient;
     private LocationCallback locationCallback;
     private Marker currentLocationMarker;
     private Polyline currentPolyline;
     private List<LatLng> polylinePoints;
 
-    public final String LATITUDE_KEY = "latitude";
-    public final String LONGITUDE_KEY = "longitude";
+    public final String LATITUDE_KEY_CLIENT = "latitude_client";
+    public final String LONGITUDE_KEY_CLIENT = "longitude_client";
+    public final String DRIVER_ID_KEY = "driverId_client";
 
+    public final String LONGITUDE_KEY_DRIVER = "longitude_driver";
+
+    public final String LATITUDE_KEY_DRIVER = "latitude_driver";
     SharedPreferences sp;
     SharedPreferences.Editor edit;
     private GoogleMap googleMap;
-
+    DatabaseReference ref;
+    FirebaseFirestore firestore;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -65,203 +87,129 @@ public class HomeFragment extends Fragment implements OnMapReadyCallback {
         FragmentHomeBinding binding = FragmentHomeBinding.inflate(inflater, container, false);
 
 
+
+
         sp = requireContext().getSharedPreferences("spLocation", MODE_PRIVATE);
         edit = sp.edit();
 
-        String latitude_sp = sp.getString(LATITUDE_KEY, "null");
-        String longitude_sp = sp.getString(LONGITUDE_KEY, "null");
-        Log.d("TAGMainnn", "onCreate: " +"latitude : " + latitude_sp + "  longitude : " + longitude_sp);
+        double longitude_sp_client = sp.getFloat(LONGITUDE_KEY_CLIENT,  0.0f);
+        double latitude_sp__client = sp.getFloat(LATITUDE_KEY_CLIENT,0.0f);
+        double longitude_sp_driver = sp.getFloat(LONGITUDE_KEY_DRIVER, 0.0f);
+        double latitude_sp__driver = sp.getFloat(LATITUDE_KEY_DRIVER, 0.0f);
+        String driverId_sp = sp.getString(DRIVER_ID_KEY, "null_id");
 
-        double latitude_sp_double = Double.parseDouble(latitude_sp);
-        double longitude_sp_double = Double.parseDouble(longitude_sp);
-
-
-//        SupportMapFragment mapFrag = SupportMapFragment.newInstance();
-//        FragmentManager fragmentManager = getChildFragmentManager();
-//        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-//        fragmentTransaction.add(R.id.map, mapFrag);
-//        fragmentTransaction.commit();
-//
-//        mapFrag.getMapAsync(new OnMapReadyCallback() {
-//            @Override
-//            public void onMapReady(GoogleMap map) {
-//                googleMap = map;
-//
-//                // Set initial camera position
-//                LatLng initialPosition = new LatLng(latitude_sp_double, longitude_sp_double);
-//                float zoomLevel = 12.0f;
-//                CameraUpdate cameraUpdate = CameraUpdateFactory.newLatLngZoom(initialPosition, zoomLevel);
-//                googleMap.moveCamera(cameraUpdate);
-//
-//                // Enable zoom controls
-//                googleMap.getUiSettings().setZoomControlsEnabled(true);
-//
-//                // Add a marker
-//                LatLng markerPosition = new LatLng(latitude_sp_double, longitude_sp_double);
-//                MarkerOptions markerOptions = new MarkerOptions()
-//                        .position(markerPosition)
-//                        .title("Marker Title")
-//                        .icon(BitmapDescriptorFactory.fromResource(R.drawable.img_bus))
-//                        .snippet("Marker Snippet");
-//                googleMap.addMarker(markerOptions);
-//
-//                // Change map type
-//                googleMap.setMapType(GoogleMap.MAP_TYPE_NORMAL);
-//
-//                polylinePoints.add(initialPosition);
-//                drawFinalPolyline();
-//            }
-//        });
+        Log.d("HomeFragmentTAG", "onCreateView: client  --->   " + longitude_sp_client + "   --->   " + latitude_sp__client);
+        Log.d("HomeFragmentTAG", "onCreateView: driver  --->   " + longitude_sp_driver + "   --->   " + latitude_sp__driver);
+        Log.d("HomeFragmentTAG", "onCreateView: driver_id  --->   " + driverId_sp);
 
 
-
-
-        // Obtain the SupportMapFragment and get notified when the map is ready to be used.
-        SupportMapFragment mapFragment = (SupportMapFragment) getChildFragmentManager().findFragmentById(R.id.map);
-        mapFragment.getMapAsync(this);
-
-        fusedLocationClient = LocationServices.getFusedLocationProviderClient(getActivity());
-
-        locationCallback = new LocationCallback() {
+        firestore = FirebaseFirestore.getInstance();
+        firestore.collection("Drivers_numbers").get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
             @Override
-            public void onLocationResult(LocationResult locationResult) {
-                super.onLocationResult(locationResult);
-                if (locationResult == null) {
-                    return;
-                }
-                for (Location location : locationResult.getLocations()) {
-                    // Update the marker position on the map
-                    updateCurrentLocationMarker(new LatLng(location.getLatitude(), location.getLongitude()));
+            public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                if (task.isSuccessful()) {
+
+                    for (QueryDocumentSnapshot document : task.getResult()) {
+                        DriversNumbers num = document.toObject(DriversNumbers.class);
+
+                        String driver_id = num.getId();
+                        Log.d("HomeFragmentTAG", "onComplete: driver_id  --->   " + driver_id);
+                        edit.putString(DRIVER_ID_KEY, driver_id);
+                        edit.commit();
+
+                    }
+
+                } else {
+                    Log.d("LoginActivityLOG", task.getException().getMessage());
                 }
             }
-        };
+        });
+
+
+        ref = FirebaseDatabase.getInstance().getReference("DriverLocation");
+        GeoFire geoFire = new GeoFire(ref);
+
+        geoFire.getLocation(driverId_sp, new com.firebase.geofire.LocationCallback() {
+            @Override
+            public void onLocationResult(String key, GeoLocation location) {
+                if (location != null) {
+                    double longitude_driver = location.longitude;
+                    double latitude_driver = location.latitude;
+                    edit.putFloat(LATITUDE_KEY_DRIVER, (float) longitude_driver);
+                    edit.putFloat(LONGITUDE_KEY_DRIVER, (float) latitude_driver);
+                    edit.apply();
+                    System.out.println(String.format("The location for key %s is [%f,%f]", key, location.latitude, location.longitude));
+                } else {
+                    System.out.println(String.format("There is no location for key %s in GeoFire", key));
+                }
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+                System.err.println("There was an error getting the GeoFire location: " + databaseError);
+            }
+        });
+
+
+        ActivityResultLauncher<String> arl = registerForActivityResult
+                (new ActivityResultContracts.RequestPermission(), new ActivityResultCallback<Boolean>() {
+                    @Override
+                    public void onActivityResult(Boolean result) {
+                        if (result) {
+                            Toast.makeText(getActivity(), "Permission granted", Toast.LENGTH_SHORT).show();
+                        } else {
+                            Toast.makeText(getActivity(), "Permission denied", Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                });
+        arl.launch(Manifest.permission.CALL_PHONE);
+
+        binding.btnCall.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                showCustomDialog();
+            }
+        });
+
 
         return binding.getRoot();
     }
 
-    @Override
-    public void onResume() {
-        super.onResume();
-        startLocationUpdates();
+    private void showCustomDialog() {
+        // Create an instance of your custom dialog class
+        CustomDialogFragment dialog = new CustomDialogFragment();
+
+        // Show the dialog using the fragment manager
+        dialog.show(getChildFragmentManager(), "CustomDialog");
     }
 
     @Override
-    public void onPause() {
-        super.onPause();
-        stopLocationUpdates();
-    }
+    public void onMapReady(@NonNull GoogleMap googleMap) {
 
-
-
-    @Override
-    public void onMapReady(GoogleMap googleMap) {
-        mMap = googleMap;
-
-        if (ContextCompat.checkSelfPermission(requireContext(), Manifest.permission.ACCESS_FINE_LOCATION)
-                == PackageManager.PERMISSION_GRANTED) {
-            mMap.setMyLocationEnabled(true);
-            mMap.getUiSettings().setMyLocationButtonEnabled(true);
-
-            polylinePoints = new ArrayList<>();
-            PolylineOptions polylineOptions = new PolylineOptions()
-                    .width(5)
-                    .color(Color.RED);
-
-            currentPolyline = mMap.addPolyline(polylineOptions);
-
-            String latitude_sp = sp.getString(LATITUDE_KEY, "null");
-            String longitude_sp = sp.getString(LONGITUDE_KEY, "null");
-            Log.d("TAGMainnn", "onCreate: " +"latitude : " + latitude_sp + "  longitude : " + longitude_sp);
-
-            double latitude_sp_double = Double.parseDouble(latitude_sp);
-            double longitude_sp_double = Double.parseDouble(longitude_sp);
-
-            // Adjust the initial camera position and zoom level
-            double defaultLatitude = latitude_sp_double; // Replace with your desired latitude
-            double defaultLongitude = longitude_sp_double; // Replace with your desired longitude
-            float defaultZoomLevel = 12f; // Replace with your desired zoom level
-
-            LatLng defaultLocation = new LatLng(defaultLatitude, defaultLongitude);
-            mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(defaultLocation, defaultZoomLevel));
-        } else {
-            requestLocationPermission();
-        }
-    }
-
-    private void requestLocationPermission() {
-        if (ActivityCompat.shouldShowRequestPermissionRationale(requireActivity(),
-                Manifest.permission.ACCESS_FINE_LOCATION)) {
-            // Display a rationale for requesting the permission
-            Toast.makeText(requireContext(), "GPS permission is required for live tracking", Toast.LENGTH_SHORT).show();
-        }
-
-        // Request the permission
-        ActivityCompat.requestPermissions(requireActivity(),
-                new String[]{Manifest.permission.ACCESS_FINE_LOCATION},
-                LOCATION_PERMISSION_REQUEST_CODE);
-    }
-
-    @Override
-    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
-        if (requestCode == LOCATION_PERMISSION_REQUEST_CODE) {
-            if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                if (ActivityCompat.checkSelfPermission(getActivity(), Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(getActivity(), Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-                    // TODO: Consider calling
-                    //    ActivityCompat#requestPermissions
-                    // here to request the missing permissions, and then overriding
-                    //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
-                    //                                          int[] grantResults)
-                    // to handle the case where the user grants the permission. See the documentation
-                    // for ActivityCompat#requestPermissions for more details.
-                    return;
-                }
-                mMap.setMyLocationEnabled(true);
-            } else {
-                Toast.makeText(requireContext(), "Location permission denied. Live tracking cannot be enabled.", Toast.LENGTH_SHORT).show();
-            }
-        }
-    }
-
-    private void startLocationUpdates() {
-        if (ContextCompat.checkSelfPermission(requireContext(), Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {LocationRequest locationRequest = LocationRequest.create()
-                .setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY)
-                .setInterval(1000) // Update location every second
-                .setFastestInterval(500); // Set the fastest update interval
-
-            fusedLocationClient.requestLocationUpdates(locationRequest, locationCallback, null);
-        } else {
-            requestLocationPermission();
-        }
-    }
-
-    private void stopLocationUpdates() {
-        fusedLocationClient.removeLocationUpdates(locationCallback);
-    }
-
-
-
-    private void updateCurrentLocationMarker(LatLng latLng) {
-        if (currentLocationMarker != null) {
-            currentLocationMarker.setPosition(latLng);
-            // Remove the mMap.animateCamera line to prevent automatic zooming out
-        } else {
-            MarkerOptions markerOptions = new MarkerOptions()
-                    .position(latLng)
-                    .icon(BitmapDescriptorFactory.fromResource(R.drawable.img_bus));
-            currentLocationMarker = mMap.addMarker(markerOptions);
-        }
-
-        polylinePoints.add(latLng);
-        drawFinalPolyline();
     }
 
 
 
 
-    private void drawFinalPolyline() {
-        // Set the updated points to the Polyline
-        currentPolyline.setPoints(polylinePoints);
-    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 }

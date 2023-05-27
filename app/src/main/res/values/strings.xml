@@ -40,4 +40,46 @@
     <string name="determine_the_accuracy_of_your_location">Determine the accuracy of your location</string>
 
 
+    <string name="login">Login</string>
+    <string name="mobile_number">Mobile Number</string>
+    <string name="tv_sch_f_schedule">Schedule</string>
+    <string name="enter_the_code">Enter the code</string>
+    <string name="secret_code">Enter the code that was sent to</string>
+
+    <string name="profile_notif">Notification</string>
+
+    <string name="vehicle_id">Vehicle ID</string>
+    <string name="name">Name</string>
+    <string name="city">City</string>
+    <string name="day_off">Day Off</string>
+
+    <string name="tv_attended">Attended</string>
+    <string name="tv_absent">Absent</string>
+
+    <string name="btn_daily">Daily</string>
+    <string name="btn_all">All</string>
+    <string name="tv_itinerary">Itinerary </string>
+    <string name="btn_start">Start </string>
+    <string name="tab_saturday">Saturday </string>
+    <string name="tab_sunday">Sunday </string>
+    <string name="tab_monday">Monday </string>
+    <string name="tab_tuesday">Tuesday </string>
+    <string name="tab_wednesday">Wednesday </string>
+    <string name="tab_thursday">Thursday </string>
+    <string name="tv_settings">Settings </string>
+    <string name="tv_sound">Sound </string>
+    <string name="tv_language">Language </string>
+    <string name="btn_english">English</string>
+    <string name="btn_arabic">Arabic</string>
+    <string name="tv_fontSize">Font size</string>
+    <string name="btn_save">Save</string>
+    <string name="didn_t_get_otp_resend">Didn\'t get OTP? <b><u>Resend</u></b></string>
+    <string name="send">Send</string>
+    <string name="palestine_code">+970</string>
+    <string name="sending">Sending</string>
+    <string name="verify">Verify</string>
+    <string name="verifying">Verifying</string>
+
+
+
 </resources>
