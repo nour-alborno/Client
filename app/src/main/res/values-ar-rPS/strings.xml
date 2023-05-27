@@ -36,6 +36,47 @@
 
     <string name="title_attendance">أكد حضورك</string>
     <string name="ok">Ok</string>
-    <string name="determine_the_accuracy_of_your_location">Determine the accuracy of your location</string>
+    <string name="determine_the_accuracy_of_your_location">تحديد موقعك الحالي</string>
+
+    <string name="tv_sch_f_schedule">جدول المواعيد</string>
+    <string name="login">تسجيل دخول</string>
+    <string name="mobile_number">رقم الجوال</string>
+    <string name="enter_the_code">أدخل رمز التحقق</string>
+    <string name="secret_code">أدخل الرمز الذي تم إرساله ل</string>
+
+    <string name="profile_notif">الإشعارات</string>
+
+
+    <string name="vehicle_id">رقم المركبة</string>
+    <string name="name">الإسم</string>
+    <string name="city">المنطقة</string>
+    <string name="day_off">يوم الإجازة</string>
+
+    <string name="tv_attended">حضر</string>
+    <string name="tv_absent">لم يحضر</string>
+
+    <string name="btn_daily">يوميًّا </string>
+    <string name="btn_all">الكل </string>
+    <string name="tv_itinerary">الرحلة </string>
+    <string name="btn_start">ابدأ </string>
+    <string name="tab_saturday">السبت </string>
+    <string name="tab_sunday">الأحد </string>
+    <string name="tab_monday">الاثنين </string>
+    <string name="tab_tuesday">الثلاثاء </string>
+    <string name="tab_wednesday">الأربعاء </string>
+    <string name="tab_thursday">الخميس </string>
+    <string name="tv_settings">الإعدادات </string>
+    <string name="tv_sound">الصوت </string>
+    <string name="tv_language">اللغة </string>
+    <string name="btn_english">الإنجليزية</string>
+    <string name="btn_arabic">العربية</string>
+    <string name="tv_fontSize">حجم الخط</string>
+    <string name="btn_save">حفظ</string>
+    <string name="didn_t_get_otp_resend"><b><u>اعادة الارسال</u></b>لم يتم ارسال رمز التحقق؟ </string>
+    <string name="send">ارسال</string>
+    <string name="palestine_code">+970</string>
+    <string name="sending">يتم الارسال</string>
+    <string name="verify">تحقق</string>
+    <string name="verifying">يتم التحقق</string>
 
 </resources>
