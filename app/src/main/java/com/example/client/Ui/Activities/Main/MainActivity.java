@@ -303,7 +303,7 @@ public class MainActivity extends AppCompatActivity implements MainView {
         if (lat != 0 && longi != 0) {
 
             Log.d("MainActivityTAG", "SaveLocationMethodInside");
-//
+
 //            float latitude = sp.getFloat(LATITUDE_KEY_CLIENT,0.0f);
 //            float longitude = sp.getFloat(LONGITUDE_KEY_CLIENT,0.0f);
 //            edit.apply();
