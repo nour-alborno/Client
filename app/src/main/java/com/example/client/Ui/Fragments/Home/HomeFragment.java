@@ -315,6 +315,8 @@ public class HomeFragment extends Fragment implements OnMapReadyCallback {
         if (currentLocationMarker != null) {
             currentLocationMarker.setPosition(latLng_client);
             // Remove the mMap.animateCamera line to prevent automatic zooming out
+            mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(latLng_client, 15f));
+
         } else {
             MarkerOptions markerOptions = new MarkerOptions()
                     .position(latLng_client)
@@ -323,9 +325,11 @@ public class HomeFragment extends Fragment implements OnMapReadyCallback {
         }
 
 
+
         if (driverLocationMarker != null) {
             driverLocationMarker.setPosition(latLng_driver);
             // Remove the mMap.animateCamera line to prevent automatic zooming out
+            mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(latLng_driver, 15f));
         } else {
             MarkerOptions markerOptions = new MarkerOptions()
                     .position(latLng_driver)
