@@ -1,6 +1,5 @@
 package com.example.client.Ui.Activities.Login;
 
-
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -29,7 +28,6 @@ import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.concurrent.TimeUnit;
-
 public class LoginActivity extends AppCompatActivity {
 
     ActivityLoginBinding binding;
@@ -65,6 +63,7 @@ public class LoginActivity extends AppCompatActivity {
         firestore = FirebaseFirestore.getInstance();
 
 
+
         binding.btnLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -81,6 +80,7 @@ public class LoginActivity extends AppCompatActivity {
                 binding.btnLogin.setText(R.string.sending);
                 binding.btnLogin.setEnabled(false);
 
+
                 firestore.collection("Benf_Numbers").get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                     @Override
                     public void onComplete(@NonNull Task<QuerySnapshot> task) {
@@ -90,26 +90,55 @@ public class LoginActivity extends AppCompatActivity {
                                 CliantsNumbers num = document.toObject(CliantsNumbers.class);
 
                                 if (binding.etMobile.getText().toString().equals(String.valueOf(num.getMobile()))){
-                                    Log.d("LoginActivityLOG",String.valueOf(num.getMobile()));
-                                    num.getId();
-                                    edit.putString(CLIENT_ID_KEY,num.getId());
-                                    edit.putString(CLIENT_NUMBER_KEY,String.valueOf(num.getMobile()));
-                                    edit.commit();
+                                    Log.d("bbbbb",String.valueOf(num.getMobile()));
                                     sendCodeVerification();
-                                    binding.etMobile.setText("");
-
 
                                 }else {
-                                    Log.d("LoginActivityLOG","Does not exist");
+                                    Log.d("bbbbb","Does not exist");
+                                    Toast.makeText(LoginActivity.this, "your not Allow", Toast.LENGTH_SHORT).show();
                                     setEnabledVisibility();
                                 }
                             }
 
                         } else {
-                            Log.d("LoginActivityLOG",task.getException().getMessage());
+                            Log.d("verification",task.getException().getMessage());
                         }
                     }
                 });
+
+
+//                firestore.collection("Benf_Numbers").get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+//                    @Override
+//                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+//                        if (task.isSuccessful()){
+//
+//                                for (QueryDocumentSnapshot document : task.getResult()){
+//                                    CliantsNumbers num = document.toObject(CliantsNumbers.class);
+//
+//
+//                                    if (binding.etMobile.getText().toString().equals(String.valueOf(num.getMobile()))){
+//                                        Log.d("LoginActivityLOG",String.valueOf(num.getMobile()));
+//
+////                                          num.getId();
+////                                        edit.putString(CLIENT_ID_KEY,num.getId());
+////                                        edit.putString(CLIENT_NUMBER_KEY,String.valueOf(num.getMobile()));
+////                                        edit.commit();
+//                                        sendCodeVerification();
+//                                        binding.etMobile.setText("");
+//
+//
+//                                }else {
+//                                        Log.d("LoginActivityLOG","Does not exist");
+//                                        Toast.makeText(LoginActivity.this, "your not Allow", Toast.LENGTH_SHORT).show();
+//                                    setEnabledVisibility();
+//                                }
+//                            }
+//
+//                        } else {
+//                            Log.d("LoginActivityLOG",task.getException().getMessage());
+//                        }
+//                    }
+//                });
 
 
             }
@@ -122,6 +151,21 @@ public class LoginActivity extends AppCompatActivity {
         Log.e("LoginActivityLOG", phone);
 
 
+//        if (TextUtils.isEmpty(phone)) {
+//            binding.etMobile.setError("Enter your phone number");
+//            binding.btnLogin.setEnabled(true);
+//            Toast.makeText(this, "Enter your phone", Toast.LENGTH_SHORT).show();
+//            return;
+//        } else {
+//            binding.progressBar.setVisibility(View.VISIBLE);
+//            binding.btnLogin.setText(R.string.sending);
+//            binding.etMobile.setEnabled(false);
+//            binding.btnLogin.setEnabled(false);
+//        }
+//            if (phone.startsWith("0")) {
+//                phone = phone.substring(1);
+//            }
+//            binding.progressBar.setVisibility(View.VISIBLE);
 
         PhoneAuthProvider.getInstance().verifyPhoneNumber(
                 "+970" + phone,
@@ -156,7 +200,6 @@ public class LoginActivity extends AppCompatActivity {
         );
     }
 
-
     @Override
     public void onBackPressed() {
         super.onBackPressed();
@@ -169,3 +212,8 @@ public class LoginActivity extends AppCompatActivity {
         binding.btnLogin.setEnabled(true);
     }
 }
+
+
+
+
+
