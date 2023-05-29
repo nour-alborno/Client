@@ -110,9 +110,7 @@ public class LoginActivity extends AppCompatActivity {
                         }
                     }
                 });
-                if (binding.etMobile.getText().toString() != sp.getString(CLIENT_NUMBER_KEY,"not found")){
-                    Toast.makeText(LoginActivity.this, "your not Allow", Toast.LENGTH_SHORT).show();
-                }
+
 
             }
         });
