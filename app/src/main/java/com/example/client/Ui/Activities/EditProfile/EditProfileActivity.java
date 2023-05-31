@@ -1,13 +1,10 @@
 package com.example.client.Ui.Activities.EditProfile;
 
-import androidx.appcompat.app.AppCompatActivity;
-
-import android.content.Intent;
-import android.os.Build;
 import android.os.Bundle;
 
+import androidx.appcompat.app.AppCompatActivity;
+
 import com.example.client.Model.Benefeciares;
-import com.example.client.R;
 import com.example.client.databinding.ActivityEditProfileBinding;
 
 public class EditProfileActivity extends AppCompatActivity {
@@ -22,7 +19,7 @@ public class EditProfileActivity extends AppCompatActivity {
 
         Benefeciares benf_profile = getIntent().getParcelableExtra("userInfo");
 
-        binding.etMobile.setText(benf_profile.getMobile());
+        binding.etMobile.setText(String.valueOf(benf_profile.getMobile()));
         binding.tvName.setText(benf_profile.getName());
         binding.tvAddress.setText(benf_profile.getAddress());
         binding.tvAge.setText(benf_profile.getAge());

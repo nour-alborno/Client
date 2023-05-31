@@ -58,7 +58,7 @@ public class VerificationActivity extends AppCompatActivity {
                 PhoneAuthCredential phoneAuthCredential = PhoneAuthProvider.getCredential(verificationId, code);
                 FirebaseAuth.getInstance().signInWithCredential(phoneAuthCredential)
                         .addOnCompleteListener(task -> {
-                            Log.e("VerificationActivityLOG","   =====>  "+task.getException().getMessage());
+                          //  Log.e("VerificationActivityLOG","   =====>  "+task.getException().getMessage().toString());
                             setEnabledVisibility();
                             if (task.isSuccessful()) {
                                 startActivity(new Intent(getBaseContext(), MainActivity.class));

@@ -108,6 +108,13 @@ public class HomeFragment extends Fragment implements OnMapReadyCallback {
         sp = requireContext().getSharedPreferences("spLocation", MODE_PRIVATE);
         edit = sp.edit();
 
+
+        final String CLIENT_NUMBER_KEY = "driverNumber";
+        int num = sp.getInt(CLIENT_NUMBER_KEY,0);
+
+        Log.d("ClientNumber ", String.valueOf(num));
+
+
         longitude_sp_client = sp.getFloat(LONGITUDE_KEY_CLIENT, 0.0f);
         latitude_sp__client = sp.getFloat(LATITUDE_KEY_CLIENT, 0.0f);
         longitude_sp_driver = sp.getFloat(LONGITUDE_KEY_DRIVER, 0.0f);
@@ -151,14 +158,12 @@ public class HomeFragment extends Fragment implements OnMapReadyCallback {
                 if (location != null) {
                     double longitude_driver = location.longitude;
                     double latitude_driver = location.latitude;
-                    edit.putFloat(LATITUDE_KEY_DRIVER, (float) longitude_driver);
-                    edit.putFloat(LONGITUDE_KEY_DRIVER, (float) latitude_driver);
+                    edit.putFloat(LATITUDE_KEY_DRIVER, (float) latitude_driver);
+                    edit.putFloat(LONGITUDE_KEY_DRIVER, (float) longitude_driver);
                     edit.apply();
 //                    System.out.println(String.format("The location for key %s is [%f,%f]", key, location.latitude, location.longitude));
                 } else {
-                    System.out.println(String.format("There is no location for key %s in GeoFire", key));
-                }
-            }
+                    System.out.println(String.format("There is no location for key %s in GeoFire", key));}}
 
             @Override
             public void onCancelled(DatabaseError databaseError) {
@@ -166,7 +171,6 @@ public class HomeFragment extends Fragment implements OnMapReadyCallback {
                 Log.d("HomeFragmentTAG", "onCancelled: There was an error getting the GeoFire location: " + databaseError);
             }
         });
-
 
         // Obtain the SupportMapFragment and get notified when the map is ready to be used.
         SupportMapFragment mapFragment = (SupportMapFragment) getChildFragmentManager().findFragmentById(R.id.map);

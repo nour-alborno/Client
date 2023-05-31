@@ -84,62 +84,38 @@ public class LoginActivity extends AppCompatActivity {
                 firestore.collection("Benf_Numbers").get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                     @Override
                     public void onComplete(@NonNull Task<QuerySnapshot> task) {
+
+
+
                         if (task.isSuccessful()){
 
                             for (QueryDocumentSnapshot document : task.getResult()){
                                 CliantsNumbers num = document.toObject(CliantsNumbers.class);
 
                                 if (binding.etMobile.getText().toString().equals(String.valueOf(num.getMobile()))){
-                                    Log.d("bbbbb",String.valueOf(num.getMobile()));
+                                    Log.d("LoginActivityLOG",String.valueOf(num.getMobile()));
+                                    num.getId();
+                                    edit.putString(CLIENT_ID_KEY,num.getId());
+                                    edit.putString(CLIENT_NUMBER_KEY,String.valueOf(num.getMobile()));
+                                    edit.commit();
                                     sendCodeVerification();
+                                   // binding.etMobile.setText("");
 
                                 }else {
-                                    Log.d("bbbbb","Does not exist");
-                                    Toast.makeText(LoginActivity.this, "your not Allow", Toast.LENGTH_SHORT).show();
+                                    Log.d("LoginActivityLOG","Does not exist");
                                     setEnabledVisibility();
                                 }
                             }
 
+
                         } else {
-                            Log.d("verification",task.getException().getMessage());
+                            Log.d("LoginActivityLOG",task.getException().getMessage());
                         }
                     }
                 });
-
-
-//                firestore.collection("Benf_Numbers").get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-//                    @Override
-//                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
-//                        if (task.isSuccessful()){
-//
-//                                for (QueryDocumentSnapshot document : task.getResult()){
-//                                    CliantsNumbers num = document.toObject(CliantsNumbers.class);
-//
-//
-//                                    if (binding.etMobile.getText().toString().equals(String.valueOf(num.getMobile()))){
-//                                        Log.d("LoginActivityLOG",String.valueOf(num.getMobile()));
-//
-////                                          num.getId();
-////                                        edit.putString(CLIENT_ID_KEY,num.getId());
-////                                        edit.putString(CLIENT_NUMBER_KEY,String.valueOf(num.getMobile()));
-////                                        edit.commit();
-//                                        sendCodeVerification();
-//                                        binding.etMobile.setText("");
-//
-//
-//                                }else {
-//                                        Log.d("LoginActivityLOG","Does not exist");
-//                                        Toast.makeText(LoginActivity.this, "your not Allow", Toast.LENGTH_SHORT).show();
-//                                    setEnabledVisibility();
-//                                }
-//                            }
-//
-//                        } else {
-//                            Log.d("LoginActivityLOG",task.getException().getMessage());
-//                        }
-//                    }
-//                });
-
+//                if (binding.etMobile.getText().toString() != sp.getString(DRIVER_NUMBER_KEY,"not found")){
+//                    Toast.makeText(LoginActivity.this, "your not Allow", Toast.LENGTH_SHORT).show();
+//                }
 
             }
         });
@@ -151,21 +127,6 @@ public class LoginActivity extends AppCompatActivity {
         Log.e("LoginActivityLOG", phone);
 
 
-//        if (TextUtils.isEmpty(phone)) {
-//            binding.etMobile.setError("Enter your phone number");
-//            binding.btnLogin.setEnabled(true);
-//            Toast.makeText(this, "Enter your phone", Toast.LENGTH_SHORT).show();
-//            return;
-//        } else {
-//            binding.progressBar.setVisibility(View.VISIBLE);
-//            binding.btnLogin.setText(R.string.sending);
-//            binding.etMobile.setEnabled(false);
-//            binding.btnLogin.setEnabled(false);
-//        }
-//            if (phone.startsWith("0")) {
-//                phone = phone.substring(1);
-//            }
-//            binding.progressBar.setVisibility(View.VISIBLE);
 
         PhoneAuthProvider.getInstance().verifyPhoneNumber(
                 "+970" + phone,
@@ -182,6 +143,7 @@ public class LoginActivity extends AppCompatActivity {
                     public void onVerificationFailed(@NonNull FirebaseException e) {
                         Toast.makeText(LoginActivity.this, e.getMessage(), Toast.LENGTH_SHORT).show();
                         Log.e("LoginActivityLOG", e.toString());
+                        binding.etMobile.setText("");
                         setEnabledVisibility();
                     }
 
