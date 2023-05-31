@@ -5,17 +5,15 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-
-import androidx.annotation.NonNull;
-import androidx.fragment.app.Fragment;
-
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import androidx.annotation.NonNull;
+import androidx.fragment.app.Fragment;
+
 import com.example.client.Model.Benefeciares;
-import com.example.client.R;
 import com.example.client.Ui.Activities.ContactUs.ContactUsActivity;
 import com.example.client.Ui.Activities.EditProfile.EditProfileActivity;
 import com.example.client.Ui.Activities.History.HistoryActivity;
@@ -88,6 +86,11 @@ public class ProfileFragment extends Fragment {
 
         sp = getActivity().getSharedPreferences("sp", Context.MODE_PRIVATE);
         String id = sp.getString(CLIENT_ID_KEY,null);
+        final String CLIENT_NUMBER_KEY = "driverNumber";
+     //   int num = sp.getInt(CLIENT_NUMBER_KEY,0);
+
+       // Log.d("ClientNumber ", String.valueOf(num));
+        Log.d("ClientID",id);
 
         firestore.collection("Beneficiaries").document(id).get()
                 .addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {

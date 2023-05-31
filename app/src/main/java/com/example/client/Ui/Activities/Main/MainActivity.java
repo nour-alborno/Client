@@ -80,8 +80,6 @@ public class MainActivity extends AppCompatActivity implements MainView {
 
 
 
-
-
         double longitude_sp = sp.getFloat(LONGITUDE_KEY_CLIENT,  0.0f);
         double latitude_sp = sp.getFloat(LATITUDE_KEY_CLIENT,0.0f);
 
