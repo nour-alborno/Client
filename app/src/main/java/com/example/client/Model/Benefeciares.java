@@ -41,6 +41,7 @@ public class Benefeciares implements Parcelable {
         this.documentId = documentId;
     }
 
+
     protected Benefeciares(Parcel in) {
         name = in.readString();
         mobile = in.readInt();
@@ -64,6 +65,25 @@ public class Benefeciares implements Parcelable {
             return new Benefeciares[size];
         }
     };
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(@NonNull Parcel parcel, int i) {
+        parcel.writeString(name);
+        parcel.writeInt(mobile);
+        parcel.writeString(region);
+        parcel.writeString(address);
+        parcel.writeString(age);
+        parcel.writeString(disabilityType);
+        parcel.writeString(organization);
+        parcel.writeString(gender);
+        parcel.writeString(documentId);
+    }
+
 
     public String getName() {
         return name;
@@ -129,29 +149,19 @@ public class Benefeciares implements Parcelable {
         this.gender = gender;
     }
 
+    public GeoPoint getLocation() {
+        return location;
+    }
+
+    public void setLocation(GeoPoint location) {
+        this.location = location;
+    }
+
     public String getDocumentId() {
         return documentId;
     }
 
     public void setDocumentId(String documentId) {
         this.documentId = documentId;
-    }
-
-    @Override
-    public int describeContents() {
-        return 0;
-    }
-
-    @Override
-    public void writeToParcel(@NonNull Parcel parcel, int i) {
-        parcel.writeString(name);
-        parcel.writeInt(mobile);
-        parcel.writeString(region);
-        parcel.writeString(address);
-        parcel.writeString(age);
-        parcel.writeString(disabilityType);
-        parcel.writeString(organization);
-        parcel.writeString(gender);
-        parcel.writeString(documentId);
     }
 }

@@ -1,5 +1,7 @@
 package com.example.client.Ui.Fragments.Attendance;
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -50,6 +52,15 @@ public class AttendanceFragment extends Fragment {
     String journeyIdGoing;
     String journeyIdReturn;
 
+    SharedPreferences sp;
+    public final String CLIENT_ID_KEY = "clientId";
+
+
+    FirebaseFirestore firestore;
+    FirebaseDatabase db;
+
+    String driverName;
+
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
@@ -96,21 +107,24 @@ public class AttendanceFragment extends Fragment {
         FragmentAttendanceBinding binding = FragmentAttendanceBinding.inflate(inflater,container,false);
 
            //getting the journey of today
-
+        sp = getActivity().getSharedPreferences("sp", Context.MODE_PRIVATE);
+        String id = sp.getString(CLIENT_ID_KEY,null);
 
         Format f = new SimpleDateFormat("EEEE");
         String day = f.format(new Date());
 
-        FirebaseFirestore firestore = FirebaseFirestore.getInstance();
-        FirebaseDatabase db =FirebaseDatabase.getInstance();
+
+
+         firestore = FirebaseFirestore.getInstance();
+         db =FirebaseDatabase.getInstance();
 
 
 
         Log.d("Day is",  day );
 
-        //Fetching going journey to the user
-        firestore.collection("Benf_Schedule").document("1")
-                .collection("Tuesday").get()
+        //Fetching user journeys
+        firestore.collection("Benf_Schedule").document(id)
+                .collection(day).get()
                 .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                     @Override
                     public void onComplete(@NonNull Task<QuerySnapshot> task) {
@@ -154,22 +168,27 @@ public class AttendanceFragment extends Fragment {
 
                                                              //Fetching DriverName
 
-                                                             firestore.collection("Driver").document(journeyModel.getDriver()).get()
-                                                                     .addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
-                                                                         @Override
-                                                                         public void onComplete(@NonNull Task<DocumentSnapshot> task) {
-                                                                             Log.d("Driver", task.getResult().toString());
-                                                                             if (task.isSuccessful()) {
-                                                                                 DriverProfile driverProfile = task.getResult().toObject(DriverProfile.class);
+                                                             binding.tvDriverName.setText(gettingDriversName(journeyModel.getDriver()));
 
-                                                                                 binding.tvDriverName.setText(driverProfile.getName());
+//                                                             firestore.collection("Driver").document(journeyModel.getDriver()).get()
+//                                                                     .addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+//                                                                         @Override
+//                                                                         public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+//                                                                             Log.d("Driver", task.getResult().toString());
+//                                                                             if (task.isSuccessful()) {
+//                                                                                 DriverProfile driverProfile = task.getResult().toObject(DriverProfile.class);
+//
+//                                                                                 binding.tvDriverName.setText(driverProfile.getName());
+//
+//                                                                                 Log.d("driver_name", driverProfile.getName());
+//                                                                             } else {
+//                                                                                 Log.d("driver_name", task.getException().getMessage());
+//                                                                             }
+//                                                                         }
+//                                                                     });
 
-                                                                                 Log.d("driver_name", driverProfile.getName());
-                                                                             } else {
-                                                                                 Log.d("driver_name", task.getException().getMessage());
-                                                                             }
-                                                                         }
-                                                                     });
+
+
 
                                                       Log.d("journey",journeyModel.getOrganization());
                                                     } else {
@@ -208,22 +227,24 @@ public class AttendanceFragment extends Fragment {
                                                     Toast.makeText(getActivity(), journeyModel.getDriver(), Toast.LENGTH_LONG).show();
                                                     //Fetching DriverName
 
-                                                    firestore.collection("Driver").document(journeyModel.getDriver()).get()
-                                                                    .addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
-                                                                        @Override
-                                                                        public void onComplete(@NonNull Task<DocumentSnapshot> task) {
-                                                                                       Log.d("Driver", task.getResult().toString());
-                                                                            if (task.isSuccessful()) {
-                                                                                DriverProfile driverProfile = task.getResult().toObject(DriverProfile.class);
+                                                    binding.tvDriverName2.setText(gettingDriversName(journeyModel.getDriver()));
 
-                                                                                binding.tvDriverName2.setText(driverProfile.getName());
-
-                                                                                Log.d("driver_name", driverProfile.getName());
-                                                                            } else {
-                                                                                Log.d("driver_name", task.getException().getMessage());
-                                                                            }
-                                                                        }
-                                                                    });
+//                                                    firestore.collection("Driver").document(journeyModel.getDriver()).get()
+//                                                                    .addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+//                                                                        @Override
+//                                                                        public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+//                                                                                       Log.d("Driver", task.getResult().toString());
+//                                                                            if (task.isSuccessful()) {
+//                                                                                DriverProfile driverProfile = task.getResult().toObject(DriverProfile.class);
+//
+//                                                                                binding.tvDriverName2.setText(driverProfile.getName());
+//
+//                                                                                Log.d("driver_name", driverProfile.getName());
+//                                                                            } else {
+//                                                                                Log.d("driver_name", task.getException().getMessage());
+//                                                                            }
+//                                                                        }
+//                                                                    });
 
 
 
@@ -247,23 +268,25 @@ public class AttendanceFragment extends Fragment {
         binding.btnAccept.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                ArrayList<String> attend = new ArrayList<>();
-                attend.add("1");
 
-                SimpleDateFormat simpleformat = new SimpleDateFormat("dd-MMMM-yyyy");
-                reference = db.getReference("AttendanceConfirmation");
-                reference.child(simpleformat.format(Calendar.getInstance().getTime())).child(driverId)
-                        .child(journeyIdGoing).setValue(new AttendanceConfirmation(attend))
-                        .addOnCompleteListener(new OnCompleteListener<Void>() {
-                            @Override
-                            public void onComplete(@NonNull Task<Void> task) {
-                                if (task.isSuccessful()){
-                                    Log.d("test","succesfull");
-                                } else {
-                                    Log.d("test",task.getException().getMessage());
-                                }
-                            }
-                        });
+                takingAttendance(id,journeyIdGoing);
+//                ArrayList<String> attend = new ArrayList<>();
+//                attend.add(id);
+//
+//                SimpleDateFormat simpleformat = new SimpleDateFormat("dd-MMMM-yyyy");
+//                reference = db.getReference("AttendanceConfirmation");
+//                reference.child(simpleformat.format(Calendar.getInstance().getTime())).child(driverId)
+//                        .child(journeyIdGoing).setValue(new AttendanceConfirmation(attend))
+//                        .addOnCompleteListener(new OnCompleteListener<Void>() {
+//                            @Override
+//                            public void onComplete(@NonNull Task<Void> task) {
+//                                if (task.isSuccessful()){
+//                                    Log.d("test","succesfull");
+//                                } else {
+//                                    Log.d("test",task.getException().getMessage());
+//                                }
+//                            }
+//                        });
 
             }
         });
@@ -272,24 +295,25 @@ public class AttendanceFragment extends Fragment {
             @Override
             public void onClick(View view) {
 
-                ArrayList<String> attend = new ArrayList<>();
-                attend.add("1");
-
-                SimpleDateFormat simpleformat = new SimpleDateFormat("dd-MMMM-yyyy");
-
-            reference = db.getReference("AttendanceConfirmation");
-            reference.child(simpleformat.format(Calendar.getInstance().getTime())).child(driverId)
-                    .child(journeyIdReturn).setValue(new AttendanceConfirmation(attend))
-                    .addOnCompleteListener(new OnCompleteListener<Void>() {
-                        @Override
-                        public void onComplete(@NonNull Task<Void> task) {
-                            if (task.isSuccessful()){
-                                Log.d("test2","succesfull");
-                            } else {
-                                Log.d("test2",task.getException().getMessage());
-                            }
-                        }
-                    });
+                takingAttendance(id,journeyIdReturn);
+//                ArrayList<String> attend = new ArrayList<>();
+//                attend.add(id);
+//
+//                SimpleDateFormat simpleformat = new SimpleDateFormat("dd-MMMM-yyyy");
+//
+//            reference = db.getReference("AttendanceConfirmation");
+//            reference.child(simpleformat.format(Calendar.getInstance().getTime())).child(driverId)
+//                    .child(journeyIdReturn).setValue(new AttendanceConfirmation(attend))
+//                    .addOnCompleteListener(new OnCompleteListener<Void>() {
+//                        @Override
+//                        public void onComplete(@NonNull Task<Void> task) {
+//                            if (task.isSuccessful()){
+//                                Log.d("test2","succesfull");
+//                            } else {
+//                                Log.d("test2",task.getException().getMessage());
+//                            }
+//                        }
+//                    });
             }
         });
 
@@ -297,6 +321,7 @@ public class AttendanceFragment extends Fragment {
            @Override
            public void onClick(View view) {
 
+               Toast.makeText(getActivity(), "Not attending", Toast.LENGTH_SHORT).show();
            }
        });
 
@@ -304,7 +329,7 @@ public class AttendanceFragment extends Fragment {
             @Override
             public void onClick(View view) {
 
-
+                Toast.makeText(getActivity(), "Not attending", Toast.LENGTH_SHORT).show();
             }
         });
 
@@ -315,5 +340,111 @@ public class AttendanceFragment extends Fragment {
 
 
 
+}
+
+
+void takingAttendance(String userId, String journeyId){
+    ArrayList<String> attend = new ArrayList<>();
+    attend.add(userId);
+
+    SimpleDateFormat simpleformat = new SimpleDateFormat("dd-MMMM-yyyy");
+
+    reference = db.getReference("AttendanceConfirmation");
+    reference.child(simpleformat.format(Calendar.getInstance().getTime())).child(driverId)
+            .child(journeyId).setValue(new AttendanceConfirmation(attend))
+            .addOnCompleteListener(new OnCompleteListener<Void>() {
+                @Override
+                public void onComplete(@NonNull Task<Void> task) {
+                    if (task.isSuccessful()){
+                        Log.d("test2","succesfull");
+                    } else {
+                        Log.d("test2",task.getException().getMessage());
+                    }
+                }
+            });
+}
+
+String gettingDriversName(String driverId){
+    driverName="Empty";
+    firestore.collection("Driver").document(driverId).get()
+            .addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+                @Override
+                public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+
+
+                    Log.d("Driver", task.getResult().toString());
+                    if (task.isSuccessful()) {
+                        DriverProfile driverProfile = task.getResult().toObject(DriverProfile.class);
+
+                        driverName = driverProfile.getName();
+                      //  binding.tvDriverName.setText(driverProfile.getName());
+
+                        Log.d("driver_name", driverProfile.getName());
+
+                    } else {
+                        Log.d("driver_name", task.getException().getMessage());
+
+                    }
+                }
+            });
+    return driverName;
+}
+
+
+void fetchingJournyData(String journeyId){
+    firestore.collection("Journey").document(journeyId).get()
+            .addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+                @Override
+                public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                    if (task.isSuccessful()){
+
+
+                 //       journeyIdReturn = benf_schedule.getJourneyIdReturn();
+
+
+                        JourneyModel journeyModel = task.getResult().toObject(JourneyModel.class);
+//                        binding.tvStartTimeItemSchedule2.setText(journeyModel.getStart());
+//                        binding.tvArrivalsTimeItemSchedule2.setText(journeyModel.getEnd());
+//                        binding.tvArrivalsPlace2.setText(journeyModel.getOrganization());
+//                        binding.tvStartingPlace2.setText(journeyModel.getRegion());
+
+
+                        SimpleDateFormat simpleformat = new SimpleDateFormat("dd-MMMM-yyyy ");
+
+
+            //            binding.tvDate2.setText(simpleformat.format(Calendar.getInstance().getTime()));
+
+                        driverId = journeyModel.getDriver();
+                        Toast.makeText(getActivity(), journeyModel.getDriver(), Toast.LENGTH_LONG).show();
+                        //Fetching DriverName
+
+              //          binding.tvDriverName2.setText(gettingDriversName(journeyModel.getDriver()));
+
+//                                                    firestore.collection("Driver").document(journeyModel.getDriver()).get()
+//                                                                    .addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+//                                                                        @Override
+//                                                                        public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+//                                                                                       Log.d("Driver", task.getResult().toString());
+//                                                                            if (task.isSuccessful()) {
+//                                                                                DriverProfile driverProfile = task.getResult().toObject(DriverProfile.class);
+//
+//                                                                                binding.tvDriverName2.setText(driverProfile.getName());
+//
+//                                                                                Log.d("driver_name", driverProfile.getName());
+//                                                                            } else {
+//                                                                                Log.d("driver_name", task.getException().getMessage());
+//                                                                            }
+//                                                                        }
+//                                                                    });
+
+
+
+
+                        Log.d("journey",journeyModel.getOrganization());
+                    } else {
+                        Log.d("OnFaliure_journey",task.getException().getMessage());
+                    }
+                }
+            });
 }
 }

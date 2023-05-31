@@ -1,7 +1,9 @@
 
 package com.example.client.Ui.Fragments.Profile;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -17,9 +19,11 @@ import com.example.client.R;
 import com.example.client.Ui.Activities.ContactUs.ContactUsActivity;
 import com.example.client.Ui.Activities.EditProfile.EditProfileActivity;
 import com.example.client.Ui.Activities.History.HistoryActivity;
+import com.example.client.Ui.Activities.Login.LoginActivity;
 import com.example.client.databinding.FragmentProfileBinding;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 
@@ -31,6 +35,10 @@ import com.google.firebase.firestore.FirebaseFirestore;
 public class ProfileFragment extends Fragment {
 
     Benefeciares benefeciares;
+
+    SharedPreferences sp;
+    public final String CLIENT_ID_KEY = "clientId";
+
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
@@ -78,7 +86,10 @@ public class ProfileFragment extends Fragment {
 
         FirebaseFirestore firestore = FirebaseFirestore.getInstance();
 
-        firestore.collection("Beneficiaries").document("1").get()
+        sp = getActivity().getSharedPreferences("sp", Context.MODE_PRIVATE);
+        String id = sp.getString(CLIENT_ID_KEY,null);
+
+        firestore.collection("Beneficiaries").document(id).get()
                 .addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
                     @Override
                     public void onComplete(@NonNull Task<DocumentSnapshot> task) {
@@ -105,7 +116,7 @@ public class ProfileFragment extends Fragment {
         binding.imgEdit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivity(new Intent(getActivity(), EditProfileActivity.class));
+                startActivity(new Intent(getActivity(), EditProfileActivity.class).putExtra("userInfo",benefeciares));
             }
         });
          binding.linLayoutHistory.setOnClickListener(new View.OnClickListener() {
@@ -120,6 +131,15 @@ public class ProfileFragment extends Fragment {
              @Override
              public void onClick(View view) {
                  startActivity(new Intent(getActivity(), ContactUsActivity.class));
+             }
+         });
+
+         binding.linLayoutLogout.setOnClickListener(new View.OnClickListener() {
+             @Override
+             public void onClick(View view) {
+                 FirebaseAuth.getInstance().signOut();
+                 startActivity(new Intent(getActivity(), LoginActivity.class));
+                 getActivity().finish();
              }
          });
 
