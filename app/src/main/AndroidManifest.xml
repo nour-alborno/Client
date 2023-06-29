@@ -15,7 +15,6 @@
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.CALL_PHONE" />
 
-
     <application
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
@@ -26,6 +25,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Client"
         tools:targetApi="31">
+
         <activity
             android:name=".Ui.Activities.History.HistoryActivity"
             android:exported="false" />
@@ -37,33 +37,37 @@
             android:exported="false" />
         <activity
             android:name=".Ui.Activities.Main.MainActivity"
-            android:exported="true">
-
-        </activity>
-
+            android:exported="true"/>
         <activity
             android:name=".Ui.Activities.Verification.VerificationActivity"
-            android:exported="true">
-
-        </activity>
-
-
+            android:exported="true"/>
         <activity
             android:name=".Ui.Activities.Login.LoginActivity"
+            android:exported="true"/>
+        <activity
+            android:name=".Ui.Activities.about_us.AboutUsActivity"
+            android:exported="true"/>
+
+        <activity
+            android:name=".Ui.Activities.onboarding.OnboardingActivity"
+            android:exported="true"/>
+
+        <activity
+            android:name=".Ui.Activities.SplashActivity"
             android:exported="true">
+
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
+                <action android:name="android.intent.action.SEND" />
+                <category android:name="android.intent.category.DEFAULT" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-
 
         </activity>
 
         <meta-data
             android:name="com.google.android.geo.API_KEY"
             android:value="AIzaSyC5Zj3Id3i6fzJYpYbLPEfd0LjkboWzX-M" />
-
         <meta-data
             android:name="com.google.android.gms.version"
             android:value="@integer/google_play_services_version" />
