@@ -161,6 +161,7 @@ public class HomeFragment extends Fragment implements OnMapReadyCallback {
                     edit.putFloat(LATITUDE_KEY_DRIVER, (float) latitude_driver);
                     edit.putFloat(LONGITUDE_KEY_DRIVER, (float) longitude_driver);
                     edit.apply();
+
 //                    System.out.println(String.format("The location for key %s is [%f,%f]", key, location.latitude, location.longitude));
                 } else {
                     System.out.println(String.format("There is no location for key %s in GeoFire", key));}}

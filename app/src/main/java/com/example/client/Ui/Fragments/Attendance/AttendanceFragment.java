@@ -61,6 +61,7 @@ public class AttendanceFragment extends Fragment {
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
+    private FragmentAttendanceBinding binding;
 
     public AttendanceFragment() {
         // Required empty public constructor
@@ -96,7 +97,7 @@ public class AttendanceFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        FragmentAttendanceBinding binding = FragmentAttendanceBinding.inflate(inflater,container,false);
+        binding = FragmentAttendanceBinding.inflate(inflater,container,false);
 
            //getting the journey of today
         sp = getActivity().getSharedPreferences("sp", Context.MODE_PRIVATE);
@@ -262,23 +263,7 @@ public class AttendanceFragment extends Fragment {
             public void onClick(View view) {
 
                 takingAttendance(id,journeyIdGoing);
-//                ArrayList<String> attend = new ArrayList<>();
-//                attend.add(id);
-//
-//                SimpleDateFormat simpleformat = new SimpleDateFormat("dd-MMMM-yyyy");
-//                reference = db.getReference("AttendanceConfirmation");
-//                reference.child(simpleformat.format(Calendar.getInstance().getTime())).child(driverId)
-//                        .child(journeyIdGoing).setValue(new AttendanceConfirmation(attend))
-//                        .addOnCompleteListener(new OnCompleteListener<Void>() {
-//                            @Override
-//                            public void onComplete(@NonNull Task<Void> task) {
-//                                if (task.isSuccessful()){
-//                                    Log.d("test","succesfull");
-//                                } else {
-//                                    Log.d("test",task.getException().getMessage());
-//                                }
-//                            }
-//                        });
+
 
             }
         });
@@ -288,24 +273,7 @@ public class AttendanceFragment extends Fragment {
             public void onClick(View view) {
 
                 takingAttendance(id,journeyIdReturn);
-//                ArrayList<String> attend = new ArrayList<>();
-//                attend.add(id);
-//
-//                SimpleDateFormat simpleformat = new SimpleDateFormat("dd-MMMM-yyyy");
-//
-//            reference = db.getReference("AttendanceConfirmation");
-//            reference.child(simpleformat.format(Calendar.getInstance().getTime())).child(driverId)
-//                    .child(journeyIdReturn).setValue(new AttendanceConfirmation(attend))
-//                    .addOnCompleteListener(new OnCompleteListener<Void>() {
-//                        @Override
-//                        public void onComplete(@NonNull Task<Void> task) {
-//                            if (task.isSuccessful()){
-//                                Log.d("test2","succesfull");
-//                            } else {
-//                                Log.d("test2",task.getException().getMessage());
-//                            }
-//                        }
-//                    });
+
             }
         });
 
@@ -368,6 +336,7 @@ String gettingDriversName(String driverId){
 
                         driverName = driverProfile.getName();
                       //  binding.tvDriverName.setText(driverProfile.getName());
+
 
                         Log.d("driver_name", driverProfile.getName());
                         Log.d("driver_name","Driver name is: " + driverName);
