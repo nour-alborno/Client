@@ -77,6 +77,7 @@ public class LoginActivity extends AppCompatActivity {
                 }
 
                 binding.progressBar.setVisibility(View.VISIBLE);
+                binding.etMobile.setEnabled(false);
                 binding.btnLogin.setText(R.string.sending);
                 binding.btnLogin.setEnabled(false);
 
@@ -84,38 +85,34 @@ public class LoginActivity extends AppCompatActivity {
                 firestore.collection("Benf_Numbers").get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                     @Override
                     public void onComplete(@NonNull Task<QuerySnapshot> task) {
-
-
-
-                        if (task.isSuccessful()){
-
-                            for (QueryDocumentSnapshot document : task.getResult()){
+                        if (task.isSuccessful()) {
+                            boolean numberFound = false;
+                            for (QueryDocumentSnapshot document : task.getResult()) {
                                 CliantsNumbers num = document.toObject(CliantsNumbers.class);
-
-                                if (binding.etMobile.getText().toString().equals(String.valueOf(num.getMobile()))){
+                                if (binding.etMobile.getText().toString().equals(String.valueOf(num.getMobile()))) {
                                     Log.d("LoginActivityLOG",String.valueOf(num.getMobile()));
                                     num.getId();
                                     edit.putString(CLIENT_ID_KEY,num.getId());
                                     edit.putString(CLIENT_NUMBER_KEY,String.valueOf(num.getMobile()));
                                     edit.commit();
                                     sendCodeVerification();
-                                   // binding.etMobile.setText("");
-
-                                }else {
-                                    Log.d("LoginActivityLOG","Does not exist");
-                                    setEnabledVisibility();
+                                    numberFound = true;
+                                    break;
                                 }
                             }
+                            if (!numberFound) {
+                                Log.d("LoginActivityLOG","Does not exist");
+                                setEnabledVisibility();
+                                Toast.makeText(getApplicationContext(), "You're not allowed to login.", Toast.LENGTH_SHORT).show();
 
-
+                            }
                         } else {
+                            Toast.makeText(getApplicationContext(), task.getException().getMessage(), Toast.LENGTH_SHORT).show();
                             Log.d("LoginActivityLOG",task.getException().getMessage());
                         }
                     }
                 });
-//                if (binding.etMobile.getText().toString() != sp.getString(DRIVER_NUMBER_KEY,"not found")){
-//                    Toast.makeText(LoginActivity.this, "your not Allow", Toast.LENGTH_SHORT).show();
-//                }
+
 
             }
         });
@@ -137,6 +134,7 @@ public class LoginActivity extends AppCompatActivity {
                     @Override
                     public void onVerificationCompleted(@NonNull PhoneAuthCredential phoneAuthCredential) {
                         Log.e("LoginActivityLOG", "done");
+                        setEnabledVisibility();
                     }
 
                     @Override
@@ -150,7 +148,6 @@ public class LoginActivity extends AppCompatActivity {
                     @Override
                     public void onCodeSent(@NonNull String verificationId, @NonNull PhoneAuthProvider.ForceResendingToken token) {
                         super.onCodeSent(verificationId, token);
-                        binding.progressBar.setVisibility(View.GONE);
                         Intent intent = new Intent(LoginActivity.this, VerificationActivity.class);
                         intent.putExtra("verificationId", verificationId);
                         intent.putExtra("resendingToken", token);

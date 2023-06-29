@@ -111,18 +111,47 @@ public class HomeFragment extends Fragment implements OnMapReadyCallback {
         });
 
         driverLocationRef = FirebaseDatabase.getInstance().getReference("DriverLocation");
-        driverLocationRef.addValueEventListener(new ValueEventListener() {
+//        driverLocationRef.addValueEventListener(new ValueEventListener() {
+//            @Override
+//            public void onDataChange(DataSnapshot dataSnapshot) {
+//                // استعراض البيانات المحدثة في Realtime Database
+//                for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
+//                    String driverId = snapshot.getKey();
+//                    Double latitudeObj = snapshot.child("latitude").getValue(Double.class);
+//                    Double longitudeObj = snapshot.child("longitude").getValue(Double.class);
+//
+//                    if (latitudeObj != null && longitudeObj != null) {
+//                        latitude_sp__driver = latitudeObj.doubleValue();
+//                        longitude_sp_driver = longitudeObj.doubleValue();
+//
+//                        edit.putFloat(LATITUDE_KEY_DRIVER, (float) latitude_sp__driver);
+//                        edit.putFloat(LONGITUDE_KEY_DRIVER, (float) longitude_sp_driver);
+//                        edit.apply();
+//
+//                        Toast.makeText(getActivity(), "Latitude: \" + latitude + \", Longitude: \" + longitude", Toast.LENGTH_SHORT).show();
+//                    }
+//                }
+//            }
+//
+//            @Override
+//            public void onCancelled(DatabaseError databaseError) {
+//                // خطأ في Realtimee
+//                Log.e("LocationService", "Failed to read location from Realtime Database: " + databaseError.getMessage());
+//                Toast.makeText(getActivity(), "Error: " + databaseError.getMessage(), Toast.LENGTH_SHORT).show();
+//
+//            }
+//        });
+        driverLocationRef.child("1").addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                // استعراض البيانات المحدثة في Realtime Database
-                for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
-                    String driverId = snapshot.getKey();
-                    Double latitudeObj = snapshot.child("latitude").getValue(Double.class);
-                    Double longitudeObj = snapshot.child("longitude").getValue(Double.class);
 
-                    if (latitudeObj != null && longitudeObj != null) {
-                        latitude_sp__driver = latitudeObj.doubleValue();
-                        longitude_sp_driver = longitudeObj.doubleValue();
+                if (dataSnapshot.exists()) {
+                    Double latitude = dataSnapshot.child("latitude").getValue(Double.class);
+                    Double longitude = dataSnapshot.child("longitude").getValue(Double.class);
+
+                    if (latitude != null && longitude != null) {
+                        latitude_sp__driver = latitude.doubleValue();
+                        longitude_sp_driver = longitude.doubleValue();
 
                         edit.putFloat(LATITUDE_KEY_DRIVER, (float) latitude_sp__driver);
                         edit.putFloat(LONGITUDE_KEY_DRIVER, (float) longitude_sp_driver);
@@ -130,17 +159,23 @@ public class HomeFragment extends Fragment implements OnMapReadyCallback {
 
                         Toast.makeText(getActivity(), "Latitude: \" + latitude + \", Longitude: \" + longitude", Toast.LENGTH_SHORT).show();
                     }
+
+                    Log.d("DriverLocation", "Latitude: " + latitude);
+                    Log.d("DriverLocation", "Longitude: " + longitude);
+                } else {
+                    // المؤشر غير موجود
+                    Log.d("DriverLocation", "Index not found");
                 }
             }
 
             @Override
             public void onCancelled(DatabaseError databaseError) {
-                // حدث خطأ في القراءة من Realtimee
-                Log.e("LocationService", "Failed to read location from Realtime Database: " + databaseError.getMessage());
+                // خطأ في Realtimee
+                Log.e("DriverLocation", "Failed to read location from Realtime Database: " + databaseError.getMessage());
                 Toast.makeText(getActivity(), "Error: " + databaseError.getMessage(), Toast.LENGTH_SHORT).show();
-
             }
         });
+
 
         ActivityResultLauncher<String> arl = registerForActivityResult
                 (new ActivityResultContracts.RequestPermission(), new ActivityResultCallback<Boolean>() {
@@ -185,21 +220,21 @@ public class HomeFragment extends Fragment implements OnMapReadyCallback {
                 .title("Bus"));
 
         // إضافة ماركر العادي
-        LatLng normalLatLng = new LatLng(latitude_sp__client, longitude_sp_client);
+        LatLng clientlLatLng = new LatLng(latitude_sp__client, longitude_sp_client);
         googleMap.addMarker(new MarkerOptions()
-                .position(normalLatLng)
+                .position(clientlLatLng)
                 .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_RED))
                 .title("Your Location"));
 
         PolylineOptions polylineOptions = new PolylineOptions()
-                .add(busLatLng, normalLatLng)
+                .add(busLatLng, clientlLatLng)
                 .width(5)
                 .color(Color.BLUE);
         Polyline polyline = googleMap.addPolyline(polylineOptions);
 
         LatLngBounds.Builder builder = new LatLngBounds.Builder();
         builder.include(busLatLng);
-        builder.include(normalLatLng);
+        builder.include(clientlLatLng);
         LatLngBounds bounds = builder.build();
         googleMap.moveCamera(CameraUpdateFactory.newLatLngBounds(bounds, 20));
     }

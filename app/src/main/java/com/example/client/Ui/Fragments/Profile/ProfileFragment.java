@@ -5,12 +5,10 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 
 import com.example.client.Model.Benefeciares;
@@ -18,11 +16,9 @@ import com.example.client.Ui.Activities.ContactUs.ContactUsActivity;
 import com.example.client.Ui.Activities.EditProfile.EditProfileActivity;
 import com.example.client.Ui.Activities.History.HistoryActivity;
 import com.example.client.Ui.Activities.Login.LoginActivity;
+import com.example.client.Ui.Activities.about_us.AboutUsActivity;
 import com.example.client.databinding.FragmentProfileBinding;
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 /**
@@ -90,30 +86,30 @@ public class ProfileFragment extends Fragment {
      //   int num = sp.getInt(CLIENT_NUMBER_KEY,0);
 
        // Log.d("ClientNumber ", String.valueOf(num));
-        Log.d("ClientID",id);
+     //   Log.d("ClientID",id);
 
-        firestore.collection("Beneficiaries").document(id).get()
-                .addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
-                    @Override
-                    public void onComplete(@NonNull Task<DocumentSnapshot> task) {
-                        Log.d("Beneficiaries",task.getResult().toString());
-                        if (task.isSuccessful()){
-
-
-                            benefeciares = task.getResult().toObject(Benefeciares.class);
-                            Log.d("Beneficiaries",task.getResult().toString());
-                            binding.tvName.setText(benefeciares.getName());
-                            binding.tvNumber.setText("+972".concat(String.valueOf(benefeciares.getMobile())));
-
-                        } else {
-
-                            Log.d("Beneficiaries", task.getException().getMessage());
-
-                        }
-
-                    }
-                });
-
+//        firestore.collection("Beneficiaries").document(id).get()
+//                .addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+//                    @Override
+//                    public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+//                        Log.d("Beneficiaries",task.getResult().toString());
+//                        if (task.isSuccessful()){
+//
+//
+//                            benefeciares = task.getResult().toObject(Benefeciares.class);
+//                            Log.d("Beneficiaries",task.getResult().toString());
+//                            binding.tvName.setText(benefeciares.getName());
+//                            binding.tvNumber.setText("+972".concat(String.valueOf(benefeciares.getMobile())));
+//
+//                        } else {
+//
+//                            Log.d("Beneficiaries", task.getException().getMessage());
+//
+//                        }
+//
+//                    }
+//                });
+//
 
 
         binding.imgEdit.setOnClickListener(new View.OnClickListener() {
@@ -146,6 +142,12 @@ public class ProfileFragment extends Fragment {
              }
          });
 
+         binding.linLayoutAboutUs.setOnClickListener(new View.OnClickListener() {
+             @Override
+             public void onClick(View view) {
+                 startActivity(new Intent(getActivity(), AboutUsActivity.class));
+             }
+         });
 
         return binding.getRoot();
     }
