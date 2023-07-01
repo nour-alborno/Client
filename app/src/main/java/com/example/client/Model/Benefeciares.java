@@ -21,12 +21,27 @@ public class Benefeciares implements Parcelable {
     GeoPoint location;
     String documentId;
 
+    String ImgUrl;
 
     public Benefeciares(GeoPoint location) {
         this.location = location;
     }
 
     public Benefeciares() {
+    }
+
+    public Benefeciares(String name, int mobile, String region, String address, String age, String disabilityType, String organization, String gender, GeoPoint location, String documentId, String imgUrl) {
+        this.name = name;
+        this.mobile = mobile;
+        this.region = region;
+        this.address = address;
+        this.age = age;
+        this.disabilityType = disabilityType;
+        this.organization = organization;
+        this.gender = gender;
+        this.location = location;
+        this.documentId = documentId;
+        ImgUrl = imgUrl;
     }
 
     public Benefeciares(String name, int mobile, String region, String address, String age, String disabilityType, String organization, String gender, String documentId) {
@@ -52,7 +67,12 @@ public class Benefeciares implements Parcelable {
         organization = in.readString();
         gender = in.readString();
         documentId = in.readString();
+        ImgUrl=in.readString();
     }
+
+
+
+
 
     public static final Creator<Benefeciares> CREATOR = new Creator<Benefeciares>() {
         @Override
@@ -82,6 +102,7 @@ public class Benefeciares implements Parcelable {
         parcel.writeString(organization);
         parcel.writeString(gender);
         parcel.writeString(documentId);
+        parcel.writeString(ImgUrl);
     }
 
 
@@ -103,6 +124,15 @@ public class Benefeciares implements Parcelable {
 
     public String getRegion() {
         return region;
+    }
+
+
+    public String getImgUrl() {
+        return ImgUrl;
+    }
+
+    public void setImgUrl(String imgUrl) {
+        ImgUrl = imgUrl;
     }
 
     public void setRegion(String region) {

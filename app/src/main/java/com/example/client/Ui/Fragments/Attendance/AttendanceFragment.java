@@ -16,6 +16,7 @@ import com.example.client.Model.AttendanceConfirmation;
 import com.example.client.Model.Benf_Schedule;
 import com.example.client.Model.DriverProfile;
 import com.example.client.Model.JourneyModel;
+import com.example.client.Ui.AppUtility.AppUtility;
 import com.example.client.databinding.FragmentAttendanceBinding;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -45,6 +46,7 @@ public class AttendanceFragment extends Fragment {
     String journeyIdReturn;
 
     SharedPreferences sp;
+    SharedPreferences.Editor edit;
     public final String CLIENT_ID_KEY = "clientId";
 
 
@@ -52,6 +54,12 @@ public class AttendanceFragment extends Fragment {
     FirebaseDatabase db;
 
     String driverName;
+
+    public interface onMove{
+        void move();
+    }
+
+    onMove OnMove;
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -103,8 +111,9 @@ public class AttendanceFragment extends Fragment {
         sp = getActivity().getSharedPreferences("sp", Context.MODE_PRIVATE);
         String id = sp.getString(CLIENT_ID_KEY,null);
 
-        Format f = new SimpleDateFormat("EEEE");
-        String day = f.format(new Date());
+        edit = sp.edit();
+
+
 
 
 
@@ -113,11 +122,11 @@ public class AttendanceFragment extends Fragment {
 
 
 
-        Log.d("Day is",  day );
+        Log.d("Day is",  AppUtility.getToday() );
 
         //Fetching user journeys
         firestore.collection("Benf_Schedule").document(id)
-                .collection(day).get()
+                .collection(AppUtility.getToday()).get()
                 .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                     @Override
                     public void onComplete(@NonNull Task<QuerySnapshot> task) {
@@ -152,12 +161,11 @@ public class AttendanceFragment extends Fragment {
                                                       binding.tvStartingPlace.setText(journeyModel.getRegion());
 
 
-                                                             SimpleDateFormat simpleformat = new SimpleDateFormat("dd-MMMM-yyyy ");
 
 
-                                                      binding.tvDate.setText(simpleformat.format(Calendar.getInstance().getTime()));
+                                                      binding.tvDate.setText(AppUtility.getDate());
 
-
+                                                             edit.putString("driverIdGoing",journeyModel.getDriver());
 
                                                              //Fetching DriverName
 
@@ -211,12 +219,14 @@ public class AttendanceFragment extends Fragment {
                                                     binding.tvStartingPlace2.setText(journeyModel.getRegion());
 
 
-                                                    SimpleDateFormat simpleformat = new SimpleDateFormat("dd-MMMM-yyyy ");
 
 
-                                                    binding.tvDate2.setText(simpleformat.format(Calendar.getInstance().getTime()));
+
+                                                    binding.tvDate2.setText(AppUtility.getDate());
 
                                                     driverId = journeyModel.getDriver();
+
+                                                    edit.putString("driverIdReturn",journeyModel.getDriver());
                                                     Toast.makeText(getActivity(), journeyModel.getDriver(), Toast.LENGTH_LONG).show();
                                                     //Fetching DriverName
 
@@ -265,6 +275,24 @@ public class AttendanceFragment extends Fragment {
                 takingAttendance(id,journeyIdGoing);
 
 
+                binding.btnAccept.setVisibility(View.GONE);
+                binding.btnExclude.setVisibility(View.GONE);
+                binding.btnGoMap.setVisibility(View.VISIBLE);
+
+
+
+
+
+            }
+        });
+
+        binding.btnGoMap.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                edit.putString("DriverId",sp.getString("driverIdGoing",null));
+                edit.putString("JourneyDate",AppUtility.getDate());
+                OnMove.move();
             }
         });
 
@@ -273,6 +301,21 @@ public class AttendanceFragment extends Fragment {
             public void onClick(View view) {
 
                 takingAttendance(id,journeyIdReturn);
+
+                binding.btnAccept2.setVisibility(View.GONE);
+                binding.btnExclude2.setVisibility(View.GONE);
+                binding.btnGoMap2.setVisibility(View.VISIBLE);
+
+
+            }
+        });
+
+        binding.btnGoMap2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                edit.putString("DriverId",sp.getString("driverIdReturn",null));
+                edit.putString("JourneyDate",AppUtility.getDate());
+                OnMove.move();
 
             }
         });
@@ -302,16 +345,21 @@ public class AttendanceFragment extends Fragment {
 
 }
 
+    @Override
+    public void onAttach(@NonNull Context context) {
+        super.onAttach(context);
 
-void takingAttendance(String userId, String journeyId){
+        OnMove = (onMove) context;
+    }
+
+    void takingAttendance(String userId, String journeyId){
     ArrayList<String> attend = new ArrayList<>();
     attend.add(userId);
 
-    SimpleDateFormat simpleformat = new SimpleDateFormat("dd-MMMM-yyyy");
 
     reference = db.getReference("AttendanceConfirmation");
-    reference.child(simpleformat.format(Calendar.getInstance().getTime())).child(driverId)
-            .child(journeyId).setValue(new AttendanceConfirmation(attend))
+    reference.child(AppUtility.getDate()).child(driverId)
+            .child(journeyId).push().setValue(new AttendanceConfirmation(attend))
             .addOnCompleteListener(new OnCompleteListener<Void>() {
                 @Override
                 public void onComplete(@NonNull Task<Void> task) {
@@ -324,89 +372,8 @@ void takingAttendance(String userId, String journeyId){
             });
 }
 
-String gettingDriversName(String driverId){
-    driverName="Empty";
-    firestore.collection("Driver").document(driverId).get()
-            .addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
-                @Override
-                public void onComplete(@NonNull Task<DocumentSnapshot> task) {
-                    Log.d("Driver", task.getResult().toString());
-                    if (task.isSuccessful()) {
-                        DriverProfile driverProfile = task.getResult().toObject(DriverProfile.class);
-
-                        driverName = driverProfile.getName();
-                      //  binding.tvDriverName.setText(driverProfile.getName());
-
-
-                        Log.d("driver_name", driverProfile.getName());
-                        Log.d("driver_name","Driver name is: " + driverName);
-
-                    } else {
-                        Log.d("driver_name", task.getException().getMessage());
-                    }
-
-                }
-
-            });
-    Log.d("driver_name","Driver name is: Return :  " + driverName);
-    return driverName;
-}
-
-
-void fetchingJournyData(String journeyId){
-    firestore.collection("Journey").document(journeyId).get()
-            .addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
-                @Override
-                public void onComplete(@NonNull Task<DocumentSnapshot> task) {
-                    if (task.isSuccessful()){
-
-
-                 //       journeyIdReturn = benf_schedule.getJourneyIdReturn();
-
-
-                        JourneyModel journeyModel = task.getResult().toObject(JourneyModel.class);
-//                        binding.tvStartTimeItemSchedule2.setText(journeyModel.getStart());
-//                        binding.tvArrivalsTimeItemSchedule2.setText(journeyModel.getEnd());
-//                        binding.tvArrivalsPlace2.setText(journeyModel.getOrganization());
-//                        binding.tvStartingPlace2.setText(journeyModel.getRegion());
-
-
-                        SimpleDateFormat simpleformat = new SimpleDateFormat("dd-MMMM-yyyy ");
-
-
-            //            binding.tvDate2.setText(simpleformat.format(Calendar.getInstance().getTime()));
-
-                        driverId = journeyModel.getDriver();
-                        Toast.makeText(getActivity(), journeyModel.getDriver(), Toast.LENGTH_LONG).show();
-                        //Fetching DriverName
-
-              //          binding.tvDriverName2.setText(gettingDriversName(journeyModel.getDriver()));
-
-//                                                    firestore.collection("Driver").document(journeyModel.getDriver()).get()
-//                                                                    .addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
-//                                                                        @Override
-//                                                                        public void onComplete(@NonNull Task<DocumentSnapshot> task) {
-//                                                                                       Log.d("Driver", task.getResult().toString());
-//                                                                            if (task.isSuccessful()) {
-//                                                                                DriverProfile driverProfile = task.getResult().toObject(DriverProfile.class);
-//
-//                                                                                binding.tvDriverName2.setText(driverProfile.getName());
-//
-//                                                                                Log.d("driver_name", driverProfile.getName());
-//                                                                            } else {
-//                                                                                Log.d("driver_name", task.getException().getMessage());
-//                                                                            }
-//                                                                        }
-//                                                                    });
 
 
 
 
-                        Log.d("journey",journeyModel.getOrganization());
-                    } else {
-                        Log.d("OnFaliure_journey",task.getException().getMessage());
-                    }
-                }
-            });
-}
 }

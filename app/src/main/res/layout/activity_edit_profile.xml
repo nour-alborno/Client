@@ -8,7 +8,7 @@
 
 
     <com.google.android.material.appbar.AppBarLayout
-        android:id="@+id/top_appbar"
+        android:id="@+id/top_appbarLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:layout_constraintEnd_toEndOf="parent"
@@ -39,7 +39,7 @@
         app:civ_border_width="@dimen/_2sdp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/top_appbar" />
+        app:layout_constraintTop_toBottomOf="@id/top_appbarLayout" />
 
     <TextView
         android:id="@+id/tv_edit_photo"
@@ -117,7 +117,8 @@
         app:layout_constraintEnd_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@id/layout_mobile"
-        android:layout_marginTop="@dimen/_13sdp">
+        android:layout_marginTop="@dimen/_13sdp"
+        android:orientation="vertical">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
@@ -404,6 +405,7 @@
                 android:layout_width="@dimen/_267sdp"
                 android:layout_height="@dimen/_40sdp"
                 android:layout_marginTop="@dimen/_13sdp"
+                android:layout_marginBottom="@dimen/_20sdp"
                 android:background="@drawable/shape_background_tv_edit_profile"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -443,8 +445,6 @@
                 app:layout_constraintEnd_toEndOf="@id/lin_layout_organization"
                 app:layout_constraintTop_toTopOf="@id/lin_layout_organization" />
 <!--            end of organization layout-->
-
-
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 

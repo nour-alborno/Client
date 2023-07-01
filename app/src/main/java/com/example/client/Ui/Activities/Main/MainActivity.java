@@ -27,6 +27,8 @@ import androidx.core.app.ActivityCompat;
 import androidx.fragment.app.Fragment;
 
 import com.example.client.R;
+import com.example.client.Ui.Fragments.Attendance.AttendanceFragment;
+import com.example.client.Ui.Fragments.Home.HomeFragment;
 import com.example.client.Ui.Fragments.Profile.ProfileFragment;
 import com.example.client.databinding.ActivityMainBinding;
 import com.google.android.gms.common.api.ApiException;
@@ -47,7 +49,7 @@ import com.google.firebase.firestore.GeoPoint;
 import java.util.HashMap;
 import java.util.Map;
 
-public class MainActivity extends AppCompatActivity implements MainView {
+public class MainActivity extends AppCompatActivity implements MainView, AttendanceFragment.onMove {
 
     ActivityMainBinding binding;
 
@@ -63,6 +65,7 @@ public class MainActivity extends AppCompatActivity implements MainView {
     SharedPreferences sp;
     SharedPreferences.Editor edit;
     private LocationRequest locationRequest;
+    MainPresenter MP;
     private static final String DIALOG_SHOWN_KEY = "dialog_shown";
     FirebaseFirestore firestore;
     double longitude, latitude;
@@ -75,6 +78,7 @@ public class MainActivity extends AppCompatActivity implements MainView {
 
         firestore=FirebaseFirestore.getInstance();
 
+         MP = new MainPresenter(this);
         sp = getSharedPreferences("spLocation", MODE_PRIVATE);
         edit = sp.edit();
 
@@ -99,7 +103,7 @@ public class MainActivity extends AppCompatActivity implements MainView {
         locationRequest.setFastestInterval(2000);
 
 
-        MainPresenter MP = new MainPresenter(this);
+
 
         MP.AddingFrag(new ProfileFragment());
 
@@ -328,4 +332,11 @@ public class MainActivity extends AppCompatActivity implements MainView {
         }
     }
 
+    @Override
+    public void move() {
+        getSupportFragmentManager().beginTransaction().replace(R.id.container, new HomeFragment()).commit();
+        //        وهان بدي اياه يحدد ع الأيقون يلي تحت تاعت السيكيدجول
+        binding.bottomNavigationMain.setSelectedItemId(R.id.page_home);
+
+    }
 }
