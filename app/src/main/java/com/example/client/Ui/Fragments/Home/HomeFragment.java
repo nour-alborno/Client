@@ -141,40 +141,44 @@ public class HomeFragment extends Fragment implements OnMapReadyCallback {
 //
 //            }
 //        });
-        driverLocationRef.child("1").addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
+     String DriverId = sp.getString("DriverId",null);
+        if (DriverId != null) {
+            driverLocationRef.child(DriverId).addListenerForSingleValueEvent(new ValueEventListener() {
+                @Override
+                public void onDataChange(DataSnapshot dataSnapshot) {
 
-                if (dataSnapshot.exists()) {
-                    Double latitude = dataSnapshot.child("latitude").getValue(Double.class);
-                    Double longitude = dataSnapshot.child("longitude").getValue(Double.class);
+                    if (dataSnapshot.exists()) {
+                        Double latitude = dataSnapshot.child("latitude").getValue(Double.class);
+                        Double longitude = dataSnapshot.child("longitude").getValue(Double.class);
 
-                    if (latitude != null && longitude != null) {
-                        latitude_sp__driver = latitude.doubleValue();
-                        longitude_sp_driver = longitude.doubleValue();
+                        if (latitude != null && longitude != null) {
+                            latitude_sp__driver = latitude.doubleValue();
+                            longitude_sp_driver = longitude.doubleValue();
 
-                        edit.putFloat(LATITUDE_KEY_DRIVER, (float) latitude_sp__driver);
-                        edit.putFloat(LONGITUDE_KEY_DRIVER, (float) longitude_sp_driver);
-                        edit.apply();
+                            edit.putFloat(LATITUDE_KEY_DRIVER, (float) latitude_sp__driver);
+                            edit.putFloat(LONGITUDE_KEY_DRIVER, (float) longitude_sp_driver);
+                            edit.apply();
 
-                        Toast.makeText(getActivity(), "Latitude: \" + latitude + \", Longitude: \" + longitude", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(getActivity(), "Latitude: \" + latitude + \", Longitude: \" + longitude", Toast.LENGTH_SHORT).show();
+                        }
+
+                        Log.d("DriverLocation", "Latitude: " + latitude);
+                        Log.d("DriverLocation", "Longitude: " + longitude);
+                    } else {
+                        // المؤشر غير موجود
+                        Log.d("DriverLocation", "Index not found");
                     }
-
-                    Log.d("DriverLocation", "Latitude: " + latitude);
-                    Log.d("DriverLocation", "Longitude: " + longitude);
-                } else {
-                    // المؤشر غير موجود
-                    Log.d("DriverLocation", "Index not found");
                 }
-            }
 
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-                // خطأ في Realtimee
-                Log.e("DriverLocation", "Failed to read location from Realtime Database: " + databaseError.getMessage());
-                Toast.makeText(getActivity(), "Error: " + databaseError.getMessage(), Toast.LENGTH_SHORT).show();
-            }
-        });
+                @Override
+                public void onCancelled(DatabaseError databaseError) {
+                    // خطأ في Realtimee
+                    Log.e("DriverLocation", "Failed to read location from Realtime Database: " + databaseError.getMessage());
+                    Toast.makeText(getActivity(), "Error: " + databaseError.getMessage(), Toast.LENGTH_SHORT).show();
+                }
+            });
+        }
+
 
 
         ActivityResultLauncher<String> arl = registerForActivityResult

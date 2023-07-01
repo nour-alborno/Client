@@ -5,20 +5,27 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 
+import com.bumptech.glide.Glide;
 import com.example.client.Model.Benefeciares;
+import com.example.client.R;
 import com.example.client.Ui.Activities.ContactUs.ContactUsActivity;
 import com.example.client.Ui.Activities.EditProfile.EditProfileActivity;
 import com.example.client.Ui.Activities.History.HistoryActivity;
 import com.example.client.Ui.Activities.Login.LoginActivity;
 import com.example.client.Ui.Activities.about_us.AboutUsActivity;
 import com.example.client.databinding.FragmentProfileBinding;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 /**
@@ -26,12 +33,15 @@ import com.google.firebase.firestore.FirebaseFirestore;
  * Use the {@link ProfileFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class ProfileFragment extends Fragment {
+public class ProfileFragment extends Fragment implements ProfileView{
 
     Benefeciares benefeciares;
 
     SharedPreferences sp;
     public final String CLIENT_ID_KEY = "clientId";
+
+
+    FragmentProfileBinding binding;
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -76,41 +86,18 @@ public class ProfileFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        FragmentProfileBinding binding = FragmentProfileBinding.inflate(inflater,container,false);
+         binding = FragmentProfileBinding.inflate(inflater,container,false);
 
-        FirebaseFirestore firestore = FirebaseFirestore.getInstance();
+        ProfilePresenter presenter = new ProfilePresenter(this);
 
-        sp = getActivity().getSharedPreferences("sp", Context.MODE_PRIVATE);
+
+        sp =requireActivity().getSharedPreferences("sp", Context.MODE_PRIVATE);
         String id = sp.getString(CLIENT_ID_KEY,null);
-        final String CLIENT_NUMBER_KEY = "driverNumber";
-     //   int num = sp.getInt(CLIENT_NUMBER_KEY,0);
 
-       // Log.d("ClientNumber ", String.valueOf(num));
-     //   Log.d("ClientID",id);
 
-//        firestore.collection("Beneficiaries").document(id).get()
-//                .addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
-//                    @Override
-//                    public void onComplete(@NonNull Task<DocumentSnapshot> task) {
-//                        Log.d("Beneficiaries",task.getResult().toString());
-//                        if (task.isSuccessful()){
-//
-//
-//                            benefeciares = task.getResult().toObject(Benefeciares.class);
-//                            Log.d("Beneficiaries",task.getResult().toString());
-//                            binding.tvName.setText(benefeciares.getName());
-//                            binding.tvNumber.setText("+972".concat(String.valueOf(benefeciares.getMobile())));
-//
-//                        } else {
-//
-//                            Log.d("Beneficiaries", task.getException().getMessage());
-//
-//                        }
-//
-//                    }
-//                });
-//
+        presenter.benfInfo(id);
 
+        presenter.gettingProfileImage(id);
 
         binding.imgEdit.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -149,6 +136,39 @@ public class ProfileFragment extends Fragment {
              }
          });
 
+
+
         return binding.getRoot();
+    }
+
+    @Override
+    public void onbenfInfoSuccess(Benefeciares benefeciares) {
+        Log.d("Beneficiaries",benefeciares.toString());
+        this.benefeciares = benefeciares;
+        binding.tvName.setText(benefeciares.getName());
+        binding.tvNumber.setText("+970".concat(String.valueOf(benefeciares.getMobile())));
+
+    }
+
+    @Override
+    public void onbenfInfoFailure(Exception e) {
+        Log.d("Beneficiaries",e.getMessage());
+    }
+
+    @Override
+    public void onGettingImgeSuccess(String img) {
+
+
+            Glide.with(requireActivity()).load(img)
+                    .into(binding.imgProfile);
+
+
+        Log.d("Success",img);
+    }
+
+    @Override
+    public void onGettingImgFailure(Exception e) {
+        binding.imgProfile.setImageResource(R.drawable.profile_avtar);
+        Log.d("FailureImg",e.getMessage());
     }
 }
