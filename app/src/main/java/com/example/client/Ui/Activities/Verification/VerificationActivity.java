@@ -1,11 +1,8 @@
 package com.example.client.Ui.Activities.Verification;
 
 import android.annotation.SuppressLint;
-import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
@@ -19,14 +16,12 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.PhoneAuthCredential;
 import com.google.firebase.auth.PhoneAuthProvider;
 
-public class VerificationActivity extends AppCompatActivity implements VerificationView{
+public class VerificationActivity extends AppCompatActivity {
     ActivityVerificationBinding binding;
     String verificationId;
     private PhoneAuthProvider.ForceResendingToken token;
-    String newNumber,verificationIdEdit;
 
-    public final String CLIENT_ID_KEY = "clientId";
-    SharedPreferences sp;
+
     @SuppressLint("ResourceAsColor")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,93 +29,48 @@ public class VerificationActivity extends AppCompatActivity implements Verificat
         binding = ActivityVerificationBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
-        VerificationPresenter verificationPresenter = new VerificationPresenter(this);
-
-        sp =getSharedPreferences("sp", Context.MODE_PRIVATE);
 
             verificationId = getIntent().getStringExtra("verificationId");
             token = getIntent().getParcelableExtra("resendingToken");
 
-        boolean fromlogin = getIntent().getBooleanExtra("fromWhere",false);
-        newNumber = getIntent().getStringExtra("number");
-        verificationIdEdit = getIntent().getStringExtra("verificationIdEdit");
 
-
-        if (fromlogin){
-            binding.btnLogin.setOnClickListener(view -> {
+        binding.btnLogin.setOnClickListener(view -> {
+            setEnabledVisibility();
+            Log.e("VerificationActivityLOG","Click");
+            if (binding.pinView.getText().toString().trim().isEmpty()) {
+                binding.pinView.setError("Enter your phone number");
+                binding.pinView.setLineColor(getResources().getColor(R.color.baby_red));
+                Toast.makeText(getApplicationContext(), "Enter your phone number", Toast.LENGTH_SHORT).show();
+                Log.e("VerificationActivityLOG", "empty");
                 setEnabledVisibility();
-                Log.e("VerificationActivityLOG","Click");
-                if (binding.pinView.getText().toString().trim().isEmpty()) {
-                    binding.pinView.setError("Enter your phone number");
-                    binding.pinView.setLineColor(getResources().getColor(R.color.baby_red));
-                    Toast.makeText(getApplicationContext(), "Enter your phone number", Toast.LENGTH_SHORT).show();
-                    Log.e("VerificationActivityLOG", "empty");
-                    setEnabledVisibility();
-                    return;
-                }else {
-                    binding.progressBar.setVisibility(View.VISIBLE);
-                    binding.btnLogin.setText(R.string.sending);
-                    binding.pinView.setEnabled(false);
-                    binding.btnLogin.setEnabled(false);
-                }
+                return;
+            }else {
+                binding.progressBar.setVisibility(View.VISIBLE);
+                binding.btnLogin.setText(R.string.sending);
+                binding.pinView.setEnabled(false);
+                binding.btnLogin.setEnabled(false);
+            }
 
 
-                String code = binding.pinView.getText().toString();
-                if (verificationId != null) {
-                    binding.progressBar.setVisibility(View.VISIBLE);
-                    PhoneAuthCredential phoneAuthCredential = PhoneAuthProvider.getCredential(verificationId, code);
-                    FirebaseAuth.getInstance().signInWithCredential(phoneAuthCredential)
-                            .addOnCompleteListener(task -> {
-                                //  Log.e("VerificationActivityLOG","   =====>  "+task.getException().getMessage().toString());
-                                setEnabledVisibility();
-                                if (task.isSuccessful()) {
-                                    startActivity(new Intent(getBaseContext(), MainActivity.class));
-                                    finish();
-                                } else {
-                                    binding.pinView.setLineColor(getResources().getColor(R.color.baby_red));
-                                    Toast.makeText(VerificationActivity.this, task.getException().getMessage(), Toast.LENGTH_SHORT).show();
-                                }
-                            });
-                    //.addOnFailureListener(e -> Toast.makeText(VerificationActivity.this, e.getMessage(), Toast.LENGTH_SHORT).show());
-                }
-            });
-        }else {
-            Log.d("froWhere","inside: "+fromlogin);
-            binding.btnLogin.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-
-                    setEnabledVisibility();
-                    Log.e("VerificationActivityLOG","Click");
-                    if (TextUtils.isEmpty(binding.pinView.getText().toString())) {
-                        binding.pinView.setError("Enter verification code");
-                        binding.pinView.setLineColor(getResources().getColor(R.color.baby_red));
-                        Toast.makeText(getApplicationContext(), "Enter verification code", Toast.LENGTH_SHORT).show();
-                        Log.e("VerificationActivityLOG", "empty");
-                        return;
-                    } else {
-                        binding.progressBar.setVisibility(View.VISIBLE);
-                        binding.btnLogin.setText(R.string.sending);
-                        binding.pinView.setEnabled(false);
-                        binding.btnLogin.setEnabled(false);
-
-                       String code = binding.pinView.getText().toString();
-                        if (verificationIdEdit != null) {
-                            binding.progressBar.setVisibility(View.VISIBLE);
-
-                            Log.d("inside if","inside");
-                            Log.d("verificationIdEdit",getIntent().getStringExtra("verificationIdEdit"));
-                            Log.d("code",binding.pinView.toString().trim());
-
-                            verificationPresenter.updatePhoneNumber(getIntent().getStringExtra("verificationIdEdit"),binding.pinView.getText().toString(),sp.getString(CLIENT_ID_KEY,null), Integer.parseInt(newNumber));
-                           // updatePhoneNumber(getIntent().getStringExtra("verificationIdEdit"),binding.pinView.getText().toString());
-                        }
-                    }
-
-                }
-            });
-        }
-
+            String code = binding.pinView.getText().toString();
+            if (verificationId != null) {
+                binding.progressBar.setVisibility(View.VISIBLE);
+                PhoneAuthCredential phoneAuthCredential = PhoneAuthProvider.getCredential(verificationId, code);
+                FirebaseAuth.getInstance().signInWithCredential(phoneAuthCredential)
+                        .addOnCompleteListener(task -> {
+                          //  Log.e("VerificationActivityLOG","   =====>  "+task.getException().getMessage().toString());
+                            setEnabledVisibility();
+                            if (task.isSuccessful()) {
+                                startActivity(new Intent(getBaseContext(), MainActivity.class));
+                                finish();
+                            } else {
+                                binding.pinView.setLineColor(getResources().getColor(R.color.baby_red));
+                                Toast.makeText(VerificationActivity.this, task.getException().getMessage(), Toast.LENGTH_SHORT).show();
+                            }
+                        });
+                        //.addOnFailureListener(e -> Toast.makeText(VerificationActivity.this, e.getMessage(), Toast.LENGTH_SHORT).show());
+            }
+        });
 
 
 //        binding.tvResend.setOnClickListener(new View.OnClickListener() {
