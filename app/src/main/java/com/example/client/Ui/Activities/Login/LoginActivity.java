@@ -107,6 +107,7 @@ public class LoginActivity extends AppCompatActivity implements LoginView {
                         Intent intent = new Intent(LoginActivity.this, VerificationActivity.class);
                         intent.putExtra("verificationId", verificationId);
                         intent.putExtra("resendingToken", token);
+                        intent.putExtra("fromWhere",true);
                         setEnabledVisibility();
                         startActivity(intent);
                         finish();

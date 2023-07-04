@@ -32,11 +32,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 
-/**
- * A simple {@link Fragment} subclass.
- * Use the {@link AttendanceFragment#newInstance} factory method to
- * create an instance of this fragment.
- */
+
 public class AttendanceFragment extends Fragment {
 
     DatabaseReference reference;
@@ -75,15 +71,7 @@ public class AttendanceFragment extends Fragment {
         // Required empty public constructor
     }
 
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment AttendanceFragment.
-     */
-    // TODO: Rename and change types and number of parameters
+
     public static AttendanceFragment newInstance(String param1, String param2) {
         AttendanceFragment fragment = new AttendanceFragment();
         Bundle args = new Bundle();
@@ -281,8 +269,6 @@ public class AttendanceFragment extends Fragment {
 
 
 
-
-
             }
         });
 
@@ -370,6 +356,7 @@ public class AttendanceFragment extends Fragment {
                     }
                 }
             });
+
 }
 
 

@@ -48,19 +48,19 @@ public class ContactUsActivity extends AppCompatActivity implements ContactUsVie
     @Override
     public void onSendingMessageSuccess() {
 
-        Toast toast = new Toast(ContactUsActivity.this);
-        toast.setGravity(Gravity.TOP | Gravity.CENTER_HORIZONTAL, 0, 100); // Position at the top with a vertical offset
-        toast.setDuration(Toast.LENGTH_LONG);
-        toast.setText("Your Message Has Been Sent. \n Thank you for contacting us!");
+        onBackPressed();
+//        Toast toast = new Toast(ContactUsActivity.this);
+//        toast.setGravity(Gravity.TOP | Gravity.CENTER_HORIZONTAL, 0, 100); // Position at the top with a vertical offset
+//        toast.setDuration(Toast.LENGTH_LONG);
+//        toast.setText("Your Message Has Been Sent. \n Thank you for contacting us!");
+//        // Show the Toast
+//        toast.show();
 
-        // Show the Toast
-        toast.show();
-
-        binding.getRoot().postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                toast.cancel();
-            }
-        }, 1200);
+//        binding.getRoot().postDelayed(new Runnable() {
+//            @Override
+//            public void run() {
+//                //toast.cancel();
+//            }
+//        }, 1200);
     }
     }

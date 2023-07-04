@@ -159,7 +159,10 @@ public class ProfileFragment extends Fragment implements ProfileView{
     public void onGettingImgeSuccess(String img) {
 
 
-            Glide.with(requireActivity()).load(img)
+        if(!isAdded() || requireActivity() == null)
+            return;
+
+        Glide.with(requireActivity()).load(img)
                     .into(binding.imgProfile);
 
 
