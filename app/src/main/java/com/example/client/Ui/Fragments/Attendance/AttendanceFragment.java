@@ -269,8 +269,6 @@ public class AttendanceFragment extends Fragment {
 
 
 
-
-
             }
         });
 
@@ -358,6 +356,7 @@ public class AttendanceFragment extends Fragment {
                     }
                 }
             });
+
 }
 
 
