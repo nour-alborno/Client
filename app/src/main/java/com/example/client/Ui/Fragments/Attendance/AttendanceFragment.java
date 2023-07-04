@@ -215,6 +215,7 @@ public class AttendanceFragment extends Fragment {
                                                     driverId = journeyModel.getDriver();
 
                                                     edit.putString("driverIdReturn",journeyModel.getDriver());
+
                                                     Toast.makeText(getActivity(), journeyModel.getDriver(), Toast.LENGTH_LONG).show();
                                                     //Fetching DriverName
 
@@ -278,6 +279,7 @@ public class AttendanceFragment extends Fragment {
 
                 edit.putString("DriverId",sp.getString("driverIdGoing",null));
                 edit.putString("JourneyDate",AppUtility.getDate());
+                edit.commit();
                 OnMove.move();
             }
         });
@@ -301,6 +303,7 @@ public class AttendanceFragment extends Fragment {
             public void onClick(View view) {
                 edit.putString("DriverId",sp.getString("driverIdReturn",null));
                 edit.putString("JourneyDate",AppUtility.getDate());
+                edit.commit();
                 OnMove.move();
 
             }
