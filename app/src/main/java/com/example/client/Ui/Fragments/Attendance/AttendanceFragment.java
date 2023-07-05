@@ -288,6 +288,7 @@ public class AttendanceFragment extends Fragment {
             @Override
             public void onClick(View view) {
 
+
                 takingAttendance(id,journeyIdReturn);
 
                 binding.btnAccept2.setVisibility(View.GONE);

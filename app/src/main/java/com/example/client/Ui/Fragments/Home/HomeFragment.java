@@ -62,6 +62,7 @@ public class HomeFragment extends Fragment implements OnMapReadyCallback {
     String driverId_sp;
     double longitude_sp_client, latitude_sp__client, longitude_sp_driver, latitude_sp__driver;
 
+    double   latitude;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -69,6 +70,8 @@ public class HomeFragment extends Fragment implements OnMapReadyCallback {
 
         sp = getContext().getSharedPreferences("spLocation", MODE_PRIVATE);
         edit = sp.edit();
+
+        String DriverId = sp.getString("DriverId",null);
 
         SupportMapFragment mapFragment = (SupportMapFragment) getChildFragmentManager().findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
@@ -141,18 +144,20 @@ public class HomeFragment extends Fragment implements OnMapReadyCallback {
 //
 //            }
 //        });
-     String DriverId = sp.getString("DriverId",null);
+
+
+
         if (DriverId != null) {
             driverLocationRef.child(DriverId).addListenerForSingleValueEvent(new ValueEventListener() {
                 @Override
                 public void onDataChange(DataSnapshot dataSnapshot) {
 
                     if (dataSnapshot.exists()) {
-                        Double latitude = dataSnapshot.child("latitude").getValue(Double.class);
+                         latitude = dataSnapshot.child("latitude").getValue(Double.class);
                         Double longitude = dataSnapshot.child("longitude").getValue(Double.class);
 
-                        if (latitude != null && longitude != null) {
-                            latitude_sp__driver = latitude.doubleValue();
+                        if (latitude != 00 && longitude != null) {
+                           // latitude_sp__driver = latitude.doubleValue();
                             longitude_sp_driver = longitude.doubleValue();
 
                             edit.putFloat(LATITUDE_KEY_DRIVER, (float) latitude_sp__driver);

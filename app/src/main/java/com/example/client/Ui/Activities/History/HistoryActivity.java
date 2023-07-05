@@ -43,8 +43,9 @@ public class HistoryActivity extends AppCompatActivity implements HistoryView {
     @Override
     public void onGettingArchivedJourneysSuccess(ArrayList<ArichivedJourney> journeys) {
 
+        if (getContext() == null) return;
 
-        binding.rvArchive.setAdapter(new ArchiveAdapter(journeys));
+        binding.rvArchive.setAdapter(new ArchiveAdapter(journeys,getBaseContext()));
         binding.rvArchive.setLayoutManager(new LinearLayoutManager(HistoryActivity.this,LinearLayoutManager.VERTICAL,false));
     }
 

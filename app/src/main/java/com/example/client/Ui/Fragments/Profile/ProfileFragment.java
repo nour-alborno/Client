@@ -40,8 +40,9 @@ public class ProfileFragment extends Fragment implements ProfileView{
     SharedPreferences sp;
     public final String CLIENT_ID_KEY = "clientId";
 
-
+    ProfilePresenter presenter;
     FragmentProfileBinding binding;
+    String id;
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -88,11 +89,11 @@ public class ProfileFragment extends Fragment implements ProfileView{
                              Bundle savedInstanceState) {
          binding = FragmentProfileBinding.inflate(inflater,container,false);
 
-        ProfilePresenter presenter = new ProfilePresenter(this);
+       presenter = new ProfilePresenter(this);
 
 
         sp =requireActivity().getSharedPreferences("sp", Context.MODE_PRIVATE);
-        String id = sp.getString(CLIENT_ID_KEY,null);
+         id = sp.getString(CLIENT_ID_KEY,null);
 
 
         presenter.benfInfo(id);
@@ -173,5 +174,14 @@ public class ProfileFragment extends Fragment implements ProfileView{
     public void onGettingImgFailure(Exception e) {
         binding.imgProfile.setImageResource(R.drawable.profile_avtar);
         Log.d("FailureImg",e.getMessage());
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        if (!isAdded()) return;
+
+        presenter.gettingProfileImage(id);
+
     }
 }
