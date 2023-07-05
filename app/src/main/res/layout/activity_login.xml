@@ -142,13 +142,13 @@
         android:layout_height="@dimen/_20sdp"
         android:layout_centerHorizontal="true"
         android:visibility="invisible"
-
         app:layout_constraintBottom_toBottomOf="@+id/btn_login"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.337"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/btn_login"
-        app:layout_constraintVertical_bias="0.538" />
+        app:layout_constraintVertical_bias="0.538"
+        android:progressTint="@color/sea_green"/>
 
 
 
