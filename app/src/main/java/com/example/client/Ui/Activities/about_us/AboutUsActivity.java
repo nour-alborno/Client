@@ -5,13 +5,13 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.Toast;
 
 import androidx.activity.result.ActivityResultCallback;
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.client.Ui.AppUtility.AppUtility;
 import com.example.client.databinding.ActivityAboutUsBinding;
 
 public class AboutUsActivity extends AppCompatActivity {
@@ -30,9 +30,9 @@ public class AboutUsActivity extends AppCompatActivity {
                     @Override
                     public void onActivityResult(Boolean result) {
                         if (result){
-                            Toast.makeText(AboutUsActivity.this, "Permission granted", Toast.LENGTH_SHORT).show();
+                            AppUtility.showSnackbar(binding.getRoot(),"Call Permission granted");
                         }else {
-                            Toast.makeText(AboutUsActivity.this, "Permission denied", Toast.LENGTH_SHORT).show();
+                            AppUtility.showSnackbar(binding.getRoot(),"Call Permission denied");
                         }
                     }
                 });

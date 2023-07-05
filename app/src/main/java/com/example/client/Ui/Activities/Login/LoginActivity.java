@@ -6,7 +6,6 @@ import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -15,6 +14,7 @@ import com.example.client.Model.CliantsNumbers;
 import com.example.client.R;
 import com.example.client.Ui.Activities.Main.MainActivity;
 import com.example.client.Ui.Activities.Verification.VerificationActivity;
+import com.example.client.Ui.AppUtility.AppUtility;
 import com.example.client.databinding.ActivityLoginBinding;
 import com.google.firebase.FirebaseException;
 import com.google.firebase.auth.FirebaseAuth;
@@ -65,7 +65,7 @@ public class LoginActivity extends AppCompatActivity implements LoginView {
             if (TextUtils.isEmpty(mobile)) {
                 binding.etMobile.setError("Enter your phone number");
                 setEnabledVisibility();
-                Toast.makeText(getApplicationContext(), "Enter your phone", Toast.LENGTH_SHORT).show();
+               // Toast.makeText(getApplicationContext(), "Enter your phone", Toast.LENGTH_SHORT).show();
                 return;
             }
 
@@ -74,6 +74,7 @@ public class LoginActivity extends AppCompatActivity implements LoginView {
             binding.btnLogin.setText(R.string.sending);
             binding.btnLogin.setEnabled(false);
             loginPresenter.checkDriverIsExist(mobile);
+
         });
     }
 
@@ -95,7 +96,7 @@ public class LoginActivity extends AppCompatActivity implements LoginView {
 
                     @Override
                     public void onVerificationFailed(@NonNull FirebaseException e) {
-                        Toast.makeText(LoginActivity.this, e.getMessage(), Toast.LENGTH_SHORT).show();
+                        AppUtility.showSnackbar(binding.getRoot(),e.getMessage());
                         Log.e("LoginActivityLOG", e.toString());
                         binding.etMobile.setText("");
                         setEnabledVisibility();
@@ -139,7 +140,8 @@ public class LoginActivity extends AppCompatActivity implements LoginView {
     @Override
     public void isDriver(CliantsNumbers num) {
         if (binding.etMobile.getText().toString().equals(String.valueOf(num.getMobile()))) {
-            Log.d("LoginActivityLOG", String.valueOf(num.getMobile()));
+            Log.d("LoginActivityLOG2", String.valueOf(num.getMobile()));
+            Log.d("LoginActivityLOG2"," id : "+ num.getId());
             num.getId();
             edit.putString(CLIENT_ID_KEY, num.getId());
             edit.putString(CLIENT_NUMBER_KEY, String.valueOf(num.getMobile()));
@@ -152,6 +154,6 @@ public class LoginActivity extends AppCompatActivity implements LoginView {
     public void numberNotFound() {
         Log.d("LoginActivityLOG", "Does not exist");
         setEnabledVisibility();
-        Toast.makeText(getApplicationContext(), "You're not allowed to login.", Toast.LENGTH_SHORT).show();
+        AppUtility.showSnackbar(binding.getRoot(),"You're not allowed to login.");
     }
 }

@@ -8,7 +8,6 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
 
 import androidx.activity.result.ActivityResultCallback;
 import androidx.activity.result.ActivityResultLauncher;
@@ -18,6 +17,7 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.DialogFragment;
 
 import com.example.client.Model.DriverProfile;
+import com.example.client.Ui.AppUtility.AppUtility;
 import com.example.client.databinding.ItemContactDialogBinding;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -70,9 +70,10 @@ public class CustomDialogFragment extends DialogFragment {
                         @Override
                         public void onActivityResult(Boolean result) {
                             if (result){
-                                Toast.makeText(getActivity(), "Permission granted", Toast.LENGTH_SHORT).show();
+                                AppUtility.showSnackbar(binding.getRoot(),"Call Permission granted");
+                             //   Toast.makeText(getActivity(), "Permission granted", Toast.LENGTH_SHORT).show();
                             }else {
-                                Toast.makeText(getActivity(), "Permission denied", Toast.LENGTH_SHORT).show();
+                                AppUtility.showSnackbar(binding.getRoot(),"Call Permission denied");
                             }
                         }
                     });
