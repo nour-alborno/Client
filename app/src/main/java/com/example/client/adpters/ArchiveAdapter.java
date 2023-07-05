@@ -53,6 +53,9 @@ Context context;
             return;
         }
 
+
+
+
         ArichivedJourney j = journeys.get(position);
 
         holder.date.setText(j.getDate());

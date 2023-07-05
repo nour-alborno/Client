@@ -176,6 +176,9 @@ public class ProfileFragment extends Fragment implements ProfileView{
         Log.d("FailureImg",e.getMessage());
     }
 
+
+
+
     @Override
     public void onResume() {
         super.onResume();

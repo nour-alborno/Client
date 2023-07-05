@@ -49,6 +49,9 @@ public class HistoryActivity extends AppCompatActivity implements HistoryView {
         binding.rvArchive.setLayoutManager(new LinearLayoutManager(HistoryActivity.this,LinearLayoutManager.VERTICAL,false));
     }
 
+
+
+
     @Override
     public void onGettingArchivedJourneysFailure(Exception e) {
 
