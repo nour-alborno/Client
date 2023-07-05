@@ -114,19 +114,19 @@
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        app:layout_constraintEnd_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/layout_mobile"
         android:layout_marginTop="@dimen/_13sdp"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintEnd_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/layout_mobile">
 
         <androidx.constraintlayout.widget.ConstraintLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
             android:id="@+id/conslayout_scroll"
-            >
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
 
-<!--            name-->
+            <!--            name-->
             <LinearLayout
                 android:id="@+id/lin_layout_name"
                 android:layout_width="@dimen/_267sdp"
@@ -140,10 +140,10 @@
                     android:id="@+id/icon_car"
                     android:layout_width="@dimen/_14sdp"
                     android:layout_height="@dimen/_10sdp"
+                    android:layout_gravity="center_vertical|start"
                     android:layout_marginStart="@dimen/_15sdp"
                     android:layout_marginEnd="@dimen/_5sdp"
-                    android:src="@drawable/baseline_person_24"
-                    android:layout_gravity="center_vertical|start" />
+                    android:src="@drawable/baseline_person_24" />
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -151,12 +151,11 @@
                     android:layout_gravity="center_vertical|start"
                     android:text="@string/edit_profile_name"
                     android:textColor="@color/sea_green"
-                    android:textSize="@dimen/_11sdp"
-                    />
-
+                    android:textSize="@dimen/_11sdp" />
 
 
             </LinearLayout>
+
             <TextView
                 android:id="@+id/tv_name"
                 android:layout_width="wrap_content"
@@ -169,10 +168,10 @@
                 app:layout_constraintBottom_toBottomOf="@id/lin_layout_name"
                 app:layout_constraintEnd_toEndOf="@id/lin_layout_name"
                 app:layout_constraintTop_toTopOf="@id/lin_layout_name" />
-<!--            end name layout-->
+            <!--            end name layout-->
 
 
-<!--            gender-->
+            <!--            gender-->
             <LinearLayout
                 android:id="@+id/lin_layout_gender"
                 android:layout_width="@dimen/_267sdp"
@@ -187,10 +186,10 @@
                     android:id="@+id/icon_people"
                     android:layout_width="@dimen/_14sdp"
                     android:layout_height="@dimen/_10sdp"
+                    android:layout_gravity="center_vertical|start"
                     android:layout_marginStart="@dimen/_15sdp"
                     android:layout_marginEnd="@dimen/_5sdp"
-                    android:src="@drawable/baseline_people_24"
-                    android:layout_gravity="center_vertical|start" />
+                    android:src="@drawable/baseline_people_24" />
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -198,12 +197,11 @@
                     android:layout_gravity="center_vertical|start"
                     android:text="@string/edit_profile_gender"
                     android:textColor="@color/sea_green"
-                    android:textSize="@dimen/_11sdp"
-                    />
-
+                    android:textSize="@dimen/_11sdp" />
 
 
             </LinearLayout>
+
             <TextView
                 android:id="@+id/tv_gender"
                 android:layout_width="wrap_content"
@@ -216,9 +214,9 @@
                 app:layout_constraintBottom_toBottomOf="@id/lin_layout_gender"
                 app:layout_constraintEnd_toEndOf="@id/lin_layout_gender"
                 app:layout_constraintTop_toTopOf="@id/lin_layout_gender" />
-<!--            end gender layout-->
+            <!--            end gender layout-->
 
-<!--            age-->
+            <!--            age-->
             <LinearLayout
                 android:id="@+id/lin_layout_age"
                 android:layout_width="@dimen/_267sdp"
@@ -233,10 +231,10 @@
                     android:id="@+id/icon_age"
                     android:layout_width="@dimen/_14sdp"
                     android:layout_height="@dimen/_14sdp"
+                    android:layout_gravity="center_vertical|start"
                     android:layout_marginStart="@dimen/_15sdp"
                     android:layout_marginEnd="@dimen/_5sdp"
-                    android:src="@drawable/baseline_calendar_month_24"
-                    android:layout_gravity="center_vertical|start" />
+                    android:src="@drawable/baseline_calendar_month_24" />
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -244,12 +242,11 @@
                     android:layout_gravity="center_vertical|start"
                     android:text="@string/edit_profile_age"
                     android:textColor="@color/sea_green"
-                    android:textSize="@dimen/_11sdp"
-                    />
-
+                    android:textSize="@dimen/_11sdp" />
 
 
             </LinearLayout>
+
             <TextView
                 android:id="@+id/tv_age"
                 android:layout_width="wrap_content"
@@ -262,9 +259,9 @@
                 app:layout_constraintBottom_toBottomOf="@id/lin_layout_age"
                 app:layout_constraintEnd_toEndOf="@id/lin_layout_age"
                 app:layout_constraintTop_toTopOf="@id/lin_layout_age" />
-<!--            end age layout-->
+            <!--            end age layout-->
 
-<!--            city-->
+            <!--            city-->
             <LinearLayout
                 android:id="@+id/lin_layout_city"
                 android:layout_width="@dimen/_267sdp"
@@ -279,10 +276,10 @@
                     android:id="@+id/icon_city"
                     android:layout_width="@dimen/_14sdp"
                     android:layout_height="@dimen/_14sdp"
+                    android:layout_gravity="center_vertical|start"
                     android:layout_marginStart="@dimen/_15sdp"
                     android:layout_marginEnd="@dimen/_5sdp"
-                    android:src="@drawable/baseline_business_24"
-                    android:layout_gravity="center_vertical|start" />
+                    android:src="@drawable/baseline_business_24" />
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -290,9 +287,9 @@
                     android:layout_gravity="center_vertical|start"
                     android:text="@string/edit_profile_city"
                     android:textColor="@color/sea_green"
-                    android:textSize="@dimen/_11sdp"
-                    />
+                    android:textSize="@dimen/_11sdp" />
             </LinearLayout>
+
             <TextView
                 android:id="@+id/tv_city"
                 android:layout_width="wrap_content"
@@ -305,9 +302,9 @@
                 app:layout_constraintBottom_toBottomOf="@id/lin_layout_city"
                 app:layout_constraintEnd_toEndOf="@id/lin_layout_city"
                 app:layout_constraintTop_toTopOf="@id/lin_layout_city" />
-<!--            end city layout-->
+            <!--            end city layout-->
 
-<!--            address-->
+            <!--            address-->
             <LinearLayout
                 android:id="@+id/lin_layout_address"
                 android:layout_width="@dimen/_267sdp"
@@ -322,10 +319,10 @@
                     android:id="@+id/icon_address"
                     android:layout_width="@dimen/_10sdp"
                     android:layout_height="@dimen/_12sdp"
+                    android:layout_gravity="center_vertical|start"
                     android:layout_marginStart="@dimen/_15sdp"
                     android:layout_marginEnd="@dimen/_5sdp"
-                    android:src="@drawable/baseline_location_on_24"
-                    android:layout_gravity="center_vertical|start" />
+                    android:src="@drawable/baseline_location_on_24" />
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -333,12 +330,11 @@
                     android:layout_gravity="center_vertical|start"
                     android:text="@string/edit_profile_address"
                     android:textColor="@color/sea_green"
-                    android:textSize="@dimen/_11sdp"
-                    />
-
+                    android:textSize="@dimen/_11sdp" />
 
 
             </LinearLayout>
+
             <TextView
                 android:id="@+id/tv_address"
                 android:layout_width="wrap_content"
@@ -351,9 +347,9 @@
                 app:layout_constraintBottom_toBottomOf="@id/lin_layout_address"
                 app:layout_constraintEnd_toEndOf="@id/lin_layout_address"
                 app:layout_constraintTop_toTopOf="@id/lin_layout_address" />
-<!--            end address layout-->
+            <!--            end address layout-->
 
-<!--            Type of disability-->
+            <!--            Type of disability-->
             <LinearLayout
                 android:id="@+id/lin_layout_type_of_disablity"
                 android:layout_width="@dimen/_267sdp"
@@ -368,10 +364,10 @@
                     android:id="@+id/icon_type_of_disability"
                     android:layout_width="@dimen/_11sdp"
                     android:layout_height="@dimen/_11sdp"
+                    android:layout_gravity="center_vertical|start"
                     android:layout_marginStart="@dimen/_15sdp"
                     android:layout_marginEnd="@dimen/_5sdp"
-                    android:src="@drawable/equality"
-                    android:layout_gravity="center_vertical|start" />
+                    android:src="@drawable/equality" />
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -379,12 +375,11 @@
                     android:layout_gravity="center_vertical|start"
                     android:text="@string/edit_profile_disability"
                     android:textColor="@color/sea_green"
-                    android:textSize="@dimen/_11sdp"
-                    />
-
+                    android:textSize="@dimen/_11sdp" />
 
 
             </LinearLayout>
+
             <TextView
                 android:id="@+id/tv_type_of_disability"
                 android:layout_width="wrap_content"
@@ -397,9 +392,9 @@
                 app:layout_constraintBottom_toBottomOf="@id/lin_layout_type_of_disablity"
                 app:layout_constraintEnd_toEndOf="@id/lin_layout_type_of_disablity"
                 app:layout_constraintTop_toTopOf="@id/lin_layout_type_of_disablity" />
-<!--            end type of disability layout-->
+            <!--            end type of disability layout-->
 
-<!--          organization  -->
+            <!--          organization  -->
             <LinearLayout
                 android:id="@+id/lin_layout_organization"
                 android:layout_width="@dimen/_267sdp"
@@ -415,10 +410,10 @@
                     android:id="@+id/icon_organization"
                     android:layout_width="@dimen/_13sdp"
                     android:layout_height="@dimen/_13sdp"
+                    android:layout_gravity="center_vertical|start"
                     android:layout_marginStart="@dimen/_15sdp"
                     android:layout_marginEnd="@dimen/_5sdp"
-                    android:src="@drawable/organization"
-                    android:layout_gravity="center_vertical|start" />
+                    android:src="@drawable/organization" />
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -426,12 +421,11 @@
                     android:layout_gravity="center_vertical|start"
                     android:text="@string/edit_profile_Beneficiary"
                     android:textColor="@color/sea_green"
-                    android:textSize="@dimen/_11sdp"
-                    />
-
+                    android:textSize="@dimen/_11sdp" />
 
 
             </LinearLayout>
+
             <TextView
                 android:id="@+id/tv_organization"
                 android:layout_width="wrap_content"
@@ -444,11 +438,9 @@
                 app:layout_constraintBottom_toBottomOf="@id/lin_layout_organization"
                 app:layout_constraintEnd_toEndOf="@id/lin_layout_organization"
                 app:layout_constraintTop_toTopOf="@id/lin_layout_organization" />
-<!--            end of organization layout-->
+            <!--            end of organization layout-->
 
         </androidx.constraintlayout.widget.ConstraintLayout>
-
-
 
 
     </ScrollView>

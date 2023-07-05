@@ -10,7 +10,6 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
 
 import androidx.activity.result.ActivityResultCallback;
 import androidx.activity.result.ActivityResultLauncher;
@@ -20,6 +19,7 @@ import androidx.fragment.app.Fragment;
 
 import com.example.client.Model.DriversNumbers;
 import com.example.client.R;
+import com.example.client.Ui.AppUtility.AppUtility;
 import com.example.client.databinding.FragmentHomeBinding;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -194,7 +194,8 @@ public class HomeFragment extends Fragment implements OnMapReadyCallback {
                 public void onCancelled(DatabaseError databaseError) {
                     // خطأ في Realtimee
                     Log.e("DriverLocation", "Failed to read location from Realtime Database: " + databaseError.getMessage());
-                    Toast.makeText(getActivity(), "Error: " + databaseError.getMessage(), Toast.LENGTH_SHORT).show();
+                    AppUtility.showSnackbar(binding.getRoot(),"Error: " + databaseError.getMessage());
+
                 }
             });
         }
@@ -206,9 +207,11 @@ public class HomeFragment extends Fragment implements OnMapReadyCallback {
                     @Override
                     public void onActivityResult(Boolean result) {
                         if (result) {
-                            Toast.makeText(getActivity(), "Permission granted", Toast.LENGTH_SHORT).show();
+                            AppUtility.showSnackbar(binding.getRoot(),"Call Permission granted");
+                       //     Toast.makeText(getActivity(), "Permission granted", Toast.LENGTH_SHORT).show();
                         } else {
-                            Toast.makeText(getActivity(), "Permission denied", Toast.LENGTH_SHORT).show();
+                            AppUtility.showSnackbar(binding.getRoot(),"Call Permission denied");
+                           // Toast.makeText(getActivity(), "Permission denied", Toast.LENGTH_SHORT).show();
                         }
                     }
                 });

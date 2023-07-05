@@ -27,6 +27,7 @@ import androidx.core.app.ActivityCompat;
 import androidx.fragment.app.Fragment;
 
 import com.example.client.R;
+import com.example.client.Ui.AppUtility.AppUtility;
 import com.example.client.Ui.Fragments.Attendance.AttendanceFragment;
 import com.example.client.Ui.Fragments.Home.HomeFragment;
 import com.example.client.Ui.Fragments.Profile.ProfileFragment;
@@ -261,7 +262,7 @@ public class MainActivity extends AppCompatActivity implements MainView, Attenda
 
                 try {
                     LocationSettingsResponse response = task.getResult(ApiException.class);
-                    Toast.makeText(MainActivity.this, "GPS is already tured on", Toast.LENGTH_SHORT).show();
+                    AppUtility.showSnackbar(binding.getRoot(),"GPS is already tured on");
 
                 } catch (ApiException e) {
 
