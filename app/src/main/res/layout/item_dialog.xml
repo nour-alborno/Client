@@ -8,7 +8,8 @@
     android:elevation="@dimen/_5sdp"
     android:padding="@dimen/_10sdp"
     android:id="@+id/custom_dialog"
-    android:background="@drawable/shape_code_bg">
+    app:backgroundTint="@drawable/shape_code_bg"
+    app:background="@drawable/shape_code_bg">
 
 
     <ImageView

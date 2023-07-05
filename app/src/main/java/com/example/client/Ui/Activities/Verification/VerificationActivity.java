@@ -7,12 +7,12 @@ import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
-import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.client.R;
 import com.example.client.Ui.Activities.Main.MainActivity;
+import com.example.client.Ui.AppUtility.AppUtility;
 import com.example.client.databinding.ActivityVerificationBinding;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.PhoneAuthCredential;
@@ -56,7 +56,7 @@ String newNumber,verificationIdEdit;
                 if (binding.pinView.getText().toString().trim().isEmpty()) {
                     binding.pinView.setError("Enter your phone number");
                     binding.pinView.setLineColor(getResources().getColor(R.color.baby_red));
-                    Toast.makeText(getApplicationContext(), "Enter your phone number", Toast.LENGTH_SHORT).show();
+                    AppUtility.showSnackbar(binding.getRoot(),"Enter your phone number");
                     Log.e("VerificationActivityLOG", "empty");
                     setEnabledVisibility();
                     return;
@@ -81,7 +81,8 @@ String newNumber,verificationIdEdit;
                                     finish();
                                 } else {
                                     binding.pinView.setLineColor(getResources().getColor(R.color.baby_red));
-                                    Toast.makeText(VerificationActivity.this, task.getException().getMessage(), Toast.LENGTH_SHORT).show();
+                                    AppUtility.showSnackbar(binding.getRoot(),task.getException().getMessage());
+
                                 }
                             });
                     //.addOnFailureListener(e -> Toast.makeText(VerificationActivity.this, e.getMessage(), Toast.LENGTH_SHORT).show());
@@ -99,7 +100,7 @@ String newNumber,verificationIdEdit;
                     if (TextUtils.isEmpty(binding.pinView.getText().toString())) {
                         binding.pinView.setError("Enter verification code");
                         binding.pinView.setLineColor(getResources().getColor(R.color.baby_red));
-                        Toast.makeText(getApplicationContext(), "Enter verification code", Toast.LENGTH_SHORT).show();
+                        AppUtility.showSnackbar(binding.getRoot(),"Enter verification code");
                         Log.e("VerificationActivityLOG", "empty");
                         return;
                     } else {
