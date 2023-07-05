@@ -12,7 +12,6 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 
-import com.example.client.Model.AttendanceConfirmation;
 import com.example.client.Model.Benf_Schedule;
 import com.example.client.Model.DriverProfile;
 import com.example.client.Model.JourneyModel;
@@ -26,11 +25,7 @@ import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QuerySnapshot;
 
-import java.text.Format;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Date;
 
 
 public class AttendanceFragment extends Fragment {
@@ -98,10 +93,7 @@ public class AttendanceFragment extends Fragment {
            //getting the journey of today
         sp = getActivity().getSharedPreferences("sp", Context.MODE_PRIVATE);
         String id = sp.getString(CLIENT_ID_KEY,null);
-
         edit = sp.edit();
-
-
 
 
 
@@ -262,12 +254,11 @@ public class AttendanceFragment extends Fragment {
             public void onClick(View view) {
 
                 takingAttendance(id,journeyIdGoing);
-
-
                 binding.btnAccept.setVisibility(View.GONE);
                 binding.btnExclude.setVisibility(View.GONE);
                 binding.btnGoMap.setVisibility(View.VISIBLE);
 
+                Log.d("AttendanceFragmentDID", "onClick: 1 "+sp.getString("driverIdGoing",null));
 
 
             }
@@ -294,6 +285,7 @@ public class AttendanceFragment extends Fragment {
                 binding.btnExclude2.setVisibility(View.GONE);
                 binding.btnGoMap2.setVisibility(View.VISIBLE);
 
+                Log.d("AttendanceFragmentDID", "onClick: 2 "+sp.getString("driverIdReturn",null));
 
             }
         });
@@ -342,25 +334,24 @@ public class AttendanceFragment extends Fragment {
     }
 
     void takingAttendance(String userId, String journeyId){
-    ArrayList<String> attend = new ArrayList<>();
-    attend.add(userId);
+        ArrayList<String> attend = new ArrayList<>();
+        attend.add(userId);
 
-
-    reference = db.getReference("AttendanceConfirmation");
-    reference.child(AppUtility.getDate()).child(driverId)
-            .child(journeyId).push().setValue(new AttendanceConfirmation(attend))
-            .addOnCompleteListener(new OnCompleteListener<Void>() {
-                @Override
-                public void onComplete(@NonNull Task<Void> task) {
-                    if (task.isSuccessful()){
-                        Log.d("test2","succesfull");
-                    } else {
-                        Log.d("test2",task.getException().getMessage());
+        reference = db.getReference("AttendanceConfirmation");
+        reference.child(AppUtility.getDate()).child(driverId)
+                .child(journeyId).push().setValue(userId)
+                .addOnCompleteListener(new OnCompleteListener<Void>() {
+                    @Override
+                    public void onComplete(@NonNull Task<Void> task) {
+                        if (task.isSuccessful()){
+                            Log.d("test2","successful");
+                        } else {
+                            Log.d("test2",task.getException().getMessage());
+                        }
                     }
-                }
-            });
+                });
+    }
 
-}
 
 
 

@@ -74,6 +74,7 @@ public class LoginActivity extends AppCompatActivity implements LoginView {
             binding.btnLogin.setText(R.string.sending);
             binding.btnLogin.setEnabled(false);
             loginPresenter.checkDriverIsExist(mobile);
+
         });
     }
 
@@ -139,7 +140,8 @@ public class LoginActivity extends AppCompatActivity implements LoginView {
     @Override
     public void isDriver(CliantsNumbers num) {
         if (binding.etMobile.getText().toString().equals(String.valueOf(num.getMobile()))) {
-            Log.d("LoginActivityLOG", String.valueOf(num.getMobile()));
+            Log.d("LoginActivityLOG2", String.valueOf(num.getMobile()));
+            Log.d("LoginActivityLOG2"," id : "+ num.getId());
             num.getId();
             edit.putString(CLIENT_ID_KEY, num.getId());
             edit.putString(CLIENT_NUMBER_KEY, String.valueOf(num.getMobile()));

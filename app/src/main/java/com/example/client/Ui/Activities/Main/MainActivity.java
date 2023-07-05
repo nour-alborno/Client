@@ -61,7 +61,8 @@ public class MainActivity extends AppCompatActivity implements MainView, Attenda
     public final String LATITUDE_KEY_CLIENT = "latitude_client";
     public final String LONGITUDE_KEY_CLIENT = "longitude_client";
     AlertDialog alertDialog;
-
+    public final String CLIENT_ID_KEY = "clientId";
+    String clientId;
     SharedPreferences sp;
     SharedPreferences.Editor edit;
     private LocationRequest locationRequest;
@@ -78,8 +79,8 @@ public class MainActivity extends AppCompatActivity implements MainView, Attenda
 
         firestore=FirebaseFirestore.getInstance();
 
-         MP = new MainPresenter(this);
-        sp = getSharedPreferences("spLocation", MODE_PRIVATE);
+        MP = new MainPresenter(this);
+        sp = getSharedPreferences("sp", MODE_PRIVATE);
         edit = sp.edit();
 
 
@@ -318,7 +319,8 @@ public class MainActivity extends AppCompatActivity implements MainView, Attenda
             Map<String , Object> setLocation = new HashMap<>();
             setLocation.put("location",geoPoint);
 
-            firestore.collection("Beneficiaries").document("1").update(setLocation)
+            clientId = sp.getString(CLIENT_ID_KEY,null);
+            firestore.collection("Beneficiaries").document(clientId).update(setLocation)
                     .addOnCompleteListener(new OnCompleteListener<Void>() {
                         @Override
                         public void onComplete(@NonNull Task<Void> task) {

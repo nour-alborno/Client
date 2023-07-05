@@ -79,6 +79,8 @@
         android:layout_marginTop="@dimen/_20sdp"
         android:hint="@string/mobile_number"
         android:textColorHint="@color/sea_green"
+        app:boxStrokeColor="@color/sea_green"
+        app:hintTextColor="@color/sea_green"
         android:textSize="@dimen/_12ssp"
         android:gravity="center_vertical"
         app:layout_constraintEnd_toEndOf="parent"
@@ -115,6 +117,7 @@
         app:layout_constraintStart_toStartOf="@+id/TextInputLayout2"
         app:layout_constraintTop_toTopOf="@+id/TextInputLayout2" />
 
+
     <com.google.android.material.button.MaterialButton
         android:id="@+id/btn_login"
         android:layout_width="@dimen/_267sdp"
@@ -125,6 +128,8 @@
         android:textAllCaps="false"
         android:textSize="@dimen/_14ssp"
         android:textStyle="bold"
+        android:textColor="@color/white"
+        android:backgroundTint="@color/sea_green"
         app:layout_constraintEnd_toEndOf="@+id/TextInputLayout2"
         app:layout_constraintHorizontal_bias="0.505"
         app:layout_constraintStart_toStartOf="@+id/TextInputLayout2"
@@ -137,6 +142,7 @@
         android:layout_height="@dimen/_20sdp"
         android:layout_centerHorizontal="true"
         android:visibility="invisible"
+
         app:layout_constraintBottom_toBottomOf="@+id/btn_login"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.337"

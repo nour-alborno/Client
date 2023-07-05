@@ -39,12 +39,12 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
+
+import java.util.ArrayList;
 
 public class HomeFragment extends Fragment implements OnMapReadyCallback {
     private GoogleMap mMap;
-
     public final String LATITUDE_KEY_CLIENT = "latitude_client";
     public final String LONGITUDE_KEY_CLIENT = "longitude_client";
     public final String DRIVER_ID_KEY = "driverId_client";
@@ -56,6 +56,8 @@ public class HomeFragment extends Fragment implements OnMapReadyCallback {
     SharedPreferences.Editor edit;
     DatabaseReference ref;
     FirebaseFirestore firestore;
+    String DriverId;
+    double latitude ,longitude;
     //Polyline getCurrentPolyline;
 
     DatabaseReference driverLocationRef;
@@ -67,14 +69,14 @@ public class HomeFragment extends Fragment implements OnMapReadyCallback {
                              Bundle savedInstanceState) {
         FragmentHomeBinding binding = FragmentHomeBinding.inflate(inflater, container, false);
 
-        sp = getContext().getSharedPreferences("spLocation", MODE_PRIVATE);
+        sp = getContext().getSharedPreferences("sp", MODE_PRIVATE);
         edit = sp.edit();
 
         SupportMapFragment mapFragment = (SupportMapFragment) getChildFragmentManager().findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
 
         final String CLIENT_NUMBER_KEY = "driverNumber";
-        int num = sp.getInt(CLIENT_NUMBER_KEY,0);
+        String num = sp.getString(CLIENT_NUMBER_KEY,null);
 
         Log.d("ClientNumber ", String.valueOf(num));
 
@@ -88,20 +90,27 @@ public class HomeFragment extends Fragment implements OnMapReadyCallback {
         Log.d("HomeFragmentTAG", "onCreateView: driver  --->   " + latitude_sp__driver + "   --->   " + longitude_sp_driver);
         Log.d("HomeFragmentTAG", "onCreateView: driver_id  --->   " + driverId_sp);
 
+        DriverId = sp.getString("DriverId",null);
         firestore = FirebaseFirestore.getInstance();
-        firestore.collection("Drivers_numbers").get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+        Log.d("AttendanceFragmentDID", "onComplete: driver_id  --->   " + DriverId);
+
+        firestore.collection("Drivers_numbers").whereEqualTo("id",DriverId).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
             @Override
             public void onComplete(@NonNull Task<QuerySnapshot> task) {
                 if (task.isSuccessful()) {
 
-                    for (QueryDocumentSnapshot document : task.getResult()) {
-                        DriversNumbers num = document.toObject(DriversNumbers.class);
 
-                        String driver_id = num.getId();
+                    ArrayList<DriversNumbers> num = (ArrayList<DriversNumbers>) task.getResult().toObjects(DriversNumbers.class);
+//                    String driver_id = num.getId();
+//                        Log.d("HomeFragmentTAG", "onComplete: driver_id  --->   " + driver_id);
+//                        edit.putString(DRIVER_ID_KEY, driver_id);
+//                        edit.commit();
+
+                    for (DriversNumbers driversNumbers :  num) {
+                        String driver_id = driversNumbers.getId();
                         Log.d("HomeFragmentTAG", "onComplete: driver_id  --->   " + driver_id);
                         edit.putString(DRIVER_ID_KEY, driver_id);
                         edit.commit();
-
                     }
 
                 } else {
@@ -141,26 +150,37 @@ public class HomeFragment extends Fragment implements OnMapReadyCallback {
 //
 //            }
 //        });
-     String DriverId = sp.getString("DriverId",null);
+
+    //    DriverId = sp.getString("DriverId",null);
+        Log.d("AttendanceFragmentDID", "onCreateView: "+DriverId);
+
         if (DriverId != null) {
             driverLocationRef.child(DriverId).addListenerForSingleValueEvent(new ValueEventListener() {
                 @Override
                 public void onDataChange(DataSnapshot dataSnapshot) {
 
                     if (dataSnapshot.exists()) {
-                        Double latitude = dataSnapshot.child("latitude").getValue(Double.class);
-                        Double longitude = dataSnapshot.child("longitude").getValue(Double.class);
+                        latitude = dataSnapshot.child("latitude").getValue(Double.class);
+                        longitude = dataSnapshot.child("longitude").getValue(Double.class);
 
-                        if (latitude != null && longitude != null) {
-                            latitude_sp__driver = latitude.doubleValue();
-                            longitude_sp_driver = longitude.doubleValue();
+                        Log.d("AttendanceFragmentDID",  "driverLocationRef long lat div2  :  "+latitude+" , "+longitude);
 
-                            edit.putFloat(LATITUDE_KEY_DRIVER, (float) latitude_sp__driver);
-                            edit.putFloat(LONGITUDE_KEY_DRIVER, (float) longitude_sp_driver);
-                            edit.apply();
 
-                            Toast.makeText(getActivity(), "Latitude: \" + latitude + \", Longitude: \" + longitude", Toast.LENGTH_SHORT).show();
-                        }
+//                        if (latitude != 0.0 && longitude != 0.0) {
+////                            latitude_sp__driver = latitude;
+////                            longitude_sp_driver = longitude;
+//
+//                            Log.d("AttendanceFragmentDID",  latitude_sp__driver+" , "+latitude_sp__driver);
+//                            Log.d("AttendanceFragmentDID",  "long lat  :  "+latitude+" , "+longitude);
+//
+//
+//
+//                            edit.putFloat(LATITUDE_KEY_DRIVER, (float) latitude);
+//                            edit.putFloat(LONGITUDE_KEY_DRIVER, (float) longitude);
+//                            edit.apply();
+//
+//                          //  Toast.makeText(getActivity(), "Latitude: \" + latitude + \", Longitude: \" + longitude", Toast.LENGTH_SHORT).show();
+//                        }
 
                         Log.d("DriverLocation", "Latitude: " + latitude);
                         Log.d("DriverLocation", "Longitude: " + longitude);
@@ -216,12 +236,19 @@ public class HomeFragment extends Fragment implements OnMapReadyCallback {
     public void onMapReady(@NonNull GoogleMap googleMap) {
         mMap = googleMap;
 
+
+        Log.d("AttendanceFragmentDID",  "onMapReady sp div2 : "+latitude_sp__driver+" , "+latitude_sp__driver);
+
+        Log.d("AttendanceFragmentDID",  "onMapReady long lat div2  :  "+latitude+" , "+longitude);
         // إضافة ماركر الباص
-        LatLng busLatLng = new LatLng(latitude_sp__driver, longitude_sp_driver);
+        LatLng busLatLng = new LatLng(latitude, longitude);
         googleMap.addMarker(new MarkerOptions()
                 .position(busLatLng)
                 .icon(BitmapDescriptorFactory.fromResource(R.drawable.img_bus))
                 .title("Bus"));
+
+        Log.d("AttendanceFragmentDID",  "onMapReady cla : "+latitude_sp__client+" , "+longitude_sp_client);
+
 
         // إضافة ماركر العادي
         LatLng clientlLatLng = new LatLng(latitude_sp__client, longitude_sp_client);
