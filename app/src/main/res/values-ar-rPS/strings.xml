@@ -93,4 +93,6 @@
     <string name="attendance_must_be_confirmed_first">يجب تأكيد الحضور أولاً!</string>
     <string name="go">اذهب</string>
 
+    <string name="history_status">حضر الرحلة</string>
+
 </resources>

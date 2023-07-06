@@ -12,16 +12,16 @@ import android.util.Log;
 
 import com.example.client.Model.ArichivedJourney;
 import com.example.client.R;
+import com.example.client.Ui.base_classes.BaseActivity;
 import com.example.client.adpters.ArchiveAdapter;
 import com.example.client.databinding.ActivityHistoryBinding;
 
 import java.util.ArrayList;
 
-public class HistoryActivity extends AppCompatActivity implements HistoryView {
+public class HistoryActivity extends BaseActivity implements HistoryView {
 
     ActivityHistoryBinding binding;
-    SharedPreferences sp;
-    public final String CLIENT_ID_KEY = "clientId";
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,11 +30,10 @@ public class HistoryActivity extends AppCompatActivity implements HistoryView {
         setContentView(binding.getRoot());
 
         HistoryPresenter presenter = new HistoryPresenter(this);
-        sp = getSharedPreferences("sp", Context.MODE_PRIVATE);
 
 
 
-        presenter.gettingArchivedJourneys(  sp.getString(CLIENT_ID_KEY,null));
+        presenter.gettingArchivedJourneys(sp.getString(CLIENT_ID_KEY,null));
 
 
 
@@ -43,10 +42,14 @@ public class HistoryActivity extends AppCompatActivity implements HistoryView {
     @Override
     public void onGettingArchivedJourneysSuccess(ArrayList<ArichivedJourney> journeys) {
 
+        if (getContext() == null) return;
 
-        binding.rvArchive.setAdapter(new ArchiveAdapter(journeys));
+        binding.rvArchive.setAdapter(new ArchiveAdapter(journeys,getBaseContext()));
         binding.rvArchive.setLayoutManager(new LinearLayoutManager(HistoryActivity.this,LinearLayoutManager.VERTICAL,false));
     }
+
+
+
 
     @Override
     public void onGettingArchivedJourneysFailure(Exception e) {

@@ -11,8 +11,9 @@ public class DriverProfile implements Parcelable {
     String region;
     int vichuleId;
     String dayOff;
-    LatLng coordinates;
 
+    String ImgUrl;
+    LatLng coordinates;
 
     public DriverProfile(String name, int mobile, String region, int vichuleId, String dayOff, LatLng coordinates) {
         this.name = name;
@@ -20,6 +21,16 @@ public class DriverProfile implements Parcelable {
         this.region = region;
         this.vichuleId = vichuleId;
         this.dayOff = dayOff;
+        this.coordinates = coordinates;
+    }
+
+    public DriverProfile(String name, int mobile, String region, int vichuleId, String dayOff, String imgUrl, LatLng coordinates) {
+        this.name = name;
+        this.mobile = mobile;
+        this.region = region;
+        this.vichuleId = vichuleId;
+        this.dayOff = dayOff;
+        ImgUrl = imgUrl;
         this.coordinates = coordinates;
     }
 
@@ -69,6 +80,14 @@ public class DriverProfile implements Parcelable {
 
     public void setMobile(int mobile) {
         this.mobile = mobile;
+    }
+
+    public String getImgUrl() {
+        return ImgUrl;
+    }
+
+    public void setImgUrl(String imgUrl) {
+        ImgUrl = imgUrl;
     }
 
     public String getRegion() {

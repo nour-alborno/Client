@@ -10,6 +10,9 @@ public class ArichivedJourney {
         String date;
         String journeyId ;
 
+        String driveProfileImg;
+        String driverName;
+
 
     public ArichivedJourney(String driver, String region, String start, String end, String organization, String date, String journeyId) {
         this.driver = driver;
@@ -22,6 +25,34 @@ public class ArichivedJourney {
     }
 
     public ArichivedJourney() {
+    }
+
+    public ArichivedJourney(String driver, String region, String start, String end, String organization, String date, String journeyId, String driveProfileImg, String driverName) {
+        this.driver = driver;
+        this.region = region;
+        this.start = start;
+        this.end = end;
+        this.organization = organization;
+        this.date = date;
+        this.journeyId = journeyId;
+        this.driveProfileImg = driveProfileImg;
+        this.driverName = driverName;
+    }
+
+    public String getDriveProfileImg() {
+        return driveProfileImg;
+    }
+
+    public void setDriveProfileImg(String driveProfileImg) {
+        this.driveProfileImg = driveProfileImg;
+    }
+
+    public String getDriverName() {
+        return driverName;
+    }
+
+    public void setDriverName(String driverName) {
+        this.driverName = driverName;
     }
 
     public String getDate() {

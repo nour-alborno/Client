@@ -96,4 +96,6 @@
     <string name="attendance_must_be_confirmed_first">Attendance must be confirmed first!</string>
     <string name="go">Go</string>
 
+    <string name="history_status">Attended</string>
+
 </resources>

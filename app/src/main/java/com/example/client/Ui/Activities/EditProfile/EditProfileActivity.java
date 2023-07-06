@@ -21,6 +21,7 @@ import com.bumptech.glide.Glide;
 import com.example.client.Model.Benefeciares;
 import com.example.client.R;
 import com.example.client.Ui.Activities.Verification.VerificationActivity;
+import com.example.client.Ui.AppUtility.AppUtility;
 import com.example.client.Ui.AppUtility.ProgressDialogUtility;
 import com.example.client.databinding.ActivityEditProfileBinding;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -76,6 +77,7 @@ public class EditProfileActivity extends AppCompatActivity implements EditProfil
             @Override
             public void onClick(View view) {
 
+                AppUtility.vibrateButtonClicked(getBaseContext());
                 onBackPressed();
             }
         });
@@ -94,13 +96,23 @@ public class EditProfileActivity extends AppCompatActivity implements EditProfil
                 if (i == EditorInfo.IME_ACTION_DONE) {
                     String newNumber = binding.etMobile.getText().toString().trim();
 
+                    View view = getCurrentFocus();
 
                     if (!newNumber.isEmpty()){
+                        AppUtility.vibrateButtonClicked(getBaseContext());
+
+
+                        AppUtility.hideSoftKeyboard(getBaseContext(),view);
+
                         editProfilePresenter.updateNumber(newNumber,EditProfileActivity.this);
                       //  updateNumber(newNumber);
                         return true;
                     } else {
-                        Toast.makeText(EditProfileActivity.this, "Enter a new number", Toast.LENGTH_SHORT).show();
+
+                        AppUtility.hideSoftKeyboard(getBaseContext(),view);
+
+                        AppUtility.vibrateError(getBaseContext());
+                        AppUtility.showSnackbar(binding.getRoot(),"Enter the new number");
                     }
                 }
 

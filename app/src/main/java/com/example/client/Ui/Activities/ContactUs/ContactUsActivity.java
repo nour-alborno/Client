@@ -4,7 +4,9 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.location.Location;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
 import android.widget.Toast;
@@ -12,14 +14,14 @@ import android.widget.Toast;
 import com.example.client.Model.ContactUs;
 import com.example.client.R;
 import com.example.client.Ui.AppUtility.AppUtility;
+import com.example.client.Ui.base_classes.BaseActivity;
 import com.example.client.databinding.ActivityContactUsBinding;
 
-public class ContactUsActivity extends AppCompatActivity implements ContactUsView{
+public class ContactUsActivity extends BaseActivity implements ContactUsView{
 
     ActivityContactUsBinding binding;
 
-    public final String CLIENT_ID_KEY = "clientId";
-    SharedPreferences sp;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,18 +30,30 @@ public class ContactUsActivity extends AppCompatActivity implements ContactUsVie
         setContentView(binding.getRoot());
 
         ContactUsPresenter presenter = new ContactUsPresenter(this);
-        sp =getSharedPreferences("sp", Context.MODE_PRIVATE);
 
+
+        Log.d("Test", sp.getString(CLIENT_ID_KEY,null) );
         binding.btnSend.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                ContactUs contactUs = new ContactUs();
-                contactUs.setDate(AppUtility.getDateTime());
-                contactUs.setMessage(binding.etMessage.getText().toString());
-                contactUs.setTitle(binding.etSubject.getText().toString());
-                contactUs.setClientId(sp.getString(CLIENT_ID_KEY,null));
 
-                presenter.sendingMessage(contactUs);
+                if (binding.etMessage.getText().toString().isEmpty()){
+                    AppUtility.vibrateError(getBaseContext());
+                    binding.etMessage.setError("Fill the field");
+                } else if (binding.etSubject.getText().toString().isEmpty()) {
+                    AppUtility.vibrateError(getBaseContext());
+                    binding.etSubject.setError("Fill the field");
+                } else {
+                    ContactUs contactUs = new ContactUs();
+                    contactUs.setDate(AppUtility.getDateTime());
+                    contactUs.setMessage(binding.etMessage.getText().toString());
+                    contactUs.setTitle(binding.etSubject.getText().toString());
+                    contactUs.setClientId(sp.getString(CLIENT_ID_KEY,null));
+
+                    presenter.sendingMessage(contactUs);
+                }
+
+
             }
         });
 
@@ -48,19 +62,15 @@ public class ContactUsActivity extends AppCompatActivity implements ContactUsVie
     @Override
     public void onSendingMessageSuccess() {
 
+        AppUtility.vibrateButtonClicked(getApplicationContext());
+        AppUtility.showSnackbar(binding.getRoot(),"We've received your message. \n Thank you for contacting us!");
         onBackPressed();
-//        Toast toast = new Toast(ContactUsActivity.this);
-//        toast.setGravity(Gravity.TOP | Gravity.CENTER_HORIZONTAL, 0, 100); // Position at the top with a vertical offset
-//        toast.setDuration(Toast.LENGTH_LONG);
-//        toast.setText("Your Message Has Been Sent. \n Thank you for contacting us!");
-//        // Show the Toast
-//        toast.show();
 
-//        binding.getRoot().postDelayed(new Runnable() {
-//            @Override
-//            public void run() {
-//                //toast.cancel();
-//            }
-//        }, 1200);
     }
+
+    @Override
+    public void onSendingMessageFailure(Exception e) {
+        AppUtility.vibrateError(getBaseContext());
+        AppUtility.showSnackbar(binding.getRoot(),"It appears there is a problem. Please try later");
     }
+}

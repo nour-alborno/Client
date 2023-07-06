@@ -234,11 +234,14 @@
                 android:layout_height="@dimen/_37sdp"
                 android:text="Accept"
                 android:layout_marginTop="@dimen/_12sdp"
-                app:background="@drawable/shape_left_rounded_button"
+                android:textColor="@color/black"
+                android:background="@drawable/shape_right_rounded_button"
                 app:backgroundTint="@color/white"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/divider"
                 android:layout_marginStart="@dimen/_27sdp"
+                style="@style/Widget.MaterialComponents.Button.Icon"
+
                 />
 
             <Button
@@ -246,10 +249,11 @@
                 android:layout_width="@dimen/_113sdp"
                 android:layout_height="@dimen/_37sdp"
                 android:text="Exclude"
+                android:textColor="@color/black"
                 android:layout_marginTop="@dimen/_12sdp"
                 app:layout_constraintEnd_toEndOf="parent"
                 android:background="@drawable/shape_right_rounded_button"
-                android:backgroundTint="@color/white"
+                app:backgroundTint="@color/white"
                 app:layout_constraintStart_toEndOf="@id/btn_accept"
                 app:layout_constraintTop_toBottomOf="@id/divider"
                 android:layout_marginEnd="@dimen/_27sdp"
@@ -267,6 +271,10 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/divider"
+                style="@style/Widget.MaterialComponents.Button.Icon"
+                android:textColor="@color/black"
+                android:background="@drawable/shape_right_rounded_button"
+                app:backgroundTint="@color/white"
                 />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
@@ -449,6 +457,8 @@
                 app:layout_constraintTop_toBottomOf="@id/divider2"
                 style="@style/Widget.MaterialComponents.Button.Icon"
                 android:layout_marginStart="@dimen/_27sdp"
+                android:textColor="@color/black"
+                app:backgroundTint="@color/white"
                 />
 
             <Button
@@ -464,6 +474,8 @@
                 app:layout_constraintTop_toBottomOf="@id/divider2"
                 android:layout_marginEnd="@dimen/_27sdp"
                 style="@style/Widget.MaterialComponents.Button.Icon"
+                android:textColor="@color/black"
+                app:backgroundTint="@color/white"
                 />
 
 
@@ -477,6 +489,10 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/divider2"
+                style="@style/Widget.MaterialComponents.Button.Icon"
+                android:textColor="@color/black"
+                android:background="@drawable/shape_right_rounded_button"
+                app:backgroundTint="@color/white"
                 />
         </androidx.constraintlayout.widget.ConstraintLayout>
 
