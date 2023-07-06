@@ -22,8 +22,8 @@ public class ContactUsPresenter extends BasePresenter {
 
     public void sendingMessage(ContactUs contactUs){
 
-        ArrayList<ContactUs> contactUsArrayList = new ArrayList<>();
-        contactUsArrayList.add(contactUs);
+
+
         DatabaseReference   reference = db.getReference("ClientMessage");
         reference.child("Messages").push().setValue(contactUs)
                 .addOnCompleteListener(new OnCompleteListener<Void>() {
