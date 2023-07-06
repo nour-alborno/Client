@@ -96,11 +96,12 @@ String newNumber,verificationIdEdit;
                 public void onClick(View view) {
 
                     setEnabledVisibility();
-                    Log.e("VerificationActivityLOG","Click");
+                    Log.e("VerificationActivityLOG", "Click");
                     if (TextUtils.isEmpty(binding.pinView.getText().toString())) {
                         binding.pinView.setError("Enter verification code");
                         binding.pinView.setLineColor(getResources().getColor(R.color.baby_red));
-                        AppUtility.showSnackbar(binding.getRoot(),"Enter verification code");
+                        AppUtility.showSnackbar(binding.getRoot(), "Enter verification code");
+                        setEnabledVisibility();
                         Log.e("VerificationActivityLOG", "empty");
                         return;
                     } else {
@@ -109,15 +110,16 @@ String newNumber,verificationIdEdit;
                         binding.pinView.setEnabled(false);
                         binding.btnLogin.setEnabled(false);
 
+
                         String code = binding.pinView.getText().toString();
                         if (verificationIdEdit != null) {
                             binding.progressBar.setVisibility(View.VISIBLE);
 
-                            Log.d("inside if","inside");
-                            Log.d("verificationIdEdit",getIntent().getStringExtra("verificationIdEdit"));
-                            Log.d("code",binding.pinView.toString().trim());
+                            Log.d("inside if", "inside");
+                            Log.d("verificationIdEdit", getIntent().getStringExtra("verificationIdEdit"));
+                            Log.d("code", binding.pinView.toString().trim());
 
-                            presenter.updatePhoneNumber(getIntent().getStringExtra("verificationIdEdit"),binding.pinView.getText().toString(),sp.getString(CLIENT_ID_KEY,null),Integer.parseInt(newNumber));
+                            presenter.updatePhoneNumber(getIntent().getStringExtra("verificationIdEdit"), binding.pinView.getText().toString(), sp.getString(CLIENT_ID_KEY, null), Integer.parseInt(newNumber));
                         }
                     }
 
@@ -319,4 +321,18 @@ String newNumber,verificationIdEdit;
         binding.tvResend.setEnabled(true);
     }
 
+    @Override
+    public void onChangingNumberSuccess() {
+        AppUtility.vibrateButtonClicked(getBaseContext());
+        setEnabledVisibility();
+        startActivity(new Intent(getBaseContext(), MainActivity.class));
+    }
+
+    @Override
+    public void onChangingNumberFailure(Exception e) {
+        setEnabledVisibility();
+
+        AppUtility.showSnackbar(binding.getRoot(),e.getMessage());
+        AppUtility.vibrateError(getBaseContext());
+    }
 }

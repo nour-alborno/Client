@@ -16,10 +16,8 @@ public class BaseFragment extends Fragment {
 
    public SharedPreferences sp;
     public SharedPreferences.Editor edit;
+    public final String CLIENT_ID_KEY = "clientId";
 
-    public final String DRIVER_ID_KEY = "driverId" , DRIVER_MOBILE_KEY = "driverMobile", DRIVER_NAME_KEY ="driverName";
-
-    public String driverId,driverName;
 
     @Nullable
     @Override
@@ -30,7 +28,6 @@ public class BaseFragment extends Fragment {
         sp = getActivity().getSharedPreferences("sp", Context.MODE_PRIVATE);
         edit = sp.edit();
 
-       driverId= sp.getString(DRIVER_ID_KEY,null);
 
 
 

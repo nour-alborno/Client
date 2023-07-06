@@ -9,7 +9,7 @@ import com.google.firebase.storage.StorageReference;
 public class BasePresenter {
 
 
-    public FirebaseFirestore firestore ;
+    public static FirebaseFirestore firestore ;
    public FirebaseStorage firebaseStorage;
 
    public FirebaseDatabase db;
