@@ -40,6 +40,7 @@ public class VerificationPresenter extends BasePresenter {
                             } else {
                                 // Phone number update failed
                                 Log.d("PhoneNum updated failed", task.getException().getMessage());
+                                view.onChangingNumberFailure(task.getException());
                                // Toast.makeText(getApplicationContext(), "Failed to update phone number: " + task.getException().getMessage(), Toast.LENGTH_SHORT).show();
                             }
                         }
@@ -76,6 +77,7 @@ public class VerificationPresenter extends BasePresenter {
                     public void onComplete(@NonNull Task<Void> task) {
 
                         if (task.isSuccessful()) {
+                            view.onChangingNumberSuccess();
                             Log.d("changeNumberProfile", "Successful");
                         } else {
                             Log.d("changeNumberProfile", task.getException().getMessage());         }

@@ -74,9 +74,7 @@ dependencies {
     annotationProcessor 'com.github.bumptech.glide:compiler:4.14.2'
 
 
-//    implementation 'com.google.android.gms:play-services-maps:16.1.0'
-//    implementation 'com.github.jd-alexander:library:1.1.0'
-//    implementation 'com.google.android.material:material:1.1.0'
+
 
 
 }

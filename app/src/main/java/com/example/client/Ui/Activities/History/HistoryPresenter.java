@@ -32,11 +32,9 @@ public class HistoryPresenter extends BasePresenter {
 
                         if (task.isSuccessful()){
 
-
-
                             ArrayList<ArichivedJourney> journeys = (ArrayList<ArichivedJourney>) task.getResult().toObjects(ArichivedJourney.class);
 
-
+                            Log.d("success",journeys.toString());
                             view.onGettingArchivedJourneysSuccess(journeys);
                         }else {
                             view.onGettingArchivedJourneysFailure(task.getException());

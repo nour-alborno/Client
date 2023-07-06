@@ -2,26 +2,27 @@ package com.example.client.Ui.base_classes;
 
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.os.PersistableBundle;
-
+import android.util.Log;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 public class BaseActivity extends AppCompatActivity {
 
+    public SharedPreferences sp;
+   public SharedPreferences.Editor edit;
+    public final String CLIENT_ID_KEY = "clientId";
 
-    SharedPreferences sp;
-    SharedPreferences.Editor edit;
-    public final String DRIVER_ID_KEY = "driverId" , DRIVER_MOBILE_KEY = "driverMobile";
-    public final String DRIVER_NUMBER_KEY = "driverNumber";
-
+    public String clientId;
 
     @Override
-    public void onCreate(@Nullable Bundle savedInstanceState, @Nullable PersistableBundle persistentState) {
-        super.onCreate(savedInstanceState, persistentState);
-
+    protected void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
         sp = getSharedPreferences("sp", MODE_PRIVATE);
         edit = sp.edit();
+
+
+
+
 
 
     }

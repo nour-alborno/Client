@@ -21,6 +21,8 @@ import com.example.client.Ui.Activities.EditProfile.EditProfileActivity;
 import com.example.client.Ui.Activities.History.HistoryActivity;
 import com.example.client.Ui.Activities.Login.LoginActivity;
 import com.example.client.Ui.Activities.about_us.AboutUsActivity;
+import com.example.client.Ui.AppUtility.AppUtility;
+import com.example.client.Ui.base_classes.BaseFragment;
 import com.example.client.databinding.FragmentProfileBinding;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -33,12 +35,12 @@ import com.google.firebase.firestore.FirebaseFirestore;
  * Use the {@link ProfileFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class ProfileFragment extends Fragment implements ProfileView{
+public class ProfileFragment extends BaseFragment implements ProfileView{
 
     Benefeciares benefeciares;
 
-    SharedPreferences sp;
-    public final String CLIENT_ID_KEY = "clientId";
+
+
 
     ProfilePresenter presenter;
     FragmentProfileBinding binding;
@@ -103,12 +105,14 @@ public class ProfileFragment extends Fragment implements ProfileView{
         binding.imgEdit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                AppUtility.vibrateButtonClicked(getActivity());
                 startActivity(new Intent(getActivity(), EditProfileActivity.class).putExtra("userInfo",benefeciares));
             }
         });
          binding.linLayoutHistory.setOnClickListener(new View.OnClickListener() {
              @Override
              public void onClick(View view) {
+                 AppUtility.vibrateButtonClicked(getActivity());
                  startActivity(new Intent(getActivity(), HistoryActivity.class));
              }
          });
@@ -117,6 +121,7 @@ public class ProfileFragment extends Fragment implements ProfileView{
          binding.tvContactus.setOnClickListener(new View.OnClickListener() {
              @Override
              public void onClick(View view) {
+                 AppUtility.vibrateButtonClicked(getActivity());
                  startActivity(new Intent(getActivity(), ContactUsActivity.class));
              }
          });
@@ -124,6 +129,7 @@ public class ProfileFragment extends Fragment implements ProfileView{
          binding.linLayoutLogout.setOnClickListener(new View.OnClickListener() {
              @Override
              public void onClick(View view) {
+                 AppUtility.vibrateError(getActivity());
                  FirebaseAuth.getInstance().signOut();
                  startActivity(new Intent(getActivity(), LoginActivity.class));
                  getActivity().finish();

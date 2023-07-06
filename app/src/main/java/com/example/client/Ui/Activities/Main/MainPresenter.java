@@ -8,6 +8,7 @@ import com.example.client.R;
 import com.example.client.Ui.Fragments.Attendance.AttendanceFragment;
 import com.example.client.Ui.Fragments.Home.HomeFragment;
 import com.example.client.Ui.Fragments.Profile.ProfileFragment;
+import com.example.client.Ui.Fragments.notification.NotifiacationFragment;
 
 public class MainPresenter {
 
@@ -39,7 +40,7 @@ public class MainPresenter {
                 break;
 
             case R.id.page_notification:
-              //  fragment = new NotificationFragment();
+                fragment = new NotifiacationFragment();
                 break;
 
             case R.id.page_profile:

@@ -36,6 +36,7 @@
         android:layout_height="@dimen/_70sdp"
         android:layout_marginEnd="40dp"
         android:background="@drawable/img_bg_1"
+        app:backgroundTint="@color/sea_green"
         android:gravity="center"
         android:text=">"
         android:textSize="@dimen/_25sdp"

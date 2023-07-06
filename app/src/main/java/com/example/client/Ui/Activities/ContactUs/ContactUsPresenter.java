@@ -4,9 +4,8 @@ import android.util.Log;
 
 import androidx.annotation.NonNull;
 
-import com.example.client.Model.AttendanceConfirmation;
 import com.example.client.Model.ContactUs;
-import com.example.client.Ui.AppUtility.AppUtility;
+
 import com.example.client.Ui.base_classes.BasePresenter;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -34,6 +33,7 @@ public class ContactUsPresenter extends BasePresenter {
                             view.onSendingMessageSuccess();
                             Log.d("contactUs","succesfull");
                         } else {
+                            view.onSendingMessageFailure(task.getException());
                             Log.d("contactUs",task.getException().getMessage());
                         }
                     }

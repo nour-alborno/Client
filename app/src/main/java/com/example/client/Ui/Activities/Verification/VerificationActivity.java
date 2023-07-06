@@ -101,13 +101,15 @@ String newNumber,verificationIdEdit;
                         binding.pinView.setError("Enter verification code");
                         binding.pinView.setLineColor(getResources().getColor(R.color.baby_red));
                         AppUtility.showSnackbar(binding.getRoot(),"Enter verification code");
+                        setEnabledVisibility();
                         Log.e("VerificationActivityLOG", "empty");
-                        return;
+                         return;
                     } else {
                         binding.progressBar.setVisibility(View.VISIBLE);
                         binding.btnLogin.setText(R.string.sending);
                         binding.pinView.setEnabled(false);
                         binding.btnLogin.setEnabled(false);
+                    }
 
                         String code = binding.pinView.getText().toString();
                         if (verificationIdEdit != null) {
@@ -121,7 +123,7 @@ String newNumber,verificationIdEdit;
                         }
                     }
 
-                }
+
             });
         }
 
@@ -319,4 +321,18 @@ String newNumber,verificationIdEdit;
         binding.tvResend.setEnabled(true);
     }
 
+    @Override
+    public void onChangingNumberSuccess() {
+        AppUtility.vibrateButtonClicked(getBaseContext());
+        setEnabledVisibility();
+        startActivity(new Intent(getBaseContext(), MainActivity.class));
+    }
+
+    @Override
+    public void onChangingNumberFailure(Exception e) {
+        setEnabledVisibility();
+
+        AppUtility.showSnackbar(binding.getRoot(),e.getMessage());
+        AppUtility.vibrateError(getBaseContext());
+    }
 }
