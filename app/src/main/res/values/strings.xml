@@ -93,5 +93,7 @@
     <string name="btn_phone">Phone</string>
     <string name="skip">Skip</string>
     <string name="next">Next</string>
+    <string name="attendance_must_be_confirmed_first">Attendance must be confirmed first!</string>
+    <string name="go">Go</string>
 
 </resources>

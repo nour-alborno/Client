@@ -1,8 +1,10 @@
 package com.example.client.Model;
 
+import androidx.fragment.app.Fragment;
+
 import java.util.ArrayList;
 
-public class AttendanceConfirmation {
+public class AttendanceConfirmation extends Fragment {
     String driverId;
     String date;
     String journeyId;

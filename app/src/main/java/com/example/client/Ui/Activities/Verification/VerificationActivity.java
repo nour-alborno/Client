@@ -62,6 +62,7 @@ String newNumber,verificationIdEdit;
                     return;
                 }else {
                     binding.progressBar.setVisibility(View.VISIBLE);
+                    binding.btnLogin.setBackgroundColor(getResources().getColor(R.color.gray));
                     binding.btnLogin.setText(R.string.sending);
                     binding.pinView.setEnabled(false);
                     binding.btnLogin.setEnabled(false);
@@ -71,6 +72,8 @@ String newNumber,verificationIdEdit;
                 String code = binding.pinView.getText().toString();
                 if (verificationId != null) {
                     binding.progressBar.setVisibility(View.VISIBLE);
+                    binding.btnLogin.setBackgroundColor(getResources().getColor(R.color.gray));
+
                     PhoneAuthCredential phoneAuthCredential = PhoneAuthProvider.getCredential(verificationId, code);
                     FirebaseAuth.getInstance().signInWithCredential(phoneAuthCredential)
                             .addOnCompleteListener(task -> {
@@ -105,6 +108,7 @@ String newNumber,verificationIdEdit;
                         return;
                     } else {
                         binding.progressBar.setVisibility(View.VISIBLE);
+                        binding.btnLogin.setBackgroundColor(getResources().getColor(R.color.gray));
                         binding.btnLogin.setText(R.string.sending);
                         binding.pinView.setEnabled(false);
                         binding.btnLogin.setEnabled(false);
@@ -112,6 +116,8 @@ String newNumber,verificationIdEdit;
                         String code = binding.pinView.getText().toString();
                         if (verificationIdEdit != null) {
                             binding.progressBar.setVisibility(View.VISIBLE);
+                            binding.btnLogin.setBackgroundColor(getResources().getColor(R.color.gray));
+
 
                             Log.d("inside if","inside");
                             Log.d("verificationIdEdit",getIntent().getStringExtra("verificationIdEdit"));
@@ -317,6 +323,7 @@ String newNumber,verificationIdEdit;
         binding.btnLogin.setEnabled(true);
         binding.pinView.setEnabled(true);
         binding.tvResend.setEnabled(true);
+        binding.btnLogin.setBackgroundColor(getResources().getColor(R.color.sea_green));
     }
 
 }

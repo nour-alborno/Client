@@ -70,6 +70,7 @@ public class LoginActivity extends AppCompatActivity implements LoginView {
             }
 
             binding.progressBar.setVisibility(View.VISIBLE);
+            binding.btnLogin.setBackgroundColor(getResources().getColor(R.color.gray));
             binding.etMobile.setEnabled(false);
             binding.btnLogin.setText(R.string.sending);
             binding.btnLogin.setEnabled(false);
@@ -129,6 +130,8 @@ public class LoginActivity extends AppCompatActivity implements LoginView {
         binding.btnLogin.setText(R.string.send);
         binding.etMobile.setEnabled(true);
         binding.btnLogin.setEnabled(true);
+        binding.btnLogin.setBackgroundColor(getResources().getColor(R.color.sea_green));
+
     }
 
     @Override
