@@ -1,16 +1,16 @@
 
 package com.example.client.Ui.Fragments.Profile;
 
+import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 
-import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 
 import com.bumptech.glide.Glide;
@@ -21,14 +21,11 @@ import com.example.client.Ui.Activities.EditProfile.EditProfileActivity;
 import com.example.client.Ui.Activities.History.HistoryActivity;
 import com.example.client.Ui.Activities.Login.LoginActivity;
 import com.example.client.Ui.Activities.about_us.AboutUsActivity;
+import com.example.client.Ui.Activities.settings.SettingsActivity;
 import com.example.client.Ui.AppUtility.AppUtility;
 import com.example.client.Ui.base_classes.BaseFragment;
 import com.example.client.databinding.FragmentProfileBinding;
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.firestore.DocumentSnapshot;
-import com.google.firebase.firestore.FirebaseFirestore;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -38,10 +35,7 @@ import com.google.firebase.firestore.FirebaseFirestore;
 public class ProfileFragment extends BaseFragment implements ProfileView{
 
     Benefeciares benefeciares;
-
-
-
-
+    Dialog dialog;
     ProfilePresenter presenter;
     FragmentProfileBinding binding;
     String id;
@@ -126,13 +120,44 @@ public class ProfileFragment extends BaseFragment implements ProfileView{
              }
          });
 
+         binding.linLayoutSettings.setOnClickListener(new View.OnClickListener() {
+             @Override
+             public void onClick(View view) {
+                 AppUtility.vibrateButtonClicked(getActivity());
+                 startActivity(new Intent(getActivity(), SettingsActivity.class));
+             }
+         });
          binding.linLayoutLogout.setOnClickListener(new View.OnClickListener() {
              @Override
              public void onClick(View view) {
                  AppUtility.vibrateError(getActivity());
-                 FirebaseAuth.getInstance().signOut();
-                 startActivity(new Intent(getActivity(), LoginActivity.class));
-                 getActivity().finish();
+
+
+                 dialog = new Dialog(getActivity());
+                 View dialogView = LayoutInflater.from(requireActivity()).inflate(R.layout.item_dialog_logout, requireActivity().findViewById(R.id.custom_dialog_logout));
+                 dialog.setContentView(dialogView);
+                 dialog.show();
+
+                 Button cancel = dialogView.findViewById(R.id.btn_cancel);
+                 Button yes = dialogView.findViewById(R.id.btn_yes);
+
+                 yes.setOnClickListener(new View.OnClickListener() {
+                     @Override
+                     public void onClick(View view) {
+                         AppUtility.vibrateError(getActivity());
+                         FirebaseAuth.getInstance().signOut();
+                         startActivity(new Intent(getActivity(), LoginActivity.class));
+                         getActivity().finish();
+                     }
+                 });
+
+                 cancel.setOnClickListener(new View.OnClickListener() {
+                     @Override
+                     public void onClick(View view) {
+
+                         dialog.dismiss();
+                     }
+                 });
              }
          });
 

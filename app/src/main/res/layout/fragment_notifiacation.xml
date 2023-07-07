@@ -3,6 +3,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    app:backgroundTint="@color/white"
+    app:background="@color/white"
     tools:context=".Ui.Fragments.notification.NotifiacationFragment"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 

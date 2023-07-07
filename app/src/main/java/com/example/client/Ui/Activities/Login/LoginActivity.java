@@ -32,10 +32,10 @@ public class LoginActivity extends AppCompatActivity implements LoginView {
     CliantsNumbers cliantsNumbers;
     SharedPreferences sp;
     SharedPreferences.Editor edit;
-
+    public static String mobile;
     public final String CLIENT_ID_KEY = "clientId";
     public final String CLIENT_NUMBER_KEY = "driverNumber";
-
+    String phone;
     LoginPresenter loginPresenter;
 
     @Override
@@ -61,16 +61,19 @@ public class LoginActivity extends AppCompatActivity implements LoginView {
         loginPresenter = new LoginPresenter(this);
 
         binding.btnLogin.setOnClickListener(view -> {
-            String mobile = binding.etMobile.getText().toString().trim();
+            mobile = binding.etMobile.getText().toString().trim();
+            edit.putString("phone",phone);
             if (TextUtils.isEmpty(mobile)) {
                 binding.etMobile.setError("Enter your phone number");
                 setEnabledVisibility();
+                AppUtility.vibrateButtonClicked(getBaseContext());
                // Toast.makeText(getApplicationContext(), "Enter your phone", Toast.LENGTH_SHORT).show();
                 return;
             }
 
             binding.progressBar.setVisibility(View.VISIBLE);
             binding.btnLogin.setBackgroundColor(getResources().getColor(R.color.gray));
+            binding.btnLogin.setTextColor(getResources().getColor(R.color.sea_green));
             binding.etMobile.setEnabled(false);
             binding.btnLogin.setText(R.string.sending);
             binding.btnLogin.setEnabled(false);
@@ -80,7 +83,7 @@ public class LoginActivity extends AppCompatActivity implements LoginView {
     }
 
     private void sendCodeVerification() {
-        String phone = binding.etMobile.getText().toString().trim();
+        phone = binding.etMobile.getText().toString().trim();
         Log.e("LoginActivityLOG", phone);
 
         PhoneAuthProvider.getInstance().verifyPhoneNumber(
@@ -97,7 +100,7 @@ public class LoginActivity extends AppCompatActivity implements LoginView {
 
                     @Override
                     public void onVerificationFailed(@NonNull FirebaseException e) {
-                        AppUtility.showSnackbar(binding.getRoot(),e.getMessage());
+                        AppUtility.showSnackbar(binding.getRoot(),"Verification failed: " + e.getMessage());
                         Log.e("LoginActivityLOG", e.toString());
                         binding.etMobile.setText("");
                         setEnabledVisibility();
@@ -109,6 +112,7 @@ public class LoginActivity extends AppCompatActivity implements LoginView {
                         Intent intent = new Intent(LoginActivity.this, VerificationActivity.class);
                         intent.putExtra("verificationId", verificationId);
                         intent.putExtra("resendingToken", token);
+                        intent.putExtra("phone", phone);
                         intent.putExtra("fromWhere",true);
                         setEnabledVisibility();
                         startActivity(intent);
@@ -131,6 +135,7 @@ public class LoginActivity extends AppCompatActivity implements LoginView {
         binding.etMobile.setEnabled(true);
         binding.btnLogin.setEnabled(true);
         binding.btnLogin.setBackgroundColor(getResources().getColor(R.color.sea_green));
+        binding.btnLogin.setTextColor(getResources().getColor(R.color.white));
 
     }
 

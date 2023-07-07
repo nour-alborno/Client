@@ -75,9 +75,9 @@
     <string name="didn_t_get_otp_resend"><b><u>اعادة الارسال</u></b>لم يتم ارسال رمز التحقق؟ </string>
     <string name="send">ارسال</string>
     <string name="palestine_code">+970</string>
-    <string name="sending">يتم الارسال</string>
+    <string name="sending">يتم الارسال...</string>
     <string name="verify">تحقق</string>
-    <string name="verifying">يتم التحقق</string>
+    <string name="verifying">يتم التحقق...</string>
 
     <string name="tv_aboutus">About us</string>
     <string name="tv_content">يعمل هذا المشروع منذ عام 2012 ، ويركز على معالجة ما هو محدد
@@ -94,5 +94,8 @@
     <string name="go">اذهب</string>
 
     <string name="history_status">حضر الرحلة</string>
+    <string name="are_you_sure_you_want_to_log_out">هل انت متاكد من انك تريد تسجيل الخروج</string>
+    <string name="yes">نعم</string>
+    <string name="cancel">الغاء</string>
 
 </resources>

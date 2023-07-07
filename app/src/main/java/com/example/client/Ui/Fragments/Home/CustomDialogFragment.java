@@ -8,6 +8,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import androidx.activity.result.ActivityResultCallback;
 import androidx.activity.result.ActivityResultLauncher;
@@ -70,8 +71,8 @@ public class CustomDialogFragment extends DialogFragment {
                         @Override
                         public void onActivityResult(Boolean result) {
                             if (result){
-                                AppUtility.showSnackbar(binding.getRoot(),"Call Permission granted");
-                             //   Toast.makeText(getActivity(), "Permission granted", Toast.LENGTH_SHORT).show();
+                              //  AppUtility.showSnackbar(binding.getRoot(),"Call Permission granted");
+                                Toast.makeText(getActivity(), "Permission granted", Toast.LENGTH_SHORT).show();
                             }else {
                                 AppUtility.showSnackbar(binding.getRoot(),"Call Permission denied");
                             }

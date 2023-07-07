@@ -12,6 +12,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.Toast;
 
 import androidx.activity.result.ActivityResultCallback;
 import androidx.activity.result.ActivityResultLauncher;
@@ -176,10 +177,10 @@ public class HomeFragment extends Fragment implements OnMapReadyCallback {
                     @Override
                     public void onActivityResult(Boolean result) {
                         if (result) {
-                            AppUtility.showSnackbar(binding.getRoot(), "Call Permission granted");
-                            //     Toast.makeText(getActivity(), "Permission granted", Toast.LENGTH_SHORT).show();
+                           // AppUtility.showSnackbar(binding.getRoot(), "Call Permission granted");
+                                Toast.makeText(getActivity(), "Permission granted", Toast.LENGTH_SHORT).show();
                         } else {
-                            AppUtility.showSnackbar(binding.getRoot(), "Call Permission denied");
+                           // AppUtility.showSnackbar(binding.getRoot(), "Call Permission denied");
                             // Toast.makeText(getActivity(), "Permission denied", Toast.LENGTH_SHORT).show();
                         }
                     }
@@ -263,7 +264,7 @@ public class HomeFragment extends Fragment implements OnMapReadyCallback {
         dialog.setContentView(dialogView);
         dialog.show();
 
-       Button btn_getLocation = dialogView.findViewById(R.id.btn_getLocation);
+       Button btn_getLocation = dialogView.findViewById(R.id.btn_goAttendence);
         btn_getLocation.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
