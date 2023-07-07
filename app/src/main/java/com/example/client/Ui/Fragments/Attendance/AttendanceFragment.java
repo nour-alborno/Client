@@ -273,6 +273,7 @@ public class AttendanceFragment extends BaseFragment {
                 binding.btnGoMap.setVisibility(View.VISIBLE);
 
                 edit.putBoolean("journeyGoingAtendTaken",true);
+                edit.putString("JourneyDate",AppUtility.getDate());
                 edit.commit();
                 Log.d("AttendanceFragmentDID", "onClick: 1 "+sp.getString("driverIdGoing",null));
 
@@ -303,6 +304,7 @@ public class AttendanceFragment extends BaseFragment {
                 binding.btnGoMap2.setVisibility(View.VISIBLE);
 
                 edit.putBoolean("journeyReturnAtendTaken",true);
+                edit.putString("JourneyDate",AppUtility.getDate());
                 edit.commit();
 
                 Log.d("AttendanceFragmentDID", "onClick: 2 "+sp.getString("driverIdReturn",null));
@@ -315,7 +317,7 @@ public class AttendanceFragment extends BaseFragment {
             public void onClick(View view) {
                 AppUtility.vibrateButtonClicked(getActivity());
                 edit.putString("DriverId",sp.getString("driverIdReturn",null));
-                edit.putString("JourneyDate",AppUtility.getDate());
+
                 edit.commit();
                 OnMove.move();
 

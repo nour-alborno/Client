@@ -144,6 +144,8 @@ public class ProfileFragment extends BaseFragment implements ProfileView{
                  yes.setOnClickListener(new View.OnClickListener() {
                      @Override
                      public void onClick(View view) {
+                         edit = sp.edit();
+                         edit.clear();
                          AppUtility.vibrateError(getActivity());
                          FirebaseAuth.getInstance().signOut();
                          startActivity(new Intent(getActivity(), LoginActivity.class));

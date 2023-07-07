@@ -4,19 +4,24 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
+import android.util.Log;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.client.Ui.Activities.Login.LoginActivity;
 import com.example.client.Ui.Activities.onboarding.OnboardingActivity;
+import com.example.client.Ui.AppUtility.AppUtility;
+import com.example.client.Ui.base_classes.BaseActivity;
 import com.example.client.databinding.ActivitySplashBinding;
 import com.google.firebase.database.DatabaseReference;
 
-public class SplashActivity extends AppCompatActivity {
+import java.text.SimpleDateFormat;
+
+public class SplashActivity extends BaseActivity {
 
     ActivitySplashBinding binding;
-    SharedPreferences sp;
-    SharedPreferences.Editor edit;
+//    SharedPreferences sp;
+//    SharedPreferences.Editor edit;
     DatabaseReference driverLocationRef;
     String DriverId;
     public static final String IS_FIRST_KEY = "firstTime";
@@ -33,8 +38,11 @@ public class SplashActivity extends AppCompatActivity {
         binding = ActivitySplashBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
-        sp = getSharedPreferences("sp", MODE_PRIVATE);
-        edit = sp.edit();
+//        sp = getSharedPreferences("sp", MODE_PRIVATE);
+//        edit = sp.edit();
+
+        checkNewDay();
+
 
         new Handler().postDelayed(new Runnable() {
             @Override
@@ -53,5 +61,51 @@ public class SplashActivity extends AppCompatActivity {
                 edit.apply();
             }
         }, 4000);
+    }
+
+
+    private void checkNewDay() {
+
+
+        String previous = sp.getString("JourneyDate",null);
+        String driverId = sp.getString("DriverId",null);
+        boolean journeyGoingAtendTaken = sp.getBoolean("journeyGoingAtendTaken",false);
+        boolean journeyReturnAtendTaken = sp.getBoolean("journeyReturnAtendTaken",false);
+        boolean journeyReturnAtendTakenEx = sp.getBoolean("journeyReturnAtendTakenEx",false);
+        boolean journeyGoingAtendTakenEx = sp.getBoolean("journeyGoingAtendTakenEx",false);
+
+
+
+        if(previous != null && driverId !=null ){
+
+            boolean x = previous.equals(AppUtility.getDate());
+            Log.d("boolean",String.valueOf(x));
+            if (!x){
+                edit.putString("JourneyDate",null);
+                if (journeyReturnAtendTaken){
+                    edit.putString("journeyReturnAtendTaken",null);
+                }
+
+                if (journeyGoingAtendTaken){
+                    edit.putString("journeyGoingAtendTaken",null);
+                }
+
+                if (journeyGoingAtendTakenEx ){
+                    edit.putString("journeyGoingAtendTakenEx",null);
+                }
+                if (journeyReturnAtendTakenEx){
+                    edit.putString("journeyReturnAtendTakenEx",null);
+                }
+
+                edit.commit();
+            }
+
+
+
+
+
+        }
+
+
     }
 }
