@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Toast;
 
 import androidx.activity.result.ActivityResultCallback;
 import androidx.activity.result.ActivityResultLauncher;
@@ -30,7 +31,8 @@ public class AboutUsActivity extends AppCompatActivity {
                     @Override
                     public void onActivityResult(Boolean result) {
                         if (result){
-                            AppUtility.showSnackbar(binding.getRoot(),"Call Permission granted");
+                            Toast.makeText(AboutUsActivity.this, "Call Permission granted", Toast.LENGTH_SHORT).show();
+                        //    AppUtility.showSnackbar(binding.getRoot(),"Call Permission granted");
                         }else {
                             AppUtility.showSnackbar(binding.getRoot(),"Call Permission denied");
                         }
@@ -41,10 +43,13 @@ public class AboutUsActivity extends AppCompatActivity {
         binding.btnPhone.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                AppUtility.vibrateButtonClicked(getBaseContext());
+
                 Intent intent=new Intent(Intent.ACTION_CALL);
                 String phone = "+970593887076";
                 intent.setData(Uri.parse("tel:"+phone));
                 startActivity(intent);
+
 
             }
         });
@@ -53,6 +58,8 @@ public class AboutUsActivity extends AppCompatActivity {
         binding.btnEmail.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                AppUtility.vibrateButtonClicked(getBaseContext());
+
                 Intent intent=new Intent(Intent.ACTION_SENDTO);
                 String mail =" info@interpal.org";
                 intent.setData(Uri.parse("mailto:"+mail));

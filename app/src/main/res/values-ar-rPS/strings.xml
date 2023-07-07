@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">Client</string>
+    <string name="app_name">المستفيد</string>
 
     <string name="tv_menu_profile">الصفحة الشخصية</string>
     <string name="tv_menu_attendance">صفحة تأكيد الحضور</string>
@@ -75,22 +75,27 @@
     <string name="didn_t_get_otp_resend"><b><u>اعادة الارسال</u></b>لم يتم ارسال رمز التحقق؟ </string>
     <string name="send">ارسال</string>
     <string name="palestine_code">+970</string>
-    <string name="sending">يتم الارسال</string>
+    <string name="sending">يتم الارسال...</string>
     <string name="verify">تحقق</string>
-    <string name="verifying">يتم التحقق</string>
+    <string name="verifying">يتم التحقق...</string>
 
     <string name="tv_aboutus">About us</string>
-    <string name="tv_content">Running since 2012, this project focuses on addressing the specific
-        transport needs of people with face disabilities, and has shown itself as vital to the
-        lives of many residents of the Gaza Strip. The service provided increases the accessibility
-        of education and rehabilitation services across the Gaza Strip, and people have come to rely
-        upon the services provided. The project directly helps around 230 people, including university
-        students and employees who are unable to transport themselves to and from their commitments.</string>
-    <string name="btn_email">Email</string>
-    <string name="btn_phone">Phone</string>
-    <string name="skip">Skip</string>
-    <string name="next">Next</string>
+    <string name="tv_content">يعمل هذا المشروع منذ عام 2012 ، ويركز على معالجة ما هو محدد
+         احتياجات النقل للأشخاص ذوي الإعاقة ، وأظهرت نفسها على أنها حيوية بالنسبة لـ
+         حياة العديد من سكان قطاع غزة. الخدمة المقدمة تزيد من إمكانية الوصول
+         من خدمات التعليم وإعادة التأهيل في جميع أنحاء قطاع غزة ، وأصبح الناس يعتمدون عليها
+         على الخدمات المقدمة. يساعد المشروع بشكل مباشر حوالي 230 شخصًا ، بما في ذلك الجامعة
+         الطلاب والموظفين غير القادرين على الانتقال من التزاماتهم وإليها.</string>
+    <string name="btn_email">بريد الكتروني</string>
+    <string name="btn_phone">هاتف</string>
+    <string name="skip">تخطي</string>
+    <string name="next">التالي</string>
+    <string name="attendance_must_be_confirmed_first">يجب تأكيد الحضور أولاً!</string>
+    <string name="go">اذهب</string>
 
     <string name="history_status">حضر الرحلة</string>
+    <string name="are_you_sure_you_want_to_log_out">هل انت متاكد من انك تريد تسجيل الخروج</string>
+    <string name="yes">نعم</string>
+    <string name="cancel">الغاء</string>
 
 </resources>

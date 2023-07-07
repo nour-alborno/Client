@@ -14,19 +14,21 @@
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.CALL_PHONE" />
-    <uses-permission android:name="android.permission.VIBRATE"/>
+    <uses-permission android:name="android.permission.VIBRATE" />
 
     <application
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
         android:fullBackupContent="@xml/backup_rules"
-        android:icon="@mipmap/ic_launcher"
+        android:icon="@mipmap/ic_logo_foreground"
         android:label="@string/app_name"
-        android:roundIcon="@mipmap/ic_launcher_round"
+        android:roundIcon="@mipmap/ic_logo_foreground"
         android:supportsRtl="true"
         android:theme="@style/Theme.Client"
         tools:targetApi="31">
-
+        <activity
+            android:name=".Ui.Activities.settings.SettingsActivity"
+            android:exported="false" />
         <activity
             android:name=".Ui.Activities.History.HistoryActivity"
             android:exported="false" />
@@ -38,32 +40,29 @@
             android:exported="false" />
         <activity
             android:name=".Ui.Activities.Main.MainActivity"
-            android:exported="true"/>
+            android:exported="true" />
         <activity
             android:name=".Ui.Activities.Verification.VerificationActivity"
-            android:exported="true"/>
+            android:exported="true" />
         <activity
             android:name=".Ui.Activities.Login.LoginActivity"
-            android:exported="true"/>
+            android:exported="true" />
         <activity
             android:name=".Ui.Activities.about_us.AboutUsActivity"
-            android:exported="true"/>
-
+            android:exported="true" />
         <activity
             android:name=".Ui.Activities.onboarding.OnboardingActivity"
-            android:exported="true"/>
-
+            android:exported="true" />
         <activity
             android:name=".Ui.Activities.SplashActivity"
             android:exported="true">
-
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <action android:name="android.intent.action.SEND" />
+
                 <category android:name="android.intent.category.DEFAULT" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-
         </activity>
 
         <meta-data

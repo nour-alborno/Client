@@ -77,9 +77,9 @@
     <string name="didn_t_get_otp_resend">Didn\'t get OTP? <b><u>Resend</u></b></string>
     <string name="send">Send</string>
     <string name="palestine_code">+970</string>
-    <string name="sending">Sending</string>
+    <string name="sending">Sending...</string>
     <string name="verify">Verify</string>
-    <string name="verifying">Verifying</string>
+    <string name="verifying">Verifying...</string>
     <string name="google_maps_key">AIzaSyC5Zj3Id3i6fzJYpYbLPEfd0LjkboWzX-M</string>
 
     <string name="tv_aboutus">About us</string>
@@ -93,7 +93,12 @@
     <string name="btn_phone">Phone</string>
     <string name="skip">Skip</string>
     <string name="next">Next</string>
+    <string name="attendance_must_be_confirmed_first">Attendance must be confirmed first!</string>
+    <string name="go">Go</string>
 
     <string name="history_status">Attended</string>
+    <string name="are_you_sure_you_want_to_log_out">Are you sure you want to log out</string>
+    <string name="yes">Yes</string>
+    <string name="cancel">Cancel</string>
 
 </resources>

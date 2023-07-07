@@ -152,6 +152,7 @@ public class MainActivity extends AppCompatActivity implements MainView, Attenda
             @Override
             public void onClick(View view) {
                 getCurrentLocation();
+                AppUtility.vibrateButtonClicked(getBaseContext());
                 dialog.dismiss();
             }
         });

@@ -11,13 +11,13 @@
 
     <com.google.android.material.textview.MaterialTextView
         android:id="@+id/tv_resend"
-        android:layout_width="@dimen/_200sdp"
+        android:layout_width="wrap_content"
         android:layout_height="@dimen/_30sdp"
         android:fontFamily="@font/roboto_regular"
         android:clickable="true"
         android:gravity="center"
         android:text="@string/didn_t_get_otp_resend"
-        android:textColor="#88B3AF"
+        android:textColor="@color/sea_green"
         android:textSize="@dimen/_10ssp"
         app:layout_constraintEnd_toEndOf="@+id/btn_login"
         app:layout_constraintStart_toStartOf="@+id/btn_login"
@@ -102,12 +102,12 @@
         android:layout_width="@dimen/_267sdp"
         android:layout_height="@dimen/_40sdp"
         android:layout_marginTop="@dimen/_13sdp"
+        android:backgroundTint="@color/sea_green"
         android:fontFamily="@font/roboto_regular"
         android:text="@string/verify"
         android:textAllCaps="false"
         android:textSize="@dimen/_14ssp"
         android:textStyle="bold"
-        android:backgroundTint="@color/sea_green"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/pin_view" />
@@ -124,8 +124,6 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/btn_login"
         app:layout_constraintVertical_bias="0.538" />
-
-
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
