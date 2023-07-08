@@ -35,7 +35,9 @@
             app:elevation="50dp"
             app:hideOnScroll="true"
             app:labelVisibilityMode="labeled"
-            app:menu="@menu/bottom_navigation_menu" />
+            app:menu="@menu/bottom_navigation_menu"
+            app:itemIconTint="@color/sea_green"
+            />
 
 
     </androidx.coordinatorlayout.widget.CoordinatorLayout>

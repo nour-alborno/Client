@@ -98,4 +98,18 @@
     <string name="yes">نعم</string>
     <string name="cancel">الغاء</string>
 
+//content description profile
+    <string name="profile_mobile">رقم هاتقك</string>
+    <string name="profile_name">إسمك</string>
+    <string name="profile_gender">جنسك</string>
+    <string name="profile_age">عمرك</string>
+    <string name="profile_city">مدينتك</string>
+    <string name="profile_address">عنوانك</string>
+    <string name="profile_organization">المؤوسسة التابع لها</string>
+    <string name="profile_diabilitytype">نوع الإعاقة</string>
+    <string name="profile_edit_btn"> تعديل الصفحة الشخصية</string>
+    <string name="profile_profile_photo">الصورة الشخصية</string>
+    <string name="profile_edit_profile_photo">أنقر لتعديل الصورة الشخصية</string>
+
+
 </resources>

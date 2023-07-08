@@ -73,14 +73,7 @@ public class EditProfileActivity extends AppCompatActivity implements EditProfil
         editProfilePresenter.gettingProfileImage(benf_profile.getDocumentId());
 
 
-        binding.topAppBar.setNavigationOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
 
-                AppUtility.vibrateButtonClicked(getBaseContext());
-                onBackPressed();
-            }
-        });
 
         binding.imgProfile.setOnClickListener(new View.OnClickListener() {
             @Override

@@ -342,5 +342,6 @@ public class MainActivity extends AppCompatActivity implements MainView, Attenda
         //        وهان بدي اياه يحدد ع الأيقون يلي تحت تاعت السيكيدجول
         binding.bottomNavigationMain.setSelectedItemId(R.id.page_home);
 
+
     }
 }
