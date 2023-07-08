@@ -4,7 +4,8 @@
         android:id="@+id/page_home"
         android:enabled="true"
         android:icon="@drawable/baseline_location_on_24"
-        android:title="@string/tv_menu_map"/>
+        android:title="@string/tv_menu_map"
+      />
 
     <item
         android:id="@+id/page_attendance"

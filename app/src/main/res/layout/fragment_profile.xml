@@ -51,9 +51,10 @@
         app:layout_constraintTop_toTopOf="parent">
 
         <ImageButton
+            android:contentDescription="@string/profile_edit_btn"
             android:id="@+id/img_edit"
-            android:layout_width="@dimen/_18sdp"
-            android:layout_height="@dimen/_18sdp"
+            android:layout_width="@dimen/_20sdp"
+            android:layout_height="@dimen/_20sdp"
             android:layout_margin="@dimen/_23sdp"
             android:backgroundTint="@color/white"
             android:src="@drawable/baseline_edit_24"
@@ -78,7 +79,8 @@
                 android:layout_marginBottom="@dimen/_5sdp"
                 android:src="@drawable/profile_avtar"
                 app:civ_border_color="@color/sea_green"
-                app:civ_border_width="@dimen/_1sdp" />
+                app:civ_border_width="@dimen/_1sdp"
+                android:contentDescription="@string/profile_profile_photo"/>
 
             <TextView
                 android:id="@+id/tv_name"
@@ -87,7 +89,8 @@
                 android:layout_gravity="center_horizontal"
                 android:text="Ahmad Ali"
                 android:textColor="@color/sea_green"
-                android:textSize="@dimen/_15ssp" />
+                android:textSize="@dimen/_15ssp"
+                android:contentDescription="@string/profile_name"/>
 
             <LinearLayout
                 android:layout_width="wrap_content"
@@ -108,7 +111,8 @@
                     android:layout_gravity="center_horizontal"
                     android:text="+972 597 711 42"
                     android:textColor="@color/sea_green"
-                    android:textSize="@dimen/_13ssp" />
+                    android:textSize="@dimen/_13ssp"
+                    android:contentDescription="@string/profile_mobile"/>
             </LinearLayout>
 
         </LinearLayout>
