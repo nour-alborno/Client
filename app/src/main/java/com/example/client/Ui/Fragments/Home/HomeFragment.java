@@ -143,7 +143,7 @@ public class HomeFragment extends Fragment implements OnMapReadyCallback {
                 }
             });
 
-        }else if ((latitude_sp__client != 0.0 && longitude_sp_client != 0.0)){
+        }else if (DriverId != null && (latitude_sp__client != 0.0 && longitude_sp_client != 0.0)){
             showAttendanceLocationDialog();
         }else if (latitude_sp__client == 0.0 && longitude_sp_client == 0.0){
             showLocationDialog();
