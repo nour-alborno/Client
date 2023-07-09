@@ -276,4 +276,10 @@ public class HomeFragment extends Fragment implements OnMapReadyCallback {
             }
         });
     }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        DriverId = sp.getString("DriverId", null);
+    }
 }
