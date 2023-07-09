@@ -143,10 +143,10 @@ public class HomeFragment extends Fragment implements OnMapReadyCallback {
                 }
             });
 
-        }else if (DriverId != null && (latitude_sp__client != 0.0 || longitude_sp_client != 0.0)){
+        }else if ((latitude_sp__client != 0.0 && longitude_sp_client != 0.0)){
             showAttendanceLocationDialog();
-        }else {
-
+        }else if (latitude_sp__client == 0.0 && longitude_sp_client == 0.0){
+            showLocationDialog();
         }
 
 
@@ -245,8 +245,8 @@ public class HomeFragment extends Fragment implements OnMapReadyCallback {
         dialog.setContentView(dialogView);
         dialog.show();
 
-       Button btn_getLocation = dialogView.findViewById(R.id.btn_goAttendence);
-        btn_getLocation.setOnClickListener(new View.OnClickListener() {
+       Button btn_getAttendance = dialogView.findViewById(R.id.btn_goAttendence);
+        btn_getAttendance.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 AttendanceFragment attendanceFragment = new AttendanceFragment();
@@ -263,7 +263,7 @@ public class HomeFragment extends Fragment implements OnMapReadyCallback {
 
     private void showLocationDialog() {
         dialog = new Dialog(getActivity());
-        View dialogView = LayoutInflater.from(requireActivity()).inflate(R.layout.item_dialog_take_location, requireActivity().findViewById(R.id.custom_dialog));
+        View dialogView = LayoutInflater.from(requireActivity()).inflate(R.layout.itm_dialog_take_location, requireActivity().findViewById(R.id.custom_dialog));
         dialog.setContentView(dialogView);
         dialog.show();
 
@@ -271,12 +271,6 @@ public class HomeFragment extends Fragment implements OnMapReadyCallback {
         btn_getLocation.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                AttendanceFragment attendanceFragment = new AttendanceFragment();
-                FragmentTransaction transaction = getParentFragmentManager().beginTransaction();
-                transaction.replace(R.id.container, attendanceFragment); // Replace R.id.container with the ID of the container layout in your XML
-                transaction.addToBackStack(null); // This allows the user to navigate back to AFragment
-                transaction.commit();
-
                 AppUtility.vibrateButtonClicked(getActivity());
                 dialog.dismiss();
             }

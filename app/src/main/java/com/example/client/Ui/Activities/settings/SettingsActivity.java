@@ -4,11 +4,9 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.SeekBar;
-import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.example.client.R;
 import com.example.client.Ui.AppUtility.AppUtility;
 import com.example.client.databinding.ActivitySettingsBinding;
 
@@ -18,7 +16,7 @@ public class SettingsActivity extends AppCompatActivity {
     int textSize = 20;
     SharedPreferences sp;
     SharedPreferences.Editor edit;
-    TextView tv_login, tv_address, tv_age, tv_arrivals_place, tv_arrivals_time_item_schedule, tv_arrivals_time_item_schedule2, tv_attendance_status, tv_time_notification, tv_date2, tv_city;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -47,43 +45,6 @@ public class SettingsActivity extends AppCompatActivity {
                 binding.rbtnEnglish.setTextSize(textSize);
                 binding.tvLanguage.setTextSize(textSize);
 
-                tv_login = findViewById(R.id.tv_login);
-                tv_address = findViewById(R.id.tv_address);
-                tv_age = findViewById(R.id.tv_age);
-                tv_arrivals_place = findViewById(R.id.tv_arrivals_place);
-                tv_arrivals_time_item_schedule = findViewById(R.id.tv_arrivals_time_item_schedule);
-                tv_arrivals_time_item_schedule2 = findViewById(R.id.tv_arrivals_time_item_schedule2);
-                tv_attendance_status = findViewById(R.id.tv_attendance_status);
-                tv_time_notification = findViewById(R.id.tv_time_notification);
-                tv_date2 = findViewById(R.id.tv_date2);
-                tv_city = findViewById(R.id.tv_city);
-                findViewById(R.id.tv_code);
-                findViewById(R.id.tv_phone);
-                findViewById(R.id.tv_resend);
-                findViewById(R.id.tv_description);
-                findViewById(R.id.tv_organization);
-                findViewById(R.id.tv_title);
-                findViewById(R.id.tv_starting_place2);
-                findViewById(R.id.tv_starting_place);
-                findViewById(R.id.tv_gender);
-                findViewById(R.id.tv_contactus);
-                findViewById(R.id.tv_content);
-                findViewById(R.id.tv_arrivals_place2);
-                findViewById(R.id.tv_enterCode);
-                findViewById(R.id.tv_hintCode);
-                findViewById(R.id.tv_type_of_disability);
-                findViewById(R.id.tv_date);
-                findViewById(R.id.tv_description_notification);
-                findViewById(R.id.tv_driver_name);
-                findViewById(R.id.tv_driver_name2);
-                findViewById(R.id.tv_edit_photo);
-                findViewById(R.id.tv_start_time_item_schedule);
-                findViewById(R.id.tv_start_time_item_schedule2);
-                findViewById(R.id.tv_name);
-                findViewById(R.id.tv_number);
-                findViewById(R.id.tv_notification_title);
-
-                tv_login.setTextSize(textSize);
 
             }
 
