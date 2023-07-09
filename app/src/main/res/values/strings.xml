@@ -112,6 +112,7 @@
     <string name="profile_edit_btn"> Edit Profile</string>
     <string name="profile_profile_photo">Profile Picture</string>
     <string name="profile_edit_profile_photo">Edit your profile picture</string>
+    <string name="must_take_location">You must accept take location permission first!</string>
 
 
 </resources>

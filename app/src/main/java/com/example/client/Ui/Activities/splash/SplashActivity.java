@@ -1,12 +1,9 @@
-package com.example.client.Ui.Activities;
+package com.example.client.Ui.Activities.splash;
 
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
-
-import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.client.Ui.Activities.Login.LoginActivity;
 import com.example.client.Ui.Activities.onboarding.OnboardingActivity;
@@ -14,8 +11,6 @@ import com.example.client.Ui.AppUtility.AppUtility;
 import com.example.client.Ui.base_classes.BaseActivity;
 import com.example.client.databinding.ActivitySplashBinding;
 import com.google.firebase.database.DatabaseReference;
-
-import java.text.SimpleDateFormat;
 
 public class SplashActivity extends BaseActivity {
 

@@ -146,7 +146,7 @@ public class ProfileFragment extends BaseFragment implements ProfileView{
                      public void onClick(View view) {
                          edit = sp.edit();
                          edit.clear();
-                         AppUtility.vibrateError(getActivity());
+                         AppUtility.vibrateButtonClicked(getActivity());
                          FirebaseAuth.getInstance().signOut();
                          startActivity(new Intent(getActivity(), LoginActivity.class));
                          getActivity().finish();
