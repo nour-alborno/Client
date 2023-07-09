@@ -1,7 +1,10 @@
 package com.example.client.Ui.Fragments.Home;
 
+import static android.content.Context.MODE_PRIVATE;
+
 import android.Manifest;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
@@ -17,6 +20,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.DialogFragment;
 
+import com.bumptech.glide.Glide;
 import com.example.client.Model.DriverProfile;
 import com.example.client.Ui.AppUtility.AppUtility;
 import com.example.client.databinding.ItemContactDialogBinding;
@@ -31,8 +35,12 @@ public class CustomDialogFragment extends DialogFragment {
     FirebaseFirestore firestore;
     DriverProfile driverProfile;
     public FirebaseStorage firebaseStorage;
+    SharedPreferences sp;
+    SharedPreferences.Editor edit;
+    String DriverId;
 
-        @Nullable
+
+    @Nullable
         @Override
         public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
             // Inflate the layout for the dialog
@@ -43,27 +51,37 @@ public class CustomDialogFragment extends DialogFragment {
             firebaseStorage = FirebaseStorage.getInstance();
 
 
-            firestore.collection("Driver").document("1").get()
-                    .addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
-                        @Override
-                        public void onComplete(@NonNull Task<DocumentSnapshot> task) {
-                            Log.d("CustomDialogFragmentTAG",task.getResult().toString());
-                            if (task.isSuccessful()){
+            sp = getContext().getSharedPreferences("sp", MODE_PRIVATE);
+            edit = sp.edit();
+            DriverId = sp.getString("DriverId", null);
+            if (DriverId != null){
 
-                                driverProfile = task.getResult().toObject(DriverProfile.class);
-                                Log.d("CustomDialogFragmentTAG",task.getResult().toString());
-                                binding.tvName.setText(driverProfile.getName());
-                                binding.tvPhone.setText("+970 ".concat(String.valueOf(driverProfile.getMobile())));
-                               // binding.imgProfile.setImageURI(driverProfile.getImage);
+                firestore.collection("Driver").document(DriverId)
+                        .get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+                            @Override
+                            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
 
-                            } else {
+                                if (task.isSuccessful()){
+                                    DriverProfile driverProfile = task.getResult().toObject(DriverProfile.class);
+                                    Glide.with(getActivity()).load(driverProfile.getImgUrl())
+                                            .into(binding.imgProfile);
+                                    binding.tvName.setText(driverProfile.getName());
+                                    binding.tvPhone.setText("+970 ".concat(String.valueOf(driverProfile.getMobile())));
 
-                                Log.d("CustomDialogFragmentTAG", task.getException().getMessage());
+                                    Log.d("suceess",driverProfile.toString());
+                                }else {
+                                    Log.d("driverInfoFailed",task.getException().getMessage());
+                                }
+
+
 
                             }
+                        });
 
-                        }
-                    });
+            }
+
+
+
 
 
             ActivityResultLauncher<String> arl =registerForActivityResult
@@ -92,6 +110,7 @@ public class CustomDialogFragment extends DialogFragment {
 
 
 
+                    AppUtility.vibrateButtonClicked(getActivity());
                     Intent intent=new Intent(Intent.ACTION_CALL);
                     String num =binding.tvPhone.getText().toString();
                     intent.setData(Uri.parse("tel:"+num));

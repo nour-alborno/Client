@@ -11,6 +11,7 @@ import androidx.viewpager.widget.ViewPager;
 
 import com.example.client.R;
 import com.example.client.Ui.Activities.Login.LoginActivity;
+import com.example.client.Ui.AppUtility.AppUtility;
 import com.example.client.adpters.OnboardingPagerAdapter;
 import com.example.client.databinding.ActivityOnboardingBinding;
 
@@ -51,6 +52,7 @@ public class OnboardingActivity extends AppCompatActivity {
                         binding.btnNext.setBackground(ContextCompat.getDrawable(getBaseContext(), R.drawable.img_bg_3));
                         binding.btnNext.setTextSize(10f);
                         binding.btnSkip.setVisibility(View.GONE);
+                        AppUtility.vibrateButtonClicked(getBaseContext());
                     } else if (binding.viewPager.getCurrentItem()  == 1){
                         // Reset the text of the Next button
                         binding.btnNext.setBackground(ContextCompat.getDrawable(getBaseContext(), R.drawable.img_bg_2));
@@ -71,6 +73,7 @@ public class OnboardingActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 startActivity(new Intent(getBaseContext(), LoginActivity.class));
+                AppUtility.vibrateButtonClicked(getBaseContext());
                 finish();
             }
         });

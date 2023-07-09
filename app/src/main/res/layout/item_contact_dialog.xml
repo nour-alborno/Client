@@ -8,7 +8,7 @@
     android:elevation="@dimen/_5sdp"
     android:padding="@dimen/_30sdp"
     android:id="@+id/custom_calling_dialog"
-    android:background="@drawable/shape_code_bg">
+    app:background="@drawable/shape_code_bg">
 
 
     <TextView

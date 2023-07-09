@@ -61,12 +61,13 @@ public class LoginActivity extends AppCompatActivity implements LoginView {
         loginPresenter = new LoginPresenter(this);
 
         binding.btnLogin.setOnClickListener(view -> {
+            AppUtility.vibrateButtonClicked(getBaseContext());
             mobile = binding.etMobile.getText().toString().trim();
             edit.putString("phone",phone);
             if (TextUtils.isEmpty(mobile)) {
                 binding.etMobile.setError("Enter your phone number");
                 setEnabledVisibility();
-                AppUtility.vibrateButtonClicked(getBaseContext());
+                AppUtility.vibrateError(getBaseContext());
                // Toast.makeText(getApplicationContext(), "Enter your phone", Toast.LENGTH_SHORT).show();
                 return;
             }
@@ -163,5 +164,7 @@ public class LoginActivity extends AppCompatActivity implements LoginView {
         Log.d("LoginActivityLOG", "Does not exist");
         setEnabledVisibility();
         AppUtility.showSnackbar(binding.getRoot(),"You're not allowed to login.");
+        AppUtility.vibrateNegative(getBaseContext());
+
     }
 }

@@ -44,7 +44,6 @@ public class AboutUsActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 AppUtility.vibrateButtonClicked(getBaseContext());
-
                 Intent intent=new Intent(Intent.ACTION_CALL);
                 String phone = "+970593887076";
                 intent.setData(Uri.parse("tel:"+phone));
@@ -59,7 +58,6 @@ public class AboutUsActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 AppUtility.vibrateButtonClicked(getBaseContext());
-
                 Intent intent=new Intent(Intent.ACTION_SENDTO);
                 String mail =" info@interpal.org";
                 intent.setData(Uri.parse("mailto:"+mail));

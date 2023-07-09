@@ -63,13 +63,14 @@ String newNumber,verificationIdEdit;
         if (fromlogin) {
             binding.tvHintCode.setText(getString(R.string.secret_code) + " +970 " + getIntent().getStringExtra("phone"));
             binding.btnLogin.setOnClickListener(view -> {
+                AppUtility.vibrateButtonClicked(getBaseContext());
                 setEnabledVisibility();
                 Log.e("VerificationActivityLOG", "Click");
                 if (binding.pinView.getText().toString().trim().isEmpty()) {
                     binding.pinView.setError("Enter your phone number");
                     binding.pinView.setLineColor(getResources().getColor(R.color.baby_red));
                     AppUtility.showSnackbar(binding.getRoot(), "Enter your phone number");
-                    AppUtility.vibrateButtonClicked(getBaseContext());
+                    AppUtility.vibrateError(getBaseContext());
                     Log.e("VerificationActivityLOG", "empty");
                     setEnabledVisibility();
                     return;
@@ -100,6 +101,7 @@ String newNumber,verificationIdEdit;
                                 } else {
                                     binding.pinView.setLineColor(getResources().getColor(R.color.baby_red));
                                     AppUtility.showSnackbar(binding.getRoot(), task.getException().getMessage());
+                                    AppUtility.vibrateError(getBaseContext());
 
                                 }
                             });

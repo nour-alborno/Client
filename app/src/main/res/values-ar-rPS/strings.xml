@@ -110,6 +110,7 @@
     <string name="profile_edit_btn"> تعديل الصفحة الشخصية</string>
     <string name="profile_profile_photo">الصورة الشخصية</string>
     <string name="profile_edit_profile_photo">أنقر لتعديل الصورة الشخصية</string>
+    <string name="must_take_location">يجب الموافقة على صلاحية الوصول لموقعك اولا!</string>
 
 
 </resources>

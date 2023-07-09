@@ -2,10 +2,12 @@ package com.example.client.Ui.Activities.settings;
 
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.SeekBar;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.client.Ui.AppUtility.AppUtility;
 import com.example.client.databinding.ActivitySettingsBinding;
 
 public class SettingsActivity extends AppCompatActivity {
@@ -14,6 +16,7 @@ public class SettingsActivity extends AppCompatActivity {
     int textSize = 20;
     SharedPreferences sp;
     SharedPreferences.Editor edit;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -27,7 +30,7 @@ public class SettingsActivity extends AppCompatActivity {
             @Override
             public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
 
-                sp = getSharedPreferences("spSittings", MODE_PRIVATE);
+                sp = getSharedPreferences("sp", MODE_PRIVATE);
                 edit = sp.edit();
 
                 textSize = textSize+(progress - progressNew);
@@ -42,6 +45,7 @@ public class SettingsActivity extends AppCompatActivity {
                 binding.rbtnEnglish.setTextSize(textSize);
                 binding.tvLanguage.setTextSize(textSize);
 
+
             }
 
             @Override
@@ -52,6 +56,13 @@ public class SettingsActivity extends AppCompatActivity {
             @Override
             public void onStopTrackingTouch(SeekBar seekBar) {
                 binding.tvFontSize.setText(progressNew+"/"+binding.sbSize.getMax());
+            }
+        });
+
+        binding.btnSave.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                AppUtility.vibrateButtonClicked(getBaseContext());
             }
         });
 
