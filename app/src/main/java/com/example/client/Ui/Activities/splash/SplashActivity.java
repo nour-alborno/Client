@@ -78,20 +78,22 @@ public class SplashActivity extends BaseActivity {
             if (!x){
                 edit.putString("JourneyDate",null);
                 if (journeyReturnAtendTaken){
-                    edit.putString("journeyReturnAtendTaken",null);
+                    edit.putBoolean("journeyReturnAtendTaken",false);
                 }
 
                 if (journeyGoingAtendTaken){
-                    edit.putString("journeyGoingAtendTaken",null);
+                    edit.putBoolean("journeyGoingAtendTaken",false);
                 }
 
                 if (journeyGoingAtendTakenEx ){
-                    edit.putString("journeyGoingAtendTakenEx",null);
+                    edit.putBoolean("journeyGoingAtendTakenEx",false);
                 }
                 if (journeyReturnAtendTakenEx){
-                    edit.putString("journeyReturnAtendTakenEx",null);
+                    edit.putBoolean("journeyReturnAtendTakenEx",false);
                 }
-
+                if (driverId != null){
+                    edit.putString("DriverId",null);
+                }
                 edit.commit();
             }
 
