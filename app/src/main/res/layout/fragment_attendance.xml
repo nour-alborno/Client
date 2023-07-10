@@ -71,7 +71,8 @@
             android:background="@drawable/shape_bac_item"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/tv_title">
+            app:layout_constraintTop_toBottomOf="@+id/tv_title"
+            android:visibility="gone">
 
 
             <TextView
@@ -288,7 +289,8 @@
             android:background="@drawable/shape_bac_item"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/layout_journeyStart">
+            app:layout_constraintTop_toBottomOf="@+id/layout_journeyStart"
+            android:visibility="gone">
 
 
             <TextView
